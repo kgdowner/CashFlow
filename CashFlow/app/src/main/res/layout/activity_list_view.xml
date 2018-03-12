@@ -20,11 +20,12 @@
 
             <ImageButton
                 android:id="@+id/menu_button"
+                style="?attr/buttonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight=".20"
-                android:padding="8dp"
-                android:text="Menu" />
+                android:padding="8dp" />
+
             <Button
                 android:id="@+id/list_view_button"
                 android:layout_width="wrap_content"
