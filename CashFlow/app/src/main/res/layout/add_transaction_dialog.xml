@@ -35,7 +35,8 @@
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:prompt="CATEGORY"
+        android:entries="@array/category_array2"
+        android:tooltipText="CATEGORY"
         >
 
 

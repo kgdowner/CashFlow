@@ -69,13 +69,14 @@
                 android:layout_weight=".10"
                 android:padding="8dp"
                 android:text=" - " />
-            <Button
-                android:id="@+id/sort_list_button"
+            <Spinner
+                android:id="@+id/sort_list_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
                 android:padding="8dp"
-                android:text="Sort by ^" />
+                android:entries="@array/category_array"
+                android:prompt="@string/sort_by_prompt"/>
             <Button
                 android:id="@+id/set_allert"
                 android:layout_width="wrap_content"
