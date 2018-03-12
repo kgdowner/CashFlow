@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ListView extends AppCompatActivity {
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
     private Button mAddTransaction;
+    private Button mRemoveTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +36,33 @@ public class ListView extends AppCompatActivity {
         mTransactionRecyclerView = (RecyclerView) findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAddTransaction = (Button)findViewById(R.id.add_transaction);
+        mAddTransaction = (Button)findViewById(R.id.add_transaction_button);
 
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.add_transaction_dialog);
-                dialog.show();
+
+                    final Dialog dialog = new Dialog(context);
+                    dialog.setContentView(R.layout.add_transaction_dialog);
+
+                    Button dialogCancelButton = (Button) findViewById(R.id.add_transaction_cancel);
+
+
+
+                    dialog.show();
+
 
             }
 
         });
+
+        mRemoveTransaction = (Button)findViewById(R.id.remove_transaction_button);
+        mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
+            }
+        }));
 
 
 

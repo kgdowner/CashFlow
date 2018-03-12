@@ -15,13 +15,14 @@
         <item>Category1</item>
         <item>Category2</item>
         <item>Category3</item>
-
         <item>Category4</item>
-
         <item>Category5</item>
+    </string-array>
 
-
-
+    <string-array name="graph_view">
+        <item>Graph ^</item>
+        <item>Line</item>
+        <item>Bar</item>
     </string-array>
 
 </resources>
