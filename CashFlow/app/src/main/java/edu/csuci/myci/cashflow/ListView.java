@@ -30,6 +30,7 @@ public class ListView extends AppCompatActivity {
     private Button mRemoveTransaction;
     private Button mSetLimits;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,13 @@ public class ListView extends AppCompatActivity {
                     final Dialog dialog = new Dialog(context);
                     dialog.setContentView(R.layout.add_transaction_dialog);
 
-                    Button dialogCancelButton = (Button) findViewById(R.id.add_transaction_cancel);
+                    Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
+                    mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
 
 
@@ -72,6 +79,13 @@ public class ListView extends AppCompatActivity {
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.set_alert_dialog);
 
+                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
+                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });

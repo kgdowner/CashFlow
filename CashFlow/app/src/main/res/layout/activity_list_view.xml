@@ -24,7 +24,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".20"
                 android:padding="8dp"
-                android:src="?android:attr/floatingToolbarOpenDrawable"
                 android:text="Menu" />
             <Button
                 android:id="@+id/list_view_button"
