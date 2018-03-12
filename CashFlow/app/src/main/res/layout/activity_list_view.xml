@@ -78,7 +78,7 @@
                 android:entries="@array/category_array"
                 android:prompt="@string/sort_by_prompt"/>
             <Button
-                android:id="@+id/set_allert"
+                android:id="@+id/set_allert_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"

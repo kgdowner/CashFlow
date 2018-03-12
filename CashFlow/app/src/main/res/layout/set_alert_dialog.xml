@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical">
+
+    <!---Text View add transaction-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Limits"/>
+
+    <!---Amount Label-->     <!---Amount EditableText Field-->
+    <!---Select Categories drop down list-->
+    <Spinner
+        android:id="@+id/category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/category_array2"
+        android:tooltipText="CATEGORY"
+        >
+
+
+    </Spinner>
+
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$15.00"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$150.00"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$1500.00"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="$Ammount"/>
+
+    <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/add_limit_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="OK"/>
+        <Button
+            android:id="@+id/add_limit_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Cancel"/>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
