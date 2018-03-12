@@ -28,6 +28,7 @@ public class ListView extends AppCompatActivity {
     private TextView mCategoryTextView;
     private Button mAddTransaction;
     private Button mRemoveTransaction;
+    private Button mSetLimits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,19 @@ public class ListView extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
             }
         }));
+
+        mSetLimits = (Button)findViewById(R.id.set_allert_button);
+        mSetLimits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.set_alert_dialog);
+
+                dialog.show();
+            }
+        });
+
+
 
 
 
