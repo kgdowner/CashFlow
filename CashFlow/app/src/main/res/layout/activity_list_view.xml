@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".20"
-                android:background="@drawable/menu_icon"
+                android:foreground="@drawable/menu_icon"
                 android:entries="@array/main_menu"
                 android:padding="8dp" />
 
