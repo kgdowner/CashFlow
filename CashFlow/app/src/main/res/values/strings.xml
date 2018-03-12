@@ -25,4 +25,15 @@
         <item>Bar</item>
     </string-array>
 
+    <string-array name="main_menu">
+        <item>myProfileName</item>
+        <item>Manage Profile</item>
+        <item>Manage Categories</item>
+        <item>Add Transaction</item>
+        <item>Remove Transaction</item>
+        <item>Limits</item>
+        <item>Exit</item>
+
+    </string-array>
+
 </resources>

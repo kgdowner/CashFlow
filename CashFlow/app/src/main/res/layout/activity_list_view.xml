@@ -20,13 +20,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <Spinner
                 android:id="@+id/menu_button"
                 style="?attr/buttonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".20"
-                android:src="@drawable/menu_icon"
+                android:background="@drawable/menu_icon"
+                android:entries="@array/main_menu"
                 android:padding="8dp" />
 
             <Button
