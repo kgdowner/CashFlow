@@ -1,15 +1,11 @@
 <resources>
     <string name="app_name">CashFlow</string>
-    <string name="sort_by_prompt">Sort by</string>
-    <string name="time_range_spinner">time range</string>
-    <string name="select_category_spinner">category</string>
 
     <string-array name="category_array">
-        <item>Sort by ^</item>
+        <item>Sort by</item>
         <item>Date</item>
         <item>Category</item>
         <item>Amount</item>
-
     </string-array>
 
     <string-array name="category_array2">
@@ -35,7 +31,12 @@
         <item>Remove Transaction</item>
         <item>Limits</item>
         <item>Exit</item>
+    </string-array>
 
+    <string-array name="time_options">
+        <item>Last Month</item>
+        <item>All Time</item>
+        <item>Custom</item>
     </string-array>
 
 </resources>

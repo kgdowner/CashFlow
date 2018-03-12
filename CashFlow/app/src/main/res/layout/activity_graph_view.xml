@@ -67,21 +67,19 @@
 
             <Spinner
                 android:id="@+id/time_range_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:entries="@array/category_array"
-                android:padding="8dp"
-                android:prompt="@string/time_range_spinner" />
+                android:entries="@array/time_options"
+                android:padding="8dp" />
 
             <Spinner
                 android:id="@+id/select_category_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:entries="@array/category_array"
-                android:padding="8dp"
-                android:prompt="@string/select_category_spinner" />
+                android:entries="@array/category_array2"
+                android:padding="8dp" />
 
         </LinearLayout>
 

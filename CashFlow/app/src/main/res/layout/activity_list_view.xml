@@ -90,8 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
                 android:entries="@array/category_array"
-                android:padding="8dp"
-                android:prompt="@string/sort_by_prompt" />
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/set_allert_button"
