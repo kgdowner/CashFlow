@@ -20,7 +20,7 @@
     </string-array>
 
     <string-array name="graph_view">
-        <item>Graph ^</item>
+        <item>Graph v</item>
         <item>Line</item>
         <item>Bar</item>
     </string-array>
