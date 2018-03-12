@@ -26,6 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".20"
+                android:src="@drawable/menu_icon"
                 android:padding="8dp" />
 
             <Button
