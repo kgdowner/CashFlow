@@ -17,13 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/menu_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight=".20"
                 android:padding="8dp"
-                android:text="Button" />
+                android:src="?android:attr/floatingToolbarOpenDrawable"
+                android:text="Menu" />
             <Button
                 android:id="@+id/list_view_button"
                 android:layout_width="wrap_content"
@@ -69,14 +71,16 @@
                 android:layout_weight=".10"
                 android:padding="8dp"
                 android:text=" - " />
+
             <Spinner
                 android:id="@+id/sort_list_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
-                android:padding="8dp"
+                android:background="@android:drawable/btn_default"
                 android:entries="@array/category_array"
-                android:prompt="@string/sort_by_prompt"/>
+                android:padding="8dp"
+                android:prompt="@string/sort_by_prompt" />
             <Button
                 android:id="@+id/set_allert"
                 android:layout_width="wrap_content"
