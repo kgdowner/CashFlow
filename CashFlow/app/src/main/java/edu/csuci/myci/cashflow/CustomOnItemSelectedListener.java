@@ -39,7 +39,16 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 2: if(isInFront==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
-                    } break;
+                        break;
+                    } else {
+                        SwitchToGraphViewLine();
+                        if(isInFront==true){
+                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+                            image.setImageResource(R.drawable.graph_view_bar);
+                            break;}
+                        break;
+
+                    }
                     default:
                         Toast.makeText(parent.getContext(),
                             "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
