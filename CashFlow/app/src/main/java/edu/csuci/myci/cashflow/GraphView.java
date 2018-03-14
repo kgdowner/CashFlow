@@ -28,6 +28,20 @@ public class GraphView extends AppCompatActivity {
 
     private Button mListView;
 
+    static boolean isInFront;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isInFront = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isInFront = false;
+    }
+
 
 
 

@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import static edu.csuci.myci.cashflow.GraphView.isInFront;
 
 /**
  * Created by viktoriya on 3/13/18.
@@ -28,7 +31,15 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.graph_view_spinner:
                 switch (position) {
                     case 0: break;
-                    case 1: SwitchToGraphViewLine();
+                    case 1: if(isInFront==true) {
+                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+                        image.setImageResource(R.drawable.graph_view_line);
+                        break;
+                        } else SwitchToGraphViewLine(); break;
+                    case 2: if(isInFront==true){
+                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+                        image.setImageResource(R.drawable.graph_view_bar);
+                    } break;
                     default:
                         Toast.makeText(parent.getContext(),
                             "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
@@ -42,6 +53,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 1: ManageProfilesCustomDialog();break;
                     case 2: ManageCategoriesCustomDialog();break;
                     case 3:
+                        if(isInFront==true)break;
                         //need to insert if else statement (in which activity) if i want to reuse button
                         AddTransactionCustomDialog(); break;
                     case 5: LimitsCustomDialog(); break;
