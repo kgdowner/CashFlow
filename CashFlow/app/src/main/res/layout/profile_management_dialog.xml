@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Categories"/>
+        android:text="Profiles"/>
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
@@ -23,15 +23,15 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category1"/>
+                android:text="Profile1"/>
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category2"/>
+                android:text="Profile2"/>
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category3"/>
+                android:text="Profile3"/>
 
 
 
@@ -53,7 +53,7 @@
             android:layout_height="match_parent"
             android:text=" - "/>
         <Button
-            android:id="@+id/manage_categroy_cancel_button"
+            android:id="@+id/manage_profile_cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Cancel"/>

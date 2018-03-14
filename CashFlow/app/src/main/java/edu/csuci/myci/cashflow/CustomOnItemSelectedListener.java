@@ -37,6 +37,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.menu_spinner:
                 switch (position) {
                     case 0: break;
+                    case 1: ManageProfilesCustomDialog();break;
+                    case 2: ManageCategoriesCustomDialog();break;
                     case 3: AddTransactionCustomDialog(); break;
                     case 5: LimitsCustomDialog(); break;
                     case 6: System.exit(0);break;
@@ -90,5 +92,38 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
         dialog.show();
+    }
+    public void ManageCategoriesCustomDialog(){
+        final Dialog dialog2 = new Dialog(context);
+        dialog2.setContentView(R.layout.category_management_dialog);
+
+        Button mDialogCancelButton = (Button) dialog2.findViewById(R.id.manage_categroy_cancel_button);
+        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+            }
+        });
+
+
+
+        dialog2.show();
+
+    }
+    public void ManageProfilesCustomDialog(){
+        final Dialog dialog1 = new Dialog(context);
+        dialog1.setContentView(R.layout.profile_management_dialog);
+
+        Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
+        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog1.dismiss();
+            }
+        });
+
+
+
+        dialog1.show();
     }
 }
