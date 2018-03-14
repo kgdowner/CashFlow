@@ -1,7 +1,9 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,7 +28,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.graph_view_spinner:
                 switch (position) {
                     case 0: break;
-                    //case 6: System.exit(0); break;
+                    case 1: SwitchToGraphViewLine();
                     default:
                         Toast.makeText(parent.getContext(),
                             "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
@@ -39,7 +41,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1: ManageProfilesCustomDialog();break;
                     case 2: ManageCategoriesCustomDialog();break;
-                    case 3: AddTransactionCustomDialog(); break;
+                    case 3:
+                        //need to insert if else statement (in which activity) if i want to reuse button
+                        AddTransactionCustomDialog(); break;
                     case 5: LimitsCustomDialog(); break;
                     case 6: System.exit(0);break;
                     default:
@@ -53,6 +57,18 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to sort by : " + parent.getItemAtPosition(position).toString(),
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.select_category_spinner:
+                if(position==0) break;
+                Toast.makeText(parent.getContext(),
+                        "You are attempting to view only : " + parent.getItemAtPosition(position).toString(),
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.time_range_spinner:
+                if(position==0) break;
+                Toast.makeText(parent.getContext(),
+                        "You are attempting to view by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -125,5 +141,11 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
         dialog1.show();
+    }
+    public void SwitchToGraphViewLine(){
+
+        Intent intent = new Intent(context, GraphView.class);
+        context.startActivity(intent);
+
     }
 }

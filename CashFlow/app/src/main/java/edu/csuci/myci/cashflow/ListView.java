@@ -23,12 +23,16 @@ public class ListView extends AppCompatActivity {
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
+
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
+
     private Button mAddTransaction;
     private Button mRemoveTransaction;
     private Button mSetLimits;
+
+
     private Spinner mCategorySpinner;
     private Spinner mGraphViewSpinner;
     private Spinner mMainMenuSpinner;
@@ -47,12 +51,6 @@ public class ListView extends AppCompatActivity {
 
         mTransactionRecyclerView = (RecyclerView) findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
-
-
 
 
 
