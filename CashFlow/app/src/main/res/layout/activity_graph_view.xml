@@ -11,8 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <LinearLayout
@@ -20,14 +23,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageButton
+            <Spinner
                 android:id="@+id/menu_button"
                 style="?attr/buttonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".20"
-                android:padding="8dp"
-                android:src="@drawable/menu_icon" />
+                android:entries="@array/main_menu"
+                android:foreground="@drawable/menu_icon"
+                android:padding="8dp" />
 
             <Button
                 android:id="@+id/list_view_button"
@@ -61,39 +65,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/add_transaction_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
-                android:padding="8dp"
-                android:text=" + " />
-
-            <Button
-                android:id="@+id/remove_transaction_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
-                android:padding="8dp"
-                android:text=" - " />
+            <Spinner
+                android:id="@+id/time_range_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:entries="@array/time_options"
+                android:padding="8dp" />
 
             <Spinner
-                android:id="@+id/sort_list_spinner"
-                style="?attr/buttonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".40"
-                android:entries="@array/category_array"
-                android:padding="8dp"
-                android:prompt="@string/sort_by_prompt" />
-
-            <Button
-                android:id="@+id/set_allert_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
-                android:padding="8dp"
-                android:text=" ! " />
+                android:id="@+id/select_category_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:entries="@array/category_array2"
+                android:padding="8dp" />
 
         </LinearLayout>
 
