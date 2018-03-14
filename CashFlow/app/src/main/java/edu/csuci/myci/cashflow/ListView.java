@@ -29,66 +29,27 @@ public class ListView extends AppCompatActivity {
     private Button mAddTransaction;
     private Button mRemoveTransaction;
     private Button mSetLimits;
+    private Spinner mCategorySpinner;
+    private Spinner mGraphViewSpinner;
+    private Spinner mMainMenuSpinner;
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
+        addListenerOnSpinnerItemSelection();
+        addListenerOnDialogButton();
+
         mTransactionRecyclerView = (RecyclerView) findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mAddTransaction = (Button)findViewById(R.id.add_transaction_button);
-
-        mAddTransaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    final Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.add_transaction_dialog);
-
-                    Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
-                    mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
 
 
-
-                    dialog.show();
-
-
-            }
-
-        });
-
-        mRemoveTransaction = (Button)findViewById(R.id.remove_transaction_button);
-        mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
-            }
-        }));
-
-        mSetLimits = (Button)findViewById(R.id.set_allert_button);
-        mSetLimits.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.set_alert_dialog);
-
-                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
-                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-            }
-        });
 
 
 
@@ -155,8 +116,89 @@ public class ListView extends AppCompatActivity {
 
     }
 
+    public void addListenerOnSpinnerItemSelection(){
+        mCategorySpinner = (Spinner)findViewById(R.id.sort_list_spinner);
+        mGraphViewSpinner = (Spinner)findViewById(R.id.graph_view_spinner);
+        mMainMenuSpinner = (Spinner)findViewById(R.id.menu_spinner);
+
+        mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+
+    }
+
+    public void addListenerOnDialogButton(){
+        mAddTransaction = (Button)findViewById(R.id.add_transaction_button);
+        mRemoveTransaction = (Button)findViewById(R.id.remove_transaction_button);
+        mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
+            }
+        }));
+        mSetLimits = (Button)findViewById(R.id.set_allert_button);
+        mAddTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.add_transaction_dialog);
+
+                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
+                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+                dialog.show();
+
+
+            }
+
+        });
+
+
+
+        mSetLimits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.set_alert_dialog);
+
+                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
+                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+
+
+    }
+
 
 
 
 
 }
+    // add items into spinner dynamically
+    //public void addItemsOnSpinner2() {
+
+      //  spinner2 = (Spinner) findViewById(R.id.spinner2);
+      //  List<String> list = new ArrayList<String>();
+        //list.add("list 1");
+       // list.add("list 2");
+       // list.add("list 3");
+     //   ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+     //           android.R.layout.simple_spinner_item, list);
+     //   dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+     //   spinner2.setAdapter(dataAdapter);
+  //  }
