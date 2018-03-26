@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import static edu.csuci.myci.cashflow.GraphView.isInFront;
+import static edu.csuci.myci.cashflow.GraphViewFragment.isInFront;
 
 /**
  * Created by viktoriya on 3/13/18.
@@ -42,9 +43,11 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
                     } else {
                         SwitchToGraphViewLine();
+
+                        //while(!isInFront){}
                         if(isInFront==true){
-                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                            image.setImageResource(R.drawable.graph_view_bar);
+                            SwithGraphToBar();
+
                             break;}
                         break;
 
@@ -161,12 +164,20 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
 
+
+
         dialog1.show();
     }
     public void SwitchToGraphViewLine(){
 
-        Intent intent = new Intent(context, GraphView.class);
-        context.startActivity(intent);
+        //Intent intent = new Intent(context, GraphView.class);
+        //context.startActivity(intent);
+
+    }
+    public void SwithGraphToBar(){
+        ImageView image = new ImageView(context);
+        image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+        image.setImageResource(R.drawable.graph_view_bar);
 
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.csuci.myci.cashflow.GraphView">
+    tools:context="edu.csuci.myci.cashflow.GraphViewFragment">
 
 
     <LinearLayout
@@ -18,39 +18,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Spinner
-                android:id="@+id/menu_spinner"
-                style="?attr/buttonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".20"
-                android:entries="@array/main_menu"
-                android:foreground="@drawable/menu_icon"
-                android:padding="8dp" />
-
-            <Button
-                android:id="@+id/list_view_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".40"
-                android:padding="8dp"
-                android:text="List" />
-
-            <Spinner
-                android:id="@+id/graph_view_spinner"
-                style="?attr/buttonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".40"
-                android:entries="@array/graph_view"
-                android:padding="8dp" />
-
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView"
