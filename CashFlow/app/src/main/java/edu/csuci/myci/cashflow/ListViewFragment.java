@@ -1,5 +1,6 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -46,8 +48,18 @@ public class ListViewFragment extends Fragment {
         mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
+
+        mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
+        mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+
+
+
+//        addListenerOnSpinnerItemSelection();
+//        addListenerOnDialogButton();
+
         return v;
     }
+
 
     private class TransactionHolder extends RecyclerView.ViewHolder {
         private Transaction mTransaction;
@@ -106,5 +118,74 @@ public class ListViewFragment extends Fragment {
         mTransactionRecyclerView.setAdapter(mAdapter);
 
     }
+
+    public void addListenerOnSpinnerItemSelection(){
+        //mCategorySpinner = (Spinner) getView().findViewById(R.id.sort_list_spinner);
+        //mGraphViewSpinner = (Spinner)this.getView().findViewById(R.id.graph_view_spinner);
+        //mMainMenuSpinner = (Spinner)this.getView().findViewById(R.id.menu_spinner);
+
+        mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        //mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        //mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+
+    }
+
+    public void addListenerOnDialogButton(){
+        mAddTransaction = (Button)this.getView().findViewById(R.id.add_transaction_button);
+        mRemoveTransaction = (Button)this.getView().findViewById(R.id.remove_transaction_button);
+        mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
+            }
+        }));
+        mSetLimits = (Button)this.getView().findViewById(R.id.set_allert_button);
+        mAddTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.add_transaction_dialog);
+
+                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
+                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+                dialog.show();
+
+
+            }
+
+        });
+
+
+
+        mSetLimits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.set_alert_dialog);
+
+                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
+                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+
+
+    }
+
 
 }

@@ -21,7 +21,7 @@ import static edu.csuci.myci.cashflow.GraphViewFragment.isInFront;
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
-    public CustomOnItemSelectedListener(Context context){
+        public CustomOnItemSelectedListener(Context context){
         this.context=context;
     }
 

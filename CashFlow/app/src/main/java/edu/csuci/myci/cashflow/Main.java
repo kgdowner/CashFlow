@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 /**
  * Created by viktoriya on 3/26/18.
@@ -15,11 +16,16 @@ import android.widget.Button;
 public class Main extends AppCompatActivity {
     private Button mListViewButton;
     private Button mGraphViewButton;
+    private Spinner mMainMenuSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        //mGraphViewSpinner = (Spinner)this.getView().findViewById(R.id.graph_view_spinner);
+        mMainMenuSpinner = (Spinner)findViewById(R.id.menu_spinner);
+        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
 
         mListViewButton=(Button)findViewById(R.id.list_view_button);
         mGraphViewButton=(Button)findViewById(R.id.graph_view_spinner);
