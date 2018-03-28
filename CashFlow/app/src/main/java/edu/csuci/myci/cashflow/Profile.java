@@ -2,6 +2,7 @@ package edu.csuci.myci.cashflow;
 
 import android.content.Context;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -26,11 +27,11 @@ public class Profile {
     private Profile(Context context){
         mTransactions = new ArrayList<>();
         for(int i = 0; i<100; i++){
-            Transaction transaction = new Transaction();
-            transaction.setAmount(0.00);
-            String[] tempArray = {"category1","category2"};
-            transaction.setCategory(tempArray);//every other one
-            mTransactions.add(transaction);
+            //Transaction transaction = new Transaction(new BigDecimal(0.00), Set<Category> categories);
+            //transaction.setAmount(0.00);
+            //String[] tempArray = {"category1","category2"};
+            //transaction.setCategory(tempArray);//every other one
+            //mTransactions.add(transaction);
         }
     }
 

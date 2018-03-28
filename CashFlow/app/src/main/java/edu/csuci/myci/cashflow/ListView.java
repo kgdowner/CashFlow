@@ -70,9 +70,9 @@ public class ListView extends AppCompatActivity {
 
         public void bind(Transaction transaction){
             mTransaction = transaction;
-            mDateTextView.setText(mTransaction.getDate().toString());
-            mAmountTextView.setText(Double.toString(mTransaction.getAmount()));
-            mCategoryTextView.setText(mTransaction.getCategory()[0]);
+            mDateTextView.setText(mTransaction.getID().getDate().toString());
+            mAmountTextView.setText(mTransaction.getAmount().toString());
+            mCategoryTextView.setText(mTransaction.getCategories().toArray()[0].toString());
         }
     }
 

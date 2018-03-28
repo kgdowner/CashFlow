@@ -1,45 +1,60 @@
 package edu.csuci.myci.cashflow;
 
-import java.util.Date;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.Set;
 
-/**
- * Created by viktoriya on 3/12/18.
- */
+
+// A transaction of some negative or positive amount.
 
 public class Transaction {
-    private UUID mID;
-    private  Date mDate;
-    private double mAmount;
-    private String[] mCategory;
+    private BigDecimal amount;
+    private Set<Category> categories;
+    private TransactionID id;
 
-    public Transaction(){
-        mID = UUID.randomUUID();
-        mDate = new Date();
+    // basic initializer with a set amount & categories (categories can be null)
+    public Transaction(BigDecimal amount, Set<Category> categories) {
+        // set the amount
+        setAmount(amount);
 
+        // set the categories
+        setCategories(categories);
+
+        // create the transaction ID
+        this.id = new TransactionID();
     }
 
-    public UUID getID() {
-        return mID;
+    // accessors
+    public BigDecimal getAmount() {
+        return this.amount;
     }
 
-    public Date getDate() {
-        return mDate;
+    public Set<Category> getCategories() {
+        return this.categories;
     }
 
-    public double getAmount() {
-        return mAmount;
+    public TransactionID getID() {
+        return this.id;
     }
 
-    public void setAmount(double amount) {
-        mAmount = amount;
+    // mutators
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
-    public String[] getCategory() {
-        return mCategory;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 
-    public void setCategory(String[] category) {
-        mCategory = category;
+    public void setID(TransactionID id) {
+        this.id = id;
+    }
+
+    // additional methods
+    public void addCategory(Category c) {
+        this.categories.add(c);
+    }
+
+    public void removeCateogry(Category c) {
+        this.categories.remove(c);
     }
 }
