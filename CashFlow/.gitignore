@@ -6,3 +6,6 @@
 /build
 /captures
 .externalNativeBuild
+.idea/misc.xml
+CashFlow.iml
+app/app.iml
