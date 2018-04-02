@@ -52,10 +52,14 @@ public class ListViewFragment extends Fragment {
         mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
         mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
+        mAddTransaction = (Button)v.findViewById(R.id.add_transaction_button);
+        mRemoveTransaction = (Button)v.findViewById(R.id.remove_transaction_button);
+        mSetLimits = (Button)v.findViewById(R.id.set_allert_button);
 
 
-//        addListenerOnSpinnerItemSelection();
-//        addListenerOnDialogButton();
+
+
+        addListenerOnDialogButton();
 
         return v;
     }
@@ -119,27 +123,15 @@ public class ListViewFragment extends Fragment {
 
     }
 
-    public void addListenerOnSpinnerItemSelection(){
-        //mCategorySpinner = (Spinner) getView().findViewById(R.id.sort_list_spinner);
-        //mGraphViewSpinner = (Spinner)this.getView().findViewById(R.id.graph_view_spinner);
-        //mMainMenuSpinner = (Spinner)this.getView().findViewById(R.id.menu_spinner);
-
-        mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-        //mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-        //mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-
-    }
 
     public void addListenerOnDialogButton(){
-        mAddTransaction = (Button)this.getView().findViewById(R.id.add_transaction_button);
-        mRemoveTransaction = (Button)this.getView().findViewById(R.id.remove_transaction_button);
+
         mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
             }
         }));
-        mSetLimits = (Button)this.getView().findViewById(R.id.set_allert_button);
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

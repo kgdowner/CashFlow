@@ -5,6 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -32,11 +36,23 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.graph_view_spinner:
                 switch (position) {
                     case 0: break;
-                    case 1: if(isInFront==true) {
+                    case 1:
+
+                        if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
                         break;
                         } else SwitchToGraphViewLine(); break;
+                        // **/
+                        /**
+                        Fragment fr = new GraphViewFragment();
+                        FragmentManager fm = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment_place, fr);
+                        fragmentTransaction.commit();
+                        break;
+                        **/
+
                     case 2: if(isInFront==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
@@ -169,6 +185,15 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         dialog1.show();
     }
     public void SwitchToGraphViewLine(){
+        GraphViewFragment fr = new GraphViewFragment();
+
+        //if(fr.getActivity() != null) {
+            FragmentManager fm;
+        fm = fr.getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_place, fr);
+            fragmentTransaction.commit();
+        //}
 
         //Intent intent = new Intent(context, GraphView.class);
         //context.startActivity(intent);

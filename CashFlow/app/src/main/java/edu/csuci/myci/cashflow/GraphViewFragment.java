@@ -1,5 +1,7 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,18 +16,19 @@ import java.util.UUID;
 
 public class GraphViewFragment extends Fragment {
     public static boolean isInFront;
+    public Context mActivity;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_line_graph_view, container, false);
 
         return v;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
     }
 
 
@@ -39,5 +42,10 @@ public class GraphViewFragment extends Fragment {
     public void onPause() {
         super.onPause();
         isInFront = false;
+    }
+    @Override
+    public void onAttach(Context activity) {
+        super.onAttach(activity);
+        mActivity = activity;
     }
 }
