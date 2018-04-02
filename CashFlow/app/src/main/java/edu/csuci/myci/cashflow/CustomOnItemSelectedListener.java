@@ -37,6 +37,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
+                        SwitchToGraphViewLine();
 
                         if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
@@ -188,8 +189,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         GraphViewFragment fr = new GraphViewFragment();
 
         //if(fr.getActivity() != null) {
-            FragmentManager fm;
-        fm = fr.getActivity().getSupportFragmentManager();
+        FragmentManager fm;
+
+        fm = fr.getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_place, fr);
             fragmentTransaction.commit();

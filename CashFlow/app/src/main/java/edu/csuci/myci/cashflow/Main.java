@@ -52,6 +52,8 @@ public class Main extends AppCompatActivity {
                                 fragmentTransaction.commit();
                             }
         });
+        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+
 
 
 
@@ -68,21 +70,7 @@ public class Main extends AppCompatActivity {
 
     }
 
-    public void selectFragment(View view){
-        Fragment fr;
 
-        if(view == findViewById(R.id.list_view_button)){
-            fr = new ListViewFragment();
-        }
-        else {
-            fr = new GraphViewFragment();
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
-        fragmentTransaction.commit();
-
-    }
 
 
 
