@@ -37,13 +37,15 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        SwitchToGraphViewLine(context);
+                        //SwitchToGraphViewLine(context);
 
                         if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
                         break;
-                        } else SwitchToGraphViewLine(context); break;
+                        } else SwitchToGraphViewLine(context);
+                        parent.setSelection(0);
+                        break;
 
 
                     case 2: if(isInFront==true){
@@ -58,6 +60,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                             SwithGraphToBar();
 
                             break;}
+                        parent.setSelection(0);
+
                         break;
 
                     }
@@ -91,18 +95,22 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 Toast.makeText(parent.getContext(),
                         "You are attempting to sort by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+                parent.setSelection(0);
+
                 break;
             case R.id.select_category_spinner:
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view only : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.time_range_spinner:
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }
