@@ -37,29 +37,21 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        SwitchToGraphViewLine();
+                        SwitchToGraphViewLine(context);
 
                         if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
                         break;
-                        } else SwitchToGraphViewLine(); break;
-                        // **/
-                        /**
-                        Fragment fr = new GraphViewFragment();
-                        FragmentManager fm = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                        fragmentTransaction.replace(R.id.fragment_place, fr);
-                        fragmentTransaction.commit();
-                        break;
-                        **/
+                        } else SwitchToGraphViewLine(context); break;
+
 
                     case 2: if(isInFront==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
                         break;
                     } else {
-                        SwitchToGraphViewLine();
+                        SwitchToGraphViewLine(context);
 
                         //while(!isInFront){}
                         if(isInFront==true){
@@ -185,20 +177,20 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
         dialog1.show();
     }
-    public void SwitchToGraphViewLine(){
-        GraphViewFragment fr = new GraphViewFragment();
+    public void SwitchToGraphViewLine(Context context){
+        Fragment fr = new GraphViewFragment();
 
-        //if(fr.getActivity() != null) {
+
         FragmentManager fm;
 
-        fm = fr.getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_place, fr);
-            fragmentTransaction.commit();
-        //}
 
-        //Intent intent = new Intent(context, GraphView.class);
-        //context.startActivity(intent);
+        fm = ((FragmentActivity)context).getSupportFragmentManager();
+
+
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_place, fr);
+        fragmentTransaction.commit();
+
 
     }
     public void SwithGraphToBar(){

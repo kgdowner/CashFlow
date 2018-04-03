@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity {
                                 Fragment fr = new ListViewFragment();
 
                                 FragmentManager fm = getSupportFragmentManager();
-                                fm.popBackStack();
+                                //fm.popBackStack();
                                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
                                 fragmentTransaction.replace(R.id.fragment_place, fr).addToBackStack("tag");
