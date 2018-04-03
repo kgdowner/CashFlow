@@ -44,6 +44,7 @@ public class Main extends AppCompatActivity {
 
                                 Fragment fr = new ListViewFragment();
 
+
                                 FragmentManager fm = getSupportFragmentManager();
                                 //fm.popBackStack();
                                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
