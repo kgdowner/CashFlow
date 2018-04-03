@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -77,9 +78,11 @@ public class ListViewFragment extends Fragment {
         }
 
         public void bind(Transaction transaction) {
+            SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
+
             mTransaction = transaction;
-            mDateTextView.setText(mTransaction.getDate().toString());
-            mAmountTextView.setText(Double.toString(mTransaction.getAmount()));
+            mDateTextView.setText(df.format(mTransaction.getDate()));
+            mAmountTextView.setText("$"+Double.toString(mTransaction.getAmount()));
             mCategoryTextView.setText(mTransaction.getCategory()[0]);
         }
     }
