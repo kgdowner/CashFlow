@@ -37,13 +37,10 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        //SwitchToGraphViewLine(context);
-
                         if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
-                        break;
-                        } else SwitchToGraphViewLine(context);
+                        } else {SwitchToGraphViewLine(context, 1);}
                         parent.setSelection(0);
                         break;
 
@@ -51,20 +48,13 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 2: if(isInFront==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
-                        break;
                     } else {
-                        SwitchToGraphViewLine(context);
+                        SwitchToGraphViewLine(context, 2);
 
-                        //while(!isInFront){}
-                        if(isInFront==true){
-                            SwithGraphToBar();
-
-                            break;}
+                    }
                         parent.setSelection(0);
 
                         break;
-
-                    }
                     default:
                         Toast.makeText(parent.getContext(),
                             "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
@@ -185,8 +175,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
         dialog1.show();
     }
-    public void SwitchToGraphViewLine(Context context){
-        Fragment fr = new GraphViewFragment();
+    public void SwitchToGraphViewLine(Context context, int graphType){
+        Fragment fr = GraphViewFragment.newInstance(graphType);
 
 
         FragmentManager fm;
