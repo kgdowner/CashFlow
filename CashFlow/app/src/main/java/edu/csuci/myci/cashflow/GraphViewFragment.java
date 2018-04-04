@@ -1,6 +1,5 @@
 package edu.csuci.myci.cashflow;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import java.util.UUID;
-
 /**
  * Created by viktoriya on 3/26/18.
  */
@@ -20,7 +17,7 @@ public class GraphViewFragment extends Fragment {
     private static final String ARG_GRAPHTYPE = "type";
 
 
-    public static boolean isInFront;
+    public static boolean GraphisInFront;
     public Context mActivity;
 
     private Spinner mTimeRangeSpinner;
@@ -71,13 +68,13 @@ public class GraphViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        isInFront = true;
+        GraphisInFront = true;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        isInFront = false;
+        GraphisInFront = false;
     }
     @Override
     public void onAttach(Context activity) {

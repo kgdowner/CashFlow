@@ -3,8 +3,6 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,9 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import static edu.csuci.myci.cashflow.GraphViewFragment.isInFront;
+import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
 
 /**
  * Created by viktoriya on 3/13/18.
@@ -37,7 +33,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        if(isInFront==true) {
+                        if(GraphisInFront ==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
                         } else {SwitchToGraphViewLine(context, 1);}
@@ -45,7 +41,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
 
 
-                    case 2: if(isInFront==true){
+                    case 2: if(GraphisInFront ==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
                     } else {
@@ -68,8 +64,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 1: ManageProfilesCustomDialog();break;
                     case 2: ManageCategoriesCustomDialog();break;
                     case 3:
-                        if(isInFront==true)break;
-                        //need to insert if else statement (in which activity) if i want to reuse button
+                        if(GraphisInFront ==true)break;
                         AddTransactionCustomDialog(); break;
                     case 5: LimitsCustomDialog(); break;
                     case 6: System.exit(0);break;
@@ -152,8 +147,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             }
         });
 
-
-
         dialog2.show();
 
     }
@@ -169,32 +162,18 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             }
         });
 
-
-
-
-
         dialog1.show();
     }
     public void SwitchToGraphViewLine(Context context, int graphType){
         Fragment fr = GraphViewFragment.newInstance(graphType);
-
-
         FragmentManager fm;
 
-
         fm = ((FragmentActivity)context).getSupportFragmentManager();
-
-
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_place, fr);
         fragmentTransaction.commit();
 
 
     }
-    public void SwithGraphToBar(){
-        ImageView image = new ImageView(context);
-        image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-        image.setImageResource(R.drawable.graph_view_bar);
 
-    }
 }
