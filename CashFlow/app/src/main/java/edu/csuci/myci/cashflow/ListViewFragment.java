@@ -1,6 +1,5 @@
 package edu.csuci.myci.cashflow;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -48,7 +45,7 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_list_view, container, false);
+        View v = inflater.inflate(R.layout.fragment_list_view, container, false);
 
         mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

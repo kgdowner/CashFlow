@@ -39,7 +39,7 @@ public class GraphViewFragment extends Fragment {
         int graphType = (int) getArguments().getSerializable("type");
 
 
-        View v = inflater.inflate(R.layout.activity_line_graph_view, container, false);
+        View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         if(graphType==1){

@@ -21,7 +21,7 @@ public class LoaderFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.loader, container, false);
+        View v = inflater.inflate(R.layout.fragment_loader, container, false);
 
         mManageCategories = (Button)v.findViewById(R.id.manage_category_button);
         mManageProfiles = (Button)v.findViewById(R.id.manage_profile_button);

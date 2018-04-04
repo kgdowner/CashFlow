@@ -106,7 +106,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void LimitsCustomDialog(){
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.set_alert_dialog);
+        dialog.setContentView(R.layout.dialog_set_alert);
 
         Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
         mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +121,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     public void AddTransactionCustomDialog(){
 
         final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.add_transaction_dialog);
+        dialog.setContentView(R.layout.dialog_add_transaction);
 
         Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
         mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +137,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void ManageCategoriesCustomDialog(){
         final Dialog dialog2 = new Dialog(context);
-        dialog2.setContentView(R.layout.category_management_dialog);
+        dialog2.setContentView(R.layout.dialog_category_management);
 
         Button mDialogCancelButton = (Button) dialog2.findViewById(R.id.manage_categroy_cancel_button);
         mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +152,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void ManageProfilesCustomDialog(){
         final Dialog dialog1 = new Dialog(context);
-        dialog1.setContentView(R.layout.profile_management_dialog);
+        dialog1.setContentView(R.layout.dialog_profile_management);
 
         Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
         mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
