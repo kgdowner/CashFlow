@@ -1,6 +1,7 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ public class ListViewFragment extends Fragment {
 
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_list_view, container, false);
@@ -55,27 +57,23 @@ public class ListViewFragment extends Fragment {
         mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
         mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
-        mAddTransaction = (Button)v.findViewById(R.id.add_transaction_button);
-        mRemoveTransaction = (Button)v.findViewById(R.id.remove_transaction_button);
-        mSetLimits = (Button)v.findViewById(R.id.set_allert_button);
+        mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
+        mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
+        mSetLimits = (Button) v.findViewById(R.id.set_allert_button);
 
-
-
-
-        addListenerOnDialogButton();
+        addListenerOnDialogButton(getActivity());
 
         return v;
     }
 
 
-    private class TransactionHolder extends RecyclerView.ViewHolder  {
+    private class TransactionHolder extends RecyclerView.ViewHolder {
         private Transaction mTransaction;
 
         public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_transaction, parent, false));
 
-           // mRemoveTransaction.setOnClickListener(this);
-
+            // mRemoveTransaction.setOnClickListener(this);
 
 
             mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
@@ -97,13 +95,10 @@ public class ListViewFragment extends Fragment {
         }
 
 
-
     }
 
-    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> implements View.OnClickListener{
+    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> implements View.OnClickListener {
         private List<Transaction> mTransactions;
-
-
 
 
         public TransactionAdapter(List<Transaction> transactions) {
@@ -123,7 +118,6 @@ public class ListViewFragment extends Fragment {
             holder.bind(transaction);
 
 
-
         }
 
         @Override
@@ -133,8 +127,8 @@ public class ListViewFragment extends Fragment {
         }
 
         public void delete(int position) { //removes the row
-                mTransactions.remove(position);
-                notifyItemRemoved(position);
+            mTransactions.remove(position);
+            notifyItemRemoved(position);
         }
 
 
@@ -161,55 +155,28 @@ public class ListViewFragment extends Fragment {
     }
 
 
-    public void addListenerOnDialogButton(){
-
+    public void addListenerOnDialogButton(final Context context) {
 
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.add_transaction_dialog);
-
-                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
-                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-
-
-                dialog.show();
-
-
+                new CustomOnItemSelectedListener(context).AddTransactionCustomDialog();
             }
-
         });
 
+        mSetLimits.setOnClickListener(new View.OnClickListener(){
 
-
-        mSetLimits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(getActivity());
-                dialog.setContentView(R.layout.set_alert_dialog);
-
-                Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
-                mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
+                new CustomOnItemSelectedListener(context).LimitsCustomDialog();
             }
         });
+    }
+
 
 
 
     }
 
 
-}
+

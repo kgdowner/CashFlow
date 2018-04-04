@@ -42,21 +42,6 @@ public class Main extends AppCompatActivity {
                             }
         });
         mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
-
-
-
-
-
-
-
-        //mGraphViewButton=(Button)findViewById(R.id.graph_view_spinner);
-
-
-
-
-
-
-
     }
 
     private void fragBuilder(Fragment fr) {
