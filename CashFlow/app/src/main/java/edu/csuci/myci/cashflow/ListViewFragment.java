@@ -36,6 +36,8 @@ public class ListViewFragment extends Fragment {
 
     private Spinner mCategorySpinner;
 
+    private static int sPosition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +68,21 @@ public class ListViewFragment extends Fragment {
     }
 
 
-    private class TransactionHolder extends RecyclerView.ViewHolder {
+    private class TransactionHolder extends RecyclerView.ViewHolder  {
         private Transaction mTransaction;
 
         public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_transaction, parent, false));
 
+           // mRemoveTransaction.setOnClickListener(this);
+
+
+
             mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
             mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
             mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
+
+
         }
 
         public void bind(Transaction transaction) {
@@ -83,12 +91,25 @@ public class ListViewFragment extends Fragment {
             mTransaction = transaction;
             mDateTextView.setText(df.format(mTransaction.getDate()));
             mAmountTextView.setText("$"+Double.toString(mTransaction.getAmount()));
-            mCategoryTextView.setText(mTransaction.getCategory()[0]);
+
+            String text = "";
+            for(int i = 0; i < mTransaction.getCategory().length; i++) {
+                text = text + mTransaction.getCategory()[i]+", ";
+            }
+            mCategoryTextView.setText(text);
+
+
         }
+
+
+
     }
 
-        private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> {
+    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> implements View.OnClickListener{
         private List<Transaction> mTransactions;
+
+
+
 
         public TransactionAdapter(List<Transaction> transactions) {
             mTransactions = transactions;
@@ -102,9 +123,11 @@ public class ListViewFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(TransactionHolder holder, int position) {
+        public void onBindViewHolder(TransactionHolder holder, final int position) {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
+
+
 
         }
 
@@ -114,6 +137,22 @@ public class ListViewFragment extends Fragment {
 
         }
 
+        public void delete(int position) { //removes the row
+                mTransactions.remove(position);
+                notifyItemRemoved(position);
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            mRemoveTransaction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    delete(sPosition);
+
+                }
+            });
+        }
     }
 
 
@@ -129,12 +168,7 @@ public class ListViewFragment extends Fragment {
 
     public void addListenerOnDialogButton(){
 
-        mRemoveTransaction.setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),"You clicked remove transactions",Toast.LENGTH_LONG).show();
-            }
-        }));
+
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

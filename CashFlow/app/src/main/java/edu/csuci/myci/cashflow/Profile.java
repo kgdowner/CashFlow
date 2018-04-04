@@ -27,7 +27,7 @@ public class Profile {
         mTransactions = new ArrayList<>();
         for(int i = 0; i<100; i++){
             Transaction transaction = new Transaction();
-            transaction.setAmount(0.00);
+            transaction.setAmount(0.00+i);
             String[] tempArray = {"category1","category2"};
             transaction.setCategory(tempArray);//every other one
             mTransactions.add(transaction);
@@ -45,5 +45,8 @@ public class Profile {
             }
         }
         return null;
+    }
+    public void removeTransaction(Transaction t){
+        mTransactions.remove(t);
     }
 }

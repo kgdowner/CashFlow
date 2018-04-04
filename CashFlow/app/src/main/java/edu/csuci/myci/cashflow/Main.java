@@ -32,25 +32,13 @@ public class Main extends AppCompatActivity {
         mListViewButton=(Button)findViewById(R.id.list_view_button);
 
         Fragment fr = new LoaderFragment();
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
-        fragmentTransaction.commit();
+        fragBuilder(fr);
 
         mListViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                                Fragment fr = new ListViewFragment();
-
-
-                                FragmentManager fm = getSupportFragmentManager();
-                                //fm.popBackStack();
-                                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-                                fragmentTransaction.replace(R.id.fragment_place, fr).addToBackStack("tag");
-                                fragmentTransaction.commit();
+                Fragment fr = new ListViewFragment();
+                fragBuilder(fr);
                             }
         });
         mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
@@ -71,9 +59,12 @@ public class Main extends AppCompatActivity {
 
     }
 
-
-
-
+    private void fragBuilder(Fragment fr) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_place, fr);
+        fragmentTransaction.commit();
+    }
 
 
 }
