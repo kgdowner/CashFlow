@@ -16,8 +16,8 @@ public class Transaction {
         // set the amount
         setAmount(amount);
 
-        // set the categories
-        setCategories(categories);
+        // set the categories (if they were passed)
+        if(categories != null) {setCategories(categories);}
 
         // create the transaction ID
         this.id = new TransactionID();

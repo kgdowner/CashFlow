@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,7 +17,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import static edu.csuci.myci.cashflow.GraphView.isInFront;
+import static edu.csuci.myci.cashflow.GraphViewFragment.isInFront;
 
 /**
  * Created by viktoriya on 3/13/18.
@@ -20,7 +25,7 @@ import static edu.csuci.myci.cashflow.GraphView.isInFront;
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
-    public CustomOnItemSelectedListener(Context context){
+        public CustomOnItemSelectedListener(Context context){
         this.context=context;
     }
 
@@ -31,21 +36,32 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.graph_view_spinner:
                 switch (position) {
                     case 0: break;
-                    case 1: if(isInFront==true) {
+                    case 1:
+                        //SwitchToGraphViewLine(context);
+
+                        if(isInFront==true) {
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_line);
                         break;
-                        } else SwitchToGraphViewLine(); break;
+                        } else SwitchToGraphViewLine(context);
+                        parent.setSelection(0);
+                        break;
+
+
                     case 2: if(isInFront==true){
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
                         break;
                     } else {
-                        SwitchToGraphViewLine();
+                        SwitchToGraphViewLine(context);
+
+                        //while(!isInFront){}
                         if(isInFront==true){
-                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                            image.setImageResource(R.drawable.graph_view_bar);
+                            SwithGraphToBar();
+
                             break;}
+                        parent.setSelection(0);
+
                         break;
 
                     }
@@ -79,18 +95,22 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 Toast.makeText(parent.getContext(),
                         "You are attempting to sort by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+                parent.setSelection(0);
+
                 break;
             case R.id.select_category_spinner:
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view only : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.time_range_spinner:
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }
@@ -161,12 +181,30 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
 
+
+
         dialog1.show();
     }
-    public void SwitchToGraphViewLine(){
+    public void SwitchToGraphViewLine(Context context){
+        Fragment fr = new GraphViewFragment();
 
-        Intent intent = new Intent(context, GraphView.class);
-        context.startActivity(intent);
+
+        FragmentManager fm;
+
+
+        fm = ((FragmentActivity)context).getSupportFragmentManager();
+
+
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_place, fr);
+        fragmentTransaction.commit();
+
+
+    }
+    public void SwithGraphToBar(){
+        ImageView image = new ImageView(context);
+        image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+        image.setImageResource(R.drawable.graph_view_bar);
 
     }
 }

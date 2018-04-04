@@ -3,6 +3,8 @@ package edu.csuci.myci.cashflow;
 import android.content.Context;
 
 import java.math.BigDecimal;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,21 +19,25 @@ public class Profile {
 
     private List<Transaction> mTransactions;
 
-    public static Profile get(Context context){
-        if(sProfile == null){
+    public static Profile get(Context context) {
+        if(sProfile == null) {
             sProfile = new Profile(context);
         }
         return  sProfile;
 
     }
-    private Profile(Context context){
-        mTransactions = new ArrayList<>();
+    private Profile(Context context) {
+        this.mTransactions = new ArrayList<>();
         for(int i = 0; i<100; i++){
-            //Transaction transaction = new Transaction(new BigDecimal(0.00), Set<Category> categories);
-            //transaction.setAmount(0.00);
-            //String[] tempArray = {"category1","category2"};
-            //transaction.setCategory(tempArray);//every other one
-            //mTransactions.add(transaction);
+            // TODO: remove this & implement non-hardcoded list
+            Category tempCat = new Category("category"+i, i);
+            Set<Category> tempCats = new HashSet();
+            tempCats.add(tempCat);
+
+            Transaction transaction = new Transaction(new BigDecimal(0.00), tempCats);
+            transaction.setAmount(new BigDecimal(0.25 * i));
+
+            this.mTransactions.add(transaction);
         }
     }
 
@@ -41,10 +47,13 @@ public class Profile {
 
     public Transaction getTransactions(UUID id) {
         for(Transaction transaction : mTransactions){
-            if(transaction.getID().equals(id)){
+            if(transaction.getID().equals(id)) {
                 return transaction;
             }
         }
         return null;
+    }
+    public void removeTransaction(Transaction t){
+        mTransactions.remove(t);
     }
 }
