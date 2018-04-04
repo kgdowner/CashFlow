@@ -97,7 +97,7 @@ public class ListViewFragment extends Fragment {
 
     }
 
-    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder> implements View.OnClickListener {
+    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder>{
         private List<Transaction> mTransactions;
 
 
@@ -126,22 +126,14 @@ public class ListViewFragment extends Fragment {
 
         }
 
+        //method stub for deleting items from list.
         public void delete(int position) { //removes the row
             mTransactions.remove(position);
             notifyItemRemoved(position);
         }
 
 
-        @Override
-        public void onClick(View v) {
-            mRemoveTransaction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    delete(sPosition);
 
-                }
-            });
-        }
     }
 
 
