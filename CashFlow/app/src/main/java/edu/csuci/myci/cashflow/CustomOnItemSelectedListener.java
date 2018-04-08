@@ -3,6 +3,7 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
+import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;  //TODO: security leak, need to sew up
+
 
 /**
  * Created by viktoriya on 3/13/18.
@@ -66,6 +69,10 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 3:
                         if(GraphisInFront ==true)break;
                         AddTransactionCustomDialog(); break;
+                    case 4:if(GraphisInFront ==true)break;
+                        sDeleteFlag = true;
+                        Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
+                        break;
                     case 5: LimitsCustomDialog(); break;
                     case 6: System.exit(0);break;
                     default:
@@ -120,20 +127,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void AddTransactionCustomDialog(){
 
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_add_transaction);
-
-        Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_transaction_cancel);
-        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-
-
-        dialog.show();
+        DialogFragment df = new CustomDialogFragment.AddTransactionFragment();
+        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        df.show(ft,"Add Transaction Fragment");
     }
     public void ManageCategoriesCustomDialog(){
         final Dialog dialog2 = new Dialog(context);

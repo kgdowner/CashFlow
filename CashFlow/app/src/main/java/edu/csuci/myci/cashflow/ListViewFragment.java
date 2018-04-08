@@ -2,7 +2,9 @@ package edu.csuci.myci.cashflow;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,7 +38,7 @@ public class ListViewFragment extends Fragment {
     private Spinner mCategorySpinner;
 
     private static int sPosition;
-    private static boolean sDeleteFlag = false;
+    public static boolean sDeleteFlag = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -175,6 +177,7 @@ public class ListViewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 new CustomOnItemSelectedListener(context).AddTransactionCustomDialog();
+
             }
         });
 
