@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class ListViewFragment extends Fragment {
     private Spinner mCategorySpinner;
 
     private static int sPosition;
+    private static boolean sDeleteFlag = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,41 +62,14 @@ public class ListViewFragment extends Fragment {
 
         addListenerOnDialogButton(getActivity());
 
+
+
         return v;
     }
 
 
-    private class TransactionHolder extends RecyclerView.ViewHolder {
-        private Transaction mTransaction;
 
-        public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_transaction, parent, false));
-
-            // mRemoveTransaction.setOnClickListener(this);
-
-
-            mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
-            mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
-            mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
-
-
-        }
-
-        public void bind(Transaction transaction) {
-            // TODO: if you want this, redo this section; only fixed merge conflict
-            //SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
-
-            mTransaction = transaction;
-
-            mDateTextView.setText(mTransaction.getID().getDate().toString());
-            mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-            mCategoryTextView.setText(mTransaction.getCategories().toArray()[0].toString());
-        }
-
-
-    }
-
-    private class TransactionAdapter extends RecyclerView.Adapter<TransactionHolder>{
+    private class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionHolder>{
         private List<Transaction> mTransactions;
 
 
@@ -106,13 +81,14 @@ public class ListViewFragment extends Fragment {
         public TransactionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-            return new TransactionHolder(layoutInflater, parent);
+            return new TransactionHolder(layoutInflater.from(parent.getContext()), parent);
         }
 
         @Override
         public void onBindViewHolder(TransactionHolder holder, final int position) {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
+
 
 
         }
@@ -127,8 +103,56 @@ public class ListViewFragment extends Fragment {
         public void delete(int position) { //removes the row
             mTransactions.remove(position);
             notifyItemRemoved(position);
+
         }
 
+        public class TransactionHolder extends RecyclerView.ViewHolder {
+            private Transaction mTransaction;
+
+
+
+            public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
+                super(inflater.inflate(R.layout.list_item_transaction, parent, false));
+
+                // mRemoveTransaction.setOnClickListener(this);
+
+
+                mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
+                mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
+                mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(sDeleteFlag == true) {
+                            //TODO: are you sure messsage and reset flag to false on "not"
+                            Toast.makeText(getActivity(), "you are deleting item " + (mTransaction.getID()).toString(), Toast.LENGTH_LONG).show();
+                            sPosition = getAdapterPosition();
+                            mAdapter.delete(sPosition);
+                            sDeleteFlag = false;
+                        }
+                    }
+                });
+
+
+            }
+
+            public void bind(Transaction transaction) {
+                // TODO: if you want this, redo this section; only fixed merge conflict
+                //SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
+
+                mTransaction = transaction;
+
+                mDateTextView.setText(mTransaction.getID().getDate().toString());
+                mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
+                mCategoryTextView.setText(mTransaction.getCategories().toArray()[0].toString());
+            }
+
+
+
+
+
+        }
 
 
     }
@@ -160,6 +184,15 @@ public class ListViewFragment extends Fragment {
                 new CustomOnItemSelectedListener(context).LimitsCustomDialog();
             }
         });
+
+        mRemoveTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sDeleteFlag = true;
+                Toast.makeText(getActivity(), "Please make a selection", Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
