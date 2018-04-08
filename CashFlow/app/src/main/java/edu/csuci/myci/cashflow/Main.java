@@ -31,9 +31,10 @@ public class Main extends AppCompatActivity {
 
         mListViewButton=(Button)findViewById(R.id.list_view_button);
 
-        Fragment fr = new LoaderFragment();
-        fragBuilder(fr);
-
+        if(savedInstanceState==null) {
+            Fragment fr = new LoaderFragment();
+            fragBuilder(fr);
+        }
         mListViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
