@@ -48,9 +48,13 @@ public class Main extends AppCompatActivity {
     private void fragBuilder(Fragment fr) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
+        fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
         fragmentTransaction.commit();
     }
+
+
+
+
 
 
 }

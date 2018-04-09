@@ -1,12 +1,13 @@
 package edu.csuci.myci.cashflow;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
 
 // A transaction of some negative or positive amount.
 
-public class Transaction {
+public class Transaction implements Serializable {
     private BigDecimal amount;
     private Set<Category> categories;
     private TransactionID id;

@@ -28,17 +28,17 @@ public class Profile {
     }
     private Profile(Context context) {
         this.mTransactions = new ArrayList<>();
-        for(int i = 0; i<100; i++){
-            // TODO: remove this & implement non-hardcoded list
-            Category tempCat = new Category("category"+i, i);
-            Set<Category> tempCats = new HashSet();
-            tempCats.add(tempCat);
-
-            Transaction transaction = new Transaction(new BigDecimal(0.00), tempCats);
-            transaction.setAmount(new BigDecimal(0.25 * i));
-
-            this.mTransactions.add(transaction);
-        }
+//        for(int i = 0; i<100; i++){
+//            // TODO: remove this & implement non-hardcoded list
+//            Category tempCat = new Category("category"+i, i);
+//            Set<Category> tempCats = new HashSet();
+//            tempCats.add(tempCat);
+//
+//            Transaction transaction = new Transaction(new BigDecimal(0.00), tempCats);
+//            transaction.setAmount(new BigDecimal(0.25 * i));
+//
+//            this.mTransactions.add(transaction);
+//        }
     }
 
     public List<Transaction> getTransactions() {
@@ -56,4 +56,5 @@ public class Profile {
     public void removeTransaction(Transaction t){
         mTransactions.remove(t);
     }
+    public void addTransaction(Transaction t){mTransactions.add(t);}
 }

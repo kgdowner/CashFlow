@@ -1,5 +1,7 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -23,11 +27,15 @@ import java.util.Set;
 
     public  class AddTransactionFragment extends DialogFragment{
 
+        public static final String ADD_TRANSACTION = "edu.csuci.myci.cashflow.transaction";
+
         private static EditText sEditAmount;
         private Spinner mCategorySpinner;
+        private Category newCategory;
 
 
-        @Override
+
+    @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
@@ -41,14 +49,13 @@ import java.util.Set;
 
             sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
-            Category newCategory;
 
 
 
             mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    //newCategory = new Category(String.valueOf(mCategorySpinner.getSelectedItem()),position);
+                    if(position!=0) {newCategory = new Category(String.valueOf(mCategorySpinner.getSelectedItem()),position);}
                 }
 
                 @Override
@@ -65,9 +72,17 @@ import java.util.Set;
 
                 @Override
                 public void onClick(View view) {
-                   // Transaction resultTansaction = new Transaction(sEditAmount, newCategory);
-                    //define new transaction
-                    //set transaction values to amount, category, id
+                    String amount = sEditAmount.getText().toString();
+                    BigDecimal amount2 = new BigDecimal(amount);
+
+                    Set<Category> tempCats = new HashSet();
+                    tempCats.add(newCategory);
+
+                    Transaction resultTransaction = new Transaction(amount2,tempCats);
+                    sendResult(Activity.RESULT_OK, resultTransaction);
+                    dismiss();
+
+
                     //pass transaction to fragment... list... enter it into profile array...
                 }
             });
@@ -83,7 +98,15 @@ import java.util.Set;
 
             return view;
         }
+    private void sendResult(int resultCode, Transaction transaction){
+        if(getTargetFragment() == null){return;}
+        Intent intent = new Intent();
+        intent.putExtra(ADD_TRANSACTION, transaction);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
+
     }
+}
 
 
 

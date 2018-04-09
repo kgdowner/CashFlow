@@ -1,6 +1,8 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,9 @@ import java.util.List;
  */
 
 public class ListViewFragment extends Fragment {
+
+    private static final int REQUEST_TRANSACTION = 0;
+
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
 
@@ -133,7 +138,17 @@ public class ListViewFragment extends Fragment {
                             Toast.makeText(getActivity(), "you are deleting item " + (mTransaction.getID()).toString(), Toast.LENGTH_LONG).show();
                             sPosition = getAdapterPosition();
                             mAdapter.delete(sPosition);
+
+                            Profile myProfile = Profile.get(getActivity());
+                            myProfile.removeTransaction(mTransaction);
+
                             sDeleteFlag = false;
+
+                            // press trash can, highlight trashcan, set deleteFlag to true
+                            //select more than 1 item...
+                            //press trash can again
+                            //are you sure dialog
+                            //on ok, delete shit.
                         }
                     }
                 });
@@ -204,6 +219,16 @@ public class ListViewFragment extends Fragment {
     }
     public void deleteFlagSetter(boolean deleteFlagValue){
         sDeleteFlag = deleteFlagValue;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode != Activity.RESULT_OK){return;}
+        if(requestCode == REQUEST_TRANSACTION){
+            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            Profile.get(getActivity()).addTransaction(date);
+
+
+        }
     }
 
 

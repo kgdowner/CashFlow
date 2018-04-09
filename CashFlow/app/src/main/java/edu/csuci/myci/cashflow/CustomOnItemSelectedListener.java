@@ -3,6 +3,7 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Date;
+import java.util.List;
+
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
 import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;  //TODO: security leak, need to sew up
 
@@ -24,7 +28,10 @@ import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;  //TODO: sec
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
-        public CustomOnItemSelectedListener(Context context){
+    private static final int REQUEST_TRANSACTION = 0;
+
+
+    public CustomOnItemSelectedListener(Context context){
         this.context=context;
     }
 
@@ -130,6 +137,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
         DialogFragment df = new AddTransactionFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add Transaction Fragment");
     }
     public void ManageCategoriesCustomDialog(){
@@ -172,5 +180,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
     }
+
+
 
 }
