@@ -30,6 +30,7 @@ import java.util.Set;
         public static final String ADD_TRANSACTION = "edu.csuci.myci.cashflow.transaction";
 
         private static EditText sEditAmount;
+        private static EditText sEditName;
         private Spinner mCategorySpinner;
         private Category newCategory;
 
@@ -48,6 +49,7 @@ import java.util.Set;
 
 
             sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
+            sEditName = (EditText)view.findViewById(R.id.transaction_name);
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
 
 
@@ -72,13 +74,15 @@ import java.util.Set;
 
                 @Override
                 public void onClick(View view) {
+                    String name = sEditName.getText().toString();
+
                     String amount = sEditAmount.getText().toString();
                     BigDecimal amount2 = new BigDecimal(amount);
 
                     Set<Category> tempCats = new HashSet();
                     tempCats.add(newCategory);
 
-                    Transaction resultTransaction = new Transaction(amount2,tempCats);
+                    Transaction resultTransaction = new Transaction(amount2,tempCats, name);
                     sendResult(Activity.RESULT_OK, resultTransaction);
                     dismiss();
 

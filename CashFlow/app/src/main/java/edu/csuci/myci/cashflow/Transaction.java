@@ -12,8 +12,10 @@ public class Transaction implements Serializable {
     private Set<Category> categories;
     private TransactionID id;
 
+    private String name;
+
     // basic initializer with a set amount & categories (categories can be null)
-    public Transaction(BigDecimal amount, Set<Category> categories) {
+    public Transaction(BigDecimal amount, Set<Category> categories, String name) {
         // set the amount
         setAmount(amount);
 
@@ -22,6 +24,9 @@ public class Transaction implements Serializable {
 
         // create the transaction ID
         this.id = new TransactionID();
+
+        //set name
+        setName(name);
     }
 
     // accessors
@@ -35,6 +40,14 @@ public class Transaction implements Serializable {
 
     public TransactionID getID() {
         return this.id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     // mutators

@@ -31,8 +31,15 @@
             android:hint="$0.00" />
 
 
+
+
     </LinearLayout>
     <!---Select Categories drop down list-->
+    <EditText
+        android:id="@+id/transaction_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Enter transaction Name" />
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"

@@ -33,11 +33,11 @@ public class ListViewFragment extends Fragment {
     private TextView mDateTextView;
     private TextView mAmountTextView;
     private TextView mCategoryTextView;
+    private TextView mNameTextView;
 
     private Button mAddTransaction;
     private Button mRemoveTransaction;
     private Button mSetLimits;
-    private Button mListViewButton;
 
 
     private Spinner mCategorySpinner;
@@ -129,6 +129,7 @@ public class ListViewFragment extends Fragment {
                 mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
                 mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
                 mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
+                mNameTextView = (TextView)itemView.findViewById(R.id.transaction_name);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -165,6 +166,7 @@ public class ListViewFragment extends Fragment {
                 mDateTextView.setText(mTransaction.getID().getDate().toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
                 mCategoryTextView.setText(mTransaction.getCategories().toArray()[0].toString());
+                mNameTextView.setText(mTransaction.getName().toString());
             }
 
 
@@ -178,8 +180,8 @@ public class ListViewFragment extends Fragment {
 
 
     private void updateUI() {
-        Profile crimeLab = Profile.get(getActivity());
-        List<Transaction> transactions = crimeLab.getTransactions();
+        Profile currentProfile = Profile.get(getActivity());
+        List<Transaction> transactions = currentProfile.getTransactions();
 
         mAdapter = new TransactionAdapter(transactions);
         mTransactionRecyclerView.setAdapter(mAdapter);
@@ -214,12 +216,7 @@ public class ListViewFragment extends Fragment {
         });
 
     }
-    public boolean deleteFlagGetter(){
-        return sDeleteFlag;
-    }
-    public void deleteFlagSetter(boolean deleteFlagValue){
-        sDeleteFlag = deleteFlagValue;
-    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode != Activity.RESULT_OK){return;}
@@ -234,7 +231,7 @@ public class ListViewFragment extends Fragment {
 
 
 
-    }
+}
 
 
 
