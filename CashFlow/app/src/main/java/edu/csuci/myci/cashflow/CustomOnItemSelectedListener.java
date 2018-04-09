@@ -69,8 +69,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 3:
                         if(GraphisInFront ==true)break;
                         AddTransactionCustomDialog(); break;
+
                     case 4:if(GraphisInFront ==true)break;
-                        sDeleteFlag = true;
+                        ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         break;
                     case 5: LimitsCustomDialog(); break;
@@ -127,7 +128,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void AddTransactionCustomDialog(){
 
-        DialogFragment df = new CustomDialogFragment.AddTransactionFragment();
+        DialogFragment df = new AddTransactionFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.show(ft,"Add Transaction Fragment");
     }

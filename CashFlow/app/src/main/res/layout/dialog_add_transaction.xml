@@ -23,10 +23,12 @@
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:text="Amount"/>
+
         <EditText
+            android:id="@+id/amountEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="$0.00"/>
+            android:hint="$0.00" />
 
 
     </LinearLayout>

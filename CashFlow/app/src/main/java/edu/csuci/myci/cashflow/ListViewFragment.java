@@ -109,6 +109,7 @@ public class ListViewFragment extends Fragment {
 
         }
 
+
         public class TransactionHolder extends RecyclerView.ViewHolder {
             private Transaction mTransaction;
 
@@ -197,6 +198,12 @@ public class ListViewFragment extends Fragment {
             }
         });
 
+    }
+    public boolean deleteFlagGetter(){
+        return sDeleteFlag;
+    }
+    public void deleteFlagSetter(boolean deleteFlagValue){
+        sDeleteFlag = deleteFlagValue;
     }
 
 
