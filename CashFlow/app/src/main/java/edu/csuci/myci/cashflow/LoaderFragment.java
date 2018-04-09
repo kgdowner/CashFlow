@@ -1,6 +1,8 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class LoaderFragment extends Fragment {
+    private static final int REQUEST_TRANSACTION = 0;
+
     private Button mManageProfiles;
     private Button mManageCategories;
     private Button mAddTransaction;
@@ -57,5 +61,15 @@ public class LoaderFragment extends Fragment {
                 new CustomOnItemSelectedListener(context).ManageCategoriesCustomDialog();
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode != Activity.RESULT_OK){return;}
+        if(requestCode == REQUEST_TRANSACTION){
+            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            Profile.get(getActivity()).addTransaction(date);
+
+
+        }
     }
 }
