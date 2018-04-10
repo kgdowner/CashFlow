@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,8 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,11 +56,25 @@ import java.util.Set;
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
 
 
+            CategoryList currentProfile = CategoryList.get(getActivity());
+            List<Category> categories = currentProfile.getCategories();
+
+            List<String> categoryNames = new ArrayList<>();
+            for(Category category : categories){
+                categoryNames.add(category.getCategoryName());
+            }
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, categoryNames);
+
+            mCategorySpinner.setAdapter(dataAdapter);
+
+
 
             mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(position!=0) {newCategory = new Category(String.valueOf(mCategorySpinner.getSelectedItem()),position);}
+                    newCategory = new Category(String.valueOf(mCategorySpinner.getSelectedItem()),position);
                 }
 
                 @Override
@@ -68,7 +85,7 @@ import java.util.Set;
 
 
 
-
+            //TODO: catch exception on improper transaction input
 
             confirmButton.setOnClickListener(new View.OnClickListener() {
 
