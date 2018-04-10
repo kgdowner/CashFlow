@@ -2,11 +2,15 @@ package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +30,8 @@ import java.util.List;
 public class ListViewFragment extends Fragment {
 
     private static final int REQUEST_TRANSACTION = 0;
+    private static final int DELETE_TRANSACTION = 1;
+
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
@@ -134,16 +140,42 @@ public class ListViewFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        //new CustomOnItemSelectedListener(getActivity()).AreYouSureToDeleteDialog();
+                        //Toast.makeText(getActivity(), Boolean.toString(sDeleteFlag), Toast.LENGTH_LONG).show();
                         if(sDeleteFlag == true) {
+
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        sPosition = getAdapterPosition();
+                                        mAdapter.delete(sPosition);
+
+                                        Profile myProfile = Profile.get(getActivity());
+                                        myProfile.removeTransaction(mTransaction);
+
+                                        sDeleteFlag = false;
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        sDeleteFlag = false;
+                                        break;
+                                }
+                            }
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
+
+
                             //TODO: are you sure messsage and reset flag to false on "not"
-                            Toast.makeText(getActivity(), "you are deleting item " + (mTransaction.getID()).toString(), Toast.LENGTH_LONG).show();
-                            sPosition = getAdapterPosition();
-                            mAdapter.delete(sPosition);
 
-                            Profile myProfile = Profile.get(getActivity());
-                            myProfile.removeTransaction(mTransaction);
 
-                            sDeleteFlag = false;
+                            //Toast.makeText(getActivity(), "you are deleting item " + (mTransaction.getID()).toString(), Toast.LENGTH_LONG).show();
+
 
                             // press trash can, highlight trashcan, set deleteFlag to true
                             //select more than 1 item...
@@ -219,16 +251,15 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode != Activity.RESULT_OK){return;}
         if(requestCode == REQUEST_TRANSACTION){
+            if(resultCode != Activity.RESULT_OK){return;}
+
             Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(date);
 
 
         }
     }
-
-
 
 
 }
