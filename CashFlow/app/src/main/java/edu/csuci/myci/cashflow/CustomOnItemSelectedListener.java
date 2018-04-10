@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
-import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;  //TODO: security leak, need to sew up
+import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;
 
 
 /**
@@ -77,7 +77,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         if(GraphisInFront ==true)break;
                         AddTransactionCustomDialog(); break;
 
-                    case 4:if(GraphisInFront ==true)break;
+                    case 4:
+                        //TODO: Set delete transaction to be impossible anywhere other than ListViewFragment
+                        if(GraphisInFront ==true)break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         break;
