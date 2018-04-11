@@ -73,7 +73,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.menu_spinner:
                 switch (position) {
                     case 0: break;
-                    case 1: ManageProfilesCustomDialog();break;
+                    //case 1: ManageProfilesCustomDialog();break;
+                    case 1: new ProfileManagementFragment(this.context); break;
                     case 2: ManageCategoriesCustomDialog();break;
                     case 3:
                         if(GraphisInFront ==true)break;
@@ -161,20 +162,20 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         dialog2.show();
 
     }
-    public void ManageProfilesCustomDialog(){
-        final Dialog dialog1 = new Dialog(context);
-        dialog1.setContentView(R.layout.dialog_profile_management);
-
-        Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
-        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-
-        dialog1.show();
-    }
+//    public void ManageProfilesCustomDialog(){
+//        final Dialog dialog1 = new Dialog(context);
+//        dialog1.setContentView(R.layout.dialog_profile_management);
+//
+//        Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
+//        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog1.dismiss();
+//            }
+//        });
+//
+//        dialog1.show();
+//    }
     public void SwitchToGraphViewLine(Context context, int graphType){
         Fragment fr = GraphViewFragment.newInstance(graphType);
         FragmentManager fm;
