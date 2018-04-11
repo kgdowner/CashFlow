@@ -29,6 +29,8 @@ import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
     private static final int REQUEST_TRANSACTION = 0;
+    private static final int DELETE_TRANSACTION = 1;
+
 
 
     public CustomOnItemSelectedListener(Context context){
@@ -142,6 +144,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add Transaction Fragment");
     }
+
+
     public void ManageCategoriesCustomDialog(){
         final Dialog dialog2 = new Dialog(context);
         dialog2.setContentView(R.layout.dialog_category_management);

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +34,8 @@ import java.util.Set;
 
         public static final String ADD_TRANSACTION = "edu.csuci.myci.cashflow.transaction";
 
-        private static EditText sEditAmount;
-        private static EditText sEditName;
+        private EditText sEditAmount;
+        private EditText sEditName;
         private Spinner mCategorySpinner;
         private Category newCategory;
 
@@ -56,13 +58,17 @@ import java.util.Set;
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
 
 
-            CategoryList currentProfile = CategoryList.get(getActivity());
-            List<Category> categories = currentProfile.getCategories();
+            //TODO: more than 1 category input
+            //start: will get replaced by single database query
+            CategoryList categoryList = CategoryList.get(getActivity());
+            List<Category> categories = categoryList.getCategories();
+
 
             List<String> categoryNames = new ArrayList<>();
             for(Category category : categories){
                 categoryNames.add(category.getCategoryName());
             }
+            //end;
 
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, categoryNames);
@@ -85,26 +91,35 @@ import java.util.Set;
 
 
 
-            //TODO: catch exception on improper transaction input
-
             confirmButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     String name = sEditName.getText().toString();
+                    if(TextUtils.isEmpty(name)) {
+                        sEditName.setError("Name your transaction please.");
+                        return;
+                    }
+
+
 
                     String amount = sEditAmount.getText().toString();
-                    BigDecimal amount2 = new BigDecimal(amount);
+                    BigDecimal actualAmount;
+                    try {
+                        actualAmount =  new BigDecimal(amount);
+
+                    } catch (NumberFormatException e) {
+                        sEditAmount.setError("Please enter number.");
+                        return;
+                    }
+
 
                     Set<Category> tempCats = new HashSet();
                     tempCats.add(newCategory);
 
-                    Transaction resultTransaction = new Transaction(amount2,tempCats, name);
+                    Transaction resultTransaction = new Transaction(actualAmount,tempCats, name);
                     sendResult(Activity.RESULT_OK, resultTransaction);
                     dismiss();
-
-
-                    //pass transaction to fragment... list... enter it into profile array...
                 }
             });
 

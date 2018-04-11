@@ -29,7 +29,7 @@
         <item>Manage Categories</item>
         <item>Add Transaction</item>
         <item>Remove Transaction</item>
-        <item>Limits</item>
+        <item>Set Limits by Category</item>
         <item>Exit</item>
     </string-array>
 

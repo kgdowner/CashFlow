@@ -30,8 +30,6 @@ import java.util.List;
 public class ListViewFragment extends Fragment {
 
     private static final int REQUEST_TRANSACTION = 0;
-    private static final int DELETE_TRANSACTION = 1;
-
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
@@ -45,7 +43,6 @@ public class ListViewFragment extends Fragment {
     private Button mRemoveTransaction;
     private Button mSetLimits;
 
-
     private Spinner mCategorySpinner;
 
     private static int sPosition;
@@ -54,8 +51,6 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
 
@@ -129,9 +124,6 @@ public class ListViewFragment extends Fragment {
             public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
                 super(inflater.inflate(R.layout.list_item_transaction, parent, false));
 
-                // mRemoveTransaction.setOnClickListener(this);
-
-
                 mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
                 mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
                 mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
@@ -141,8 +133,6 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        //new CustomOnItemSelectedListener(getActivity()).AreYouSureToDeleteDialog();
-                        //Toast.makeText(getActivity(), Boolean.toString(sDeleteFlag), Toast.LENGTH_LONG).show();
                         if(sDeleteFlag == true) {
 
                         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -171,12 +161,7 @@ public class ListViewFragment extends Fragment {
                                 .setNegativeButton("No", dialogClickListener).show();
 
 
-                            //TODO: are you sure messsage and reset flag to false on "not"
-
-
-                            //Toast.makeText(getActivity(), "you are deleting item " + (mTransaction.getID()).toString(), Toast.LENGTH_LONG).show();
-
-
+                            //TODO: delete more than 1 transaction
                             // press trash can, highlight trashcan, set deleteFlag to true
                             //select more than 1 item...
                             //press trash can again
@@ -254,8 +239,8 @@ public class ListViewFragment extends Fragment {
         if(requestCode == REQUEST_TRANSACTION){
             if(resultCode != Activity.RESULT_OK){return;}
 
-            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
-            Profile.get(getActivity()).addTransaction(date);
+            Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            Profile.get(getActivity()).addTransaction(transaction);
 
 
         }
