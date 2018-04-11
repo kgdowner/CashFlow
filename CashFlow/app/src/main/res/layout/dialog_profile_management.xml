@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="0dp"
     android:layout_gravity="center_horizontal|center_vertical"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical">
 
     <!---Text View categories title-->
+
+    <!---Amount Label-->     <!---Amount EditableText Field-->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Profiles" />
+        android:text="Profiles"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteY="467dp" />
 
-    <!---Amount Label-->     <!---Amount EditableText Field-->
-
-    <RadioGroup
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal">
+        android:layout_height="10dp" />
 
-        <RadioButton
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:scrollbarStyle="insideInset">
+
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile1"
-            android:textAlignment="viewStart" />
+            android:layout_gravity="center_horizontal"
+            android:checkedButton="@+id/default_radio_button"
+            android:gravity="center_horizontal">
 
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Profile2"
-            android:textAlignment="viewStart" />
-
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Profile3"
-            android:textAlignment="viewStart" />
+            <RadioButton
+                android:id="@+id/default_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/default_profile_name"
+                android:textAlignment="textStart" />
 
 
-    </RadioGroup>
+        </RadioGroup>
+
+    </ScrollView>
 
     <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
     <LinearLayout
@@ -50,17 +63,19 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button_add_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" + " />
 
         <Button
+            android:id="@+id/button_remove_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" - " />
 
         <Button
-            android:id="@+id/manage_profile_cancel_button"
+            android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Cancel" />
