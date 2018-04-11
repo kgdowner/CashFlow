@@ -46,7 +46,8 @@ public class LoaderFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).ManageProfilesCustomDialog();
+                //new CustomOnItemSelectedListener(context).ManageProfilesCustomDialog();
+                new ProfileManagementFragment(context);
             }
         });
 
