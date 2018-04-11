@@ -5,11 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -182,7 +178,7 @@ public class ListViewFragment extends Fragment {
 
                 mDateTextView.setText(mTransaction.getID().getDate().toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-                mCategoryTextView.setText(mTransaction.getCategories().toArray()[0].toString());
+                mCategoryTextView.setText(mTransaction.getCategories().toString());
                 mNameTextView.setText(mTransaction.getName().toString());
             }
 
@@ -239,7 +235,7 @@ public class ListViewFragment extends Fragment {
         if(requestCode == REQUEST_TRANSACTION){
             if(resultCode != Activity.RESULT_OK){return;}
 
-            Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(transaction);
 
 
