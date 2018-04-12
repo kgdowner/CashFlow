@@ -31,7 +31,9 @@ import java.util.Set;
 
     public  class AddTransactionDialogFragment extends DialogFragment{
 
+        //tag for passing Transaction Object from AddTransactionDialog to ListFragment
         public static final String ADD_TRANSACTION = "edu.csuci.myci.cashflow.transaction";
+
 
         private EditText sEditAmount;
         private EditText sEditName;
@@ -99,20 +101,21 @@ import java.util.Set;
 
                 @Override
                 public void onClick(View view) {
+                    String name = sEditName.getText().toString();
+                    String amount = sEditAmount.getText().toString();
+
+                    BigDecimal actualAmount;
+
+
 
                     //Validation
-                    String name = sEditName.getText().toString();
                     if(TextUtils.isEmpty(name)) {
                         sEditName.setError("Name your transaction please.");
                         return;
                     }
-                    String amount = sEditAmount.getText().toString();
 
-
-                    BigDecimal actualAmount;
                     try {
                         actualAmount =  new BigDecimal(amount);
-
                     } catch (NumberFormatException e) {
                         sEditAmount.setError("Please enter number.");
                         return;
@@ -122,10 +125,6 @@ import java.util.Set;
                         ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
                         return;
                     }
-
-
-
-
 
                     Transaction resultTransaction = new Transaction(actualAmount,tempCats, name);
                     sendResult(Activity.RESULT_OK, resultTransaction);
@@ -143,6 +142,7 @@ import java.util.Set;
 
             return view;
         }
+
     private void sendResult(int resultCode, Transaction transaction){
         if(getTargetFragment() == null){return;}
         Intent intent = new Intent();
