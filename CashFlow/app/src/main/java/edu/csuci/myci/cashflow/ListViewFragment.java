@@ -17,7 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by viktoriya on 3/26/18.
@@ -143,6 +146,8 @@ public class ListViewFragment extends Fragment {
                                         myProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
+
+                                        updateUI();
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
@@ -172,13 +177,23 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
                 // TODO: if you want this, redo this section; only fixed merge conflict
-                //SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
+                SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
 
                 mTransaction = transaction;
 
-                mDateTextView.setText(mTransaction.getID().getDate().toString());
+                mDateTextView.setText(df.format(mTransaction.getDate()).toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-                mCategoryTextView.setText(mTransaction.getCategories().toString());
+
+                ArrayList<String> tempString = Profile.get(getActivity()).getAllCategoriesForTransaction(mTransaction.getID().toString());
+                StringBuilder sb = new StringBuilder();
+                for (String s : tempString)
+                {
+                    sb.append(s);
+                    sb.append(" ,");
+                }
+                if(!tempString.isEmpty()) {
+                    mCategoryTextView.setText(sb.toString());
+                }
                 mNameTextView.setText(mTransaction.getName().toString());
             }
 
@@ -187,8 +202,25 @@ public class ListViewFragment extends Fragment {
 
 
         }
+        public void setTransactions(List<Transaction> transactions){
+            mTransactions =transactions;
+        }
 
 
+
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        //mAdapter.notifyDataSetChanged();
+
+        updateUI();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        //outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
+        updateUI();
     }
 
 
@@ -198,6 +230,19 @@ public class ListViewFragment extends Fragment {
 
         mAdapter = new TransactionAdapter(transactions);
         mTransactionRecyclerView.setAdapter(mAdapter);
+
+        if(mAdapter==null) {
+            mAdapter = new TransactionAdapter(transactions);
+            mTransactionRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setTransactions(transactions);
+            //mCrimeRecyclerView.swapAdapter(mAdapter,true);
+
+        }
+
+        mTransactionRecyclerView.setAdapter(new TransactionAdapter(transactions));
+        mTransactionRecyclerView.invalidate();
+
 
     }
 
@@ -237,6 +282,7 @@ public class ListViewFragment extends Fragment {
 
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(transaction);
+            updateUI();
 
 
         }
