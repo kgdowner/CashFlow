@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by viktoriya on 4/8/18.
@@ -39,8 +40,7 @@ import java.util.Set;
         private EditText sEditName;
         private Spinner mCategorySpinner;
 
-        private Category newCategory;
-        private Set<Category> tempCats = new HashSet();
+        private static CategoryList categoryList;
 
 
 
@@ -62,33 +62,38 @@ import java.util.Set;
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
 
 
-            //Transfering Category Names to spinner
-            CategoryList categoryList = CategoryList.get(getActivity());
-            List<Category> categories = categoryList.getCategories();
+            //Transfering Category Names to spinner //FIXME this is acting weird - adds categories 2 times
+            categoryList = CategoryList.get(getActivity());
 
 
-            List<String> categoryNames = new ArrayList<>();
-            categoryNames.add("");
-            for(Category category : categories){
-                categoryNames.add(category.getCategoryName());
-            }
+            List<String> categoryNames = categoryList.getCategories();
 
             //Spinner set up
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, categoryNames);
 
             mCategorySpinner.setAdapter(dataAdapter);
+            final UUID tid = UUID.randomUUID();
 
 
             //Spinner action
             mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(position!=0) {
-                        newCategory = new Category(String.valueOf(mCategorySpinner.getSelectedItem()), position - 1);
-                        tempCats.add(newCategory);
+
+
+
+                        //category id = position
+                        //trandsaction id = random id that u need to reassign :( ugh
+                        // FIXME move the adding of labels to ok button action
+                        //create new db entry for transaction/category
+
+                        categoryList.addCategoryTransaction(position,tid.toString());
+
+
+                        //create new intermediate table entry with position as cat id, and date as transaction id...
                         //TODO: ADD window to see all selected categories in add transaction dialog
-                    }
+
                 }
 
                 @Override
@@ -121,12 +126,14 @@ import java.util.Set;
                         return;
                     }
 
-                    if(tempCats.size()==0){
-                        ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
-                        return;
-                    }
+                    //FIXME: need to reestablish check on empty
+//                    if(tempCats.size()==0){
+//                        ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
+//                        return;
+//                    }
 
-                    Transaction resultTransaction = new Transaction(actualAmount,tempCats, name);
+                    Transaction resultTransaction = new Transaction(actualAmount,null, name);
+                    resultTransaction.setID(tid);
                     sendResult(Activity.RESULT_OK, resultTransaction);
                     dismiss();
                 }
