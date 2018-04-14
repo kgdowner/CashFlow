@@ -11,30 +11,56 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
-/**
- * Created by viktoriya on 3/26/18.
- */
+import java.util.ArrayList;
+import java.util.Arrays;    // FIXME: remove this when hardcoded test arrays are taken out
+import java.util.Set;       // FIXME: " "
+import java.util.HashSet;   // FIXME: " "
+import java.math.BigDecimal;
+
 
 public class Main extends AppCompatActivity {
-    private Button mListViewButton;
+    private Button mListViewButton;     // TODO: move to own fragment out of main entrypoint
     private Spinner mGraphViewSpinner;
     private Spinner mMainMenuSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // restore previous instance of application
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-
-        mGraphViewSpinner = (Spinner)findViewById(R.id.graph_view_spinner);
-        mMainMenuSpinner = (Spinner)findViewById(R.id.menu_spinner);
-        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
-
-        mListViewButton=(Button)findViewById(R.id.list_view_button);
 
         if(savedInstanceState==null) {
             Fragment fr = new LoaderFragment();
             fragBuilder(fr);
         }
+
+
+        // initialize values in the GlobalScopeContainer
+        //GlobalScopeContainer.activeProfile = ?;  // TODO: set as active profile from last app run
+        //GlobalScopeContainer.profileList = ?;  // TODO: implement gathering of profile list based on local databases
+        //GlobalScopeContainer.categoryList = ?;  // TODO: implement gathering of categories from loaded profile
+        //GlobalScopeContainer.transactionBuffer = ?;  // TODO: filling this from database queries
+
+        // FIXME: temp values for the above actions that _really_ need the database hooked up
+        GlobalScopeContainer.activeProfile = new Profile("TestProfile01");
+        GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
+        GlobalScopeContainer.categoryList = Arrays.asList(new Category("TestCat01", 0), new Category("TestCat02", 1), new Category("TestCat03", 2));
+        GlobalScopeContainer.transactionBuffer = new Transaction[GlobalScopeContainer.TRANSACTION_BUFFER_SIZE];
+        for(int i=0; i<GlobalScopeContainer.TRANSACTION_BUFFER_SIZE; i++) {
+            Set<Category> tempCats = new HashSet();
+            tempCats.add(GlobalScopeContainer.categoryList.get(i%3));
+            GlobalScopeContainer.transactionBuffer[i] = new Transaction(new BigDecimal(0.25*i), tempCats, String.format("Transaction%02d", i));
+        }
+
+
+        // TODO: move to own fragment out of main entrypoint vvvvvvvvvvvvv
+        // top-bar button registration
+        mGraphViewSpinner = (Spinner) findViewById(R.id.graph_view_spinner);
+        mMainMenuSpinner = (Spinner) findViewById(R.id.menu_spinner);
+        mListViewButton = (Button) findViewById(R.id.list_view_button);
+
+        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
         mListViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +68,7 @@ public class Main extends AppCompatActivity {
                 fragBuilder(fr);
                             }
         });
-        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        // TODO ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     }
 
     private void fragBuilder(Fragment fr) {

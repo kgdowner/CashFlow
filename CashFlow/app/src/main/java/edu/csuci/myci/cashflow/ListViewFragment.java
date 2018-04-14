@@ -17,11 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by viktoriya on 3/26/18.
- */
 
 public class ListViewFragment extends Fragment {
 
@@ -139,8 +137,9 @@ public class ListViewFragment extends Fragment {
                                         sPosition = getAdapterPosition();
                                         mAdapter.delete(sPosition);
 
-                                        Profile myProfile = Profile.get(getActivity());
-                                        myProfile.removeTransaction(mTransaction);
+                                        // FIXME: rotten code; replace with access to GlobalScopeContainer
+                                        //Profile myProfile = Profile.get(getActivity());
+                                        //myProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
                                         break;
@@ -193,17 +192,14 @@ public class ListViewFragment extends Fragment {
 
 
     private void updateUI() {
-        Profile currentProfile = Profile.get(getActivity());
-        List<Transaction> transactions = currentProfile.getTransactions();
+        List<Transaction> transactions = Arrays.asList(GlobalScopeContainer.transactionBuffer);
 
         mAdapter = new TransactionAdapter(transactions);
         mTransactionRecyclerView.setAdapter(mAdapter);
-
     }
 
 
     public void addListenerOnDialogButton(final Context context) {
-
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +223,6 @@ public class ListViewFragment extends Fragment {
                 Toast.makeText(getActivity(), "Please make a selection", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
@@ -236,13 +231,10 @@ public class ListViewFragment extends Fragment {
             if(resultCode != Activity.RESULT_OK){return;}
 
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            Profile.get(getActivity()).addTransaction(transaction);
-
+            //Profile.get(getActivity()).addTransaction(transaction);  // FIXME: don't add to local buffer, add to database then refresh local buffer
 
         }
     }
-
-
 }
 
 
