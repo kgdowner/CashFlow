@@ -38,24 +38,12 @@ public class Profile {
 
     }
     private Profile(Context context) {
-//        this.mTransactions = new ArrayList<>();
         mContext = context.getApplicationContext();
         mDatabase = new TransactionBaseHelper(mContext).getWritableDatabase();
-//        for(int i = 0; i<100; i++){
-//            // TODO: remove this & implement non-hardcoded list
-//            Category tempCat = new Category("category"+i, i);
-//            Set<Category> tempCats = new HashSet();
-//            tempCats.add(tempCat);
-//
-//            Transaction transaction = new Transaction(new BigDecimal(0.00), tempCats);
-//            transaction.setAmount(new BigDecimal(0.25 * i));
-//
-//            this.mTransactions.add(transaction);
-//        }
+
     }
 
    public List<Transaction> getTransactions() {
-//
        List<Transaction> transactions = new ArrayList<>();
 
        TransactionCursorWrapper cursor = querryCrimes(null, null);
@@ -90,9 +78,7 @@ public class Profile {
     }
 
     public ArrayList<String> getAllCategoriesForTransaction(String transactionId){
-        //find in my Transaction/Category Table  all Category ids that belong to this transaction
-        //search category table for all id / catName combos,
-        //concatenate catName combos to string....
+        //for displaying in listViewFragment
         ArrayList<String> catNames = new ArrayList<>();
 
         String query = "SELECT * FROM Categories, Cat_Transaction " +
@@ -123,13 +109,11 @@ public class Profile {
 
 
     public void removeTransaction(Transaction t){
-        //mTransactions.remove(t);
         String uuidString = t.getID().toString();
         mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.IDTRANSACTION + " = ?", new String[] {uuidString});
 
     }
     public void addTransaction(Transaction t){
-        //mTransactions.add(t);
         ContentValues values = getContentValues(t);
         mDatabase.insert(TransactionTable.NAME, null, values);
     }
