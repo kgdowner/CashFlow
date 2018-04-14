@@ -20,9 +20,9 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionT
 
 public class CategoryList {
     private static CategoryList sCategoryList;
+    private Context mContext;
 
     private SQLiteDatabase mDatabase;
-    private List<String> mCategories;
 
     public static CategoryList get(Context context) {
         if(sCategoryList == null) {
@@ -33,34 +33,35 @@ public class CategoryList {
     }
 
     private CategoryList(Context context){
-        mDatabase =new TransactionBaseHelper(context).getWritableDatabase();
+        mContext = context.getApplicationContext();
+        mDatabase =new TransactionBaseHelper(mContext).getWritableDatabase();
 
 
 //        this.mCategories = new ArrayList<>();
-        addCategory(new Category("groceries", 0));
-        addCategory(new Category("gas", 1));
-        addCategory(new Category("bullshit", 2));
-        addCategory(new Category("housing", 3));
-        addCategory(new Category("clothes", 4));
-        addCategory(new Category("drinking", 5));
-        addCategory(new Category("makeup", 6));
-        addCategory(new Category("computer", 7));
+//        addCategory(new Category("groceries", 0));
+//        addCategory(new Category("gas", 1));
+//        addCategory(new Category("bullshit", 2));
+//        addCategory(new Category("housing", 3));
+//        addCategory(new Category("clothes", 4));
+//        addCategory(new Category("drinking", 5));
+//        addCategory(new Category("makeup", 6));
+//        addCategory(new Category("computer", 7));
     }
 
     public List<String> getCategories() {
-        mCategories = new ArrayList<String>();
+        List<String> tempList = new ArrayList<String>();
         TransactionCursorWrapper cursor = querryCategories(null, null);
 
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
-                mCategories.add(cursor.getCategory().getCategoryName());
+                tempList.add(cursor.getCategory().getCategoryName());
                 cursor.moveToNext();
             }
         } finally {
             cursor.close();
         }
-        return mCategories;
+        return tempList;
 
 
 
@@ -111,6 +112,16 @@ public class CategoryList {
 
     }
 
-    //add category /transaction combination
-    //remove category/transaction
+    public void populateCatList(){
+        addCategory(new Category("groceries", 0));
+        addCategory(new Category("gas", 1));
+        addCategory(new Category("bullshit", 2));
+        addCategory(new Category("housing", 3));
+        addCategory(new Category("clothes", 4));
+        addCategory(new Category("drinking", 5));
+        addCategory(new Category("makeup", 6));
+        addCategory(new Category("computer", 7));
+    }
+
+    //TODO: remove category/transaction combination
 }

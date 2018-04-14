@@ -40,7 +40,7 @@ import java.util.UUID;
         private EditText sEditName;
         private Spinner mCategorySpinner;
 
-        private static CategoryList categoryList;
+        private CategoryList categoryList;
 
 
 
@@ -62,11 +62,15 @@ import java.util.UUID;
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
 
 
-            //Transfering Category Names to spinner //FIXME this is acting weird - adds categories 2 times
-            categoryList = CategoryList.get(getActivity());
+            //Transfering Category Names to spinner
+            categoryList = CategoryList.get(getContext());
 
+            //will be removed when we add all categories
+            if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
 
-            List<String> categoryNames = categoryList.getCategories();
+            List<String> categoryNames = new ArrayList<String>();
+            categoryNames.add("");
+            categoryNames.addAll(categoryList.getCategories());
 
             //Spinner set up
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
@@ -81,18 +85,13 @@ import java.util.UUID;
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-                        //category id = position
-                        //trandsaction id = random id that u need to reassign :( ugh
+                    if(position!=0) {
                         // FIXME move the adding of labels to ok button action
-                        //create new db entry for transaction/category
 
-                        categoryList.addCategoryTransaction(position,tid.toString());
+                        categoryList.addCategoryTransaction(position - 1, tid.toString());
 
-
-                        //create new intermediate table entry with position as cat id, and date as transaction id...
                         //TODO: ADD window to see all selected categories in add transaction dialog
+                    }
 
                 }
 
@@ -126,7 +125,7 @@ import java.util.UUID;
                         return;
                     }
 
-                    //FIXME: need to reestablish check on empty
+                    //FIXME: need to reestablish check on empty spinner
 //                    if(tempCats.size()==0){
 //                        ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
 //                        return;
