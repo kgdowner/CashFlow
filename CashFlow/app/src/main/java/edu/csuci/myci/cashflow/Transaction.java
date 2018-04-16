@@ -12,8 +12,6 @@ import java.util.UUID;
 // A transaction of some negative or positive amount.
 
 public class Transaction implements Serializable {
-    private SQLiteDatabase mDatabase;
-
     private BigDecimal amount;
     //private Set<Category> categories;
     private Date date;

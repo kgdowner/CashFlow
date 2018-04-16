@@ -16,15 +16,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by viktoriya on 3/26/18.
- */
 
 public class ListViewFragment extends Fragment {
 
@@ -142,8 +139,9 @@ public class ListViewFragment extends Fragment {
                                         sPosition = getAdapterPosition();
                                         mAdapter.delete(sPosition);
 
-                                        Profile myProfile = Profile.get(getActivity());
-                                        myProfile.removeTransaction(mTransaction);
+                                        // FIXME: rotten code; replace with access to GlobalScopeContainer
+                                        //Profile myProfile = Profile.get(getActivity());
+                                        //myProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
 
@@ -176,24 +174,11 @@ public class ListViewFragment extends Fragment {
             }
 
             public void bind(Transaction transaction) {
-                // TODO: if you want this, redo this section; only fixed merge conflict
-                SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
-
                 mTransaction = transaction;
 
-                mDateTextView.setText(df.format(mTransaction.getDate()).toString());
+                mDateTextView.setText(mTransaction.getDate().toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-
-                ArrayList<String> tempString = Profile.get(getActivity()).getAllCategoriesForTransaction(mTransaction.getID().toString());
-                StringBuilder sb = new StringBuilder();
-                for (String s : tempString)
-                {
-                    sb.append(s);
-                    sb.append(" ,");
-                }
-                if(!tempString.isEmpty()) {
-                    mCategoryTextView.setText(sb.toString());
-                }
+                //mCategoryTextView.setText(mTransaction.getCategories().toString());
                 mNameTextView.setText(mTransaction.getName().toString());
             }
 
@@ -225,11 +210,7 @@ public class ListViewFragment extends Fragment {
 
 
     private void updateUI() {
-        Profile currentProfile = Profile.get(getActivity());
-        List<Transaction> transactions = currentProfile.getTransactions();
-
-        mAdapter = new TransactionAdapter(transactions);
-        mTransactionRecyclerView.setAdapter(mAdapter);
+        List<Transaction> transactions = Arrays.asList(GlobalScopeContainer.transactionBuffer);
 
         if(mAdapter==null) {
             mAdapter = new TransactionAdapter(transactions);
@@ -242,13 +223,10 @@ public class ListViewFragment extends Fragment {
 
         mTransactionRecyclerView.setAdapter(new TransactionAdapter(transactions));
         mTransactionRecyclerView.invalidate();
-
-
     }
 
 
     public void addListenerOnDialogButton(final Context context) {
-
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,7 +250,6 @@ public class ListViewFragment extends Fragment {
                 Toast.makeText(getActivity(), "Please make a selection", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
@@ -281,14 +258,10 @@ public class ListViewFragment extends Fragment {
             if(resultCode != Activity.RESULT_OK){return;}
 
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            Profile.get(getActivity()).addTransaction(transaction);
+            //Profile.get(getActivity()).addTransaction(transaction);  // FIXME: replace with function to add new transaction directly to the database
             updateUI();
-
-
         }
     }
-
-
 }
 
 

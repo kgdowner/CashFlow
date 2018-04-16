@@ -22,10 +22,6 @@ import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
 import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;
 
 
-/**
- * Created by viktoriya on 3/13/18.
- */
-
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
     private static final int REQUEST_TRANSACTION = 0;
@@ -124,7 +120,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    public void LimitsCustomDialog(){
+
+    public void LimitsCustomDialog() {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_set_alert);
 
@@ -138,16 +135,16 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         dialog.show();
 
     }
-    public void AddTransactionCustomDialog(){
 
-        DialogFragment df = new AddTransactionFragment();
+    public void AddTransactionCustomDialog() {
+
+        DialogFragment df = new AddTransactionDialogFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add Transaction Fragment");
     }
 
-
-    public void ManageCategoriesCustomDialog(){
+    public void ManageCategoriesCustomDialog() {
         final Dialog dialog2 = new Dialog(context);
         dialog2.setContentView(R.layout.dialog_category_management);
 
@@ -162,21 +159,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         dialog2.show();
 
     }
-//    public void ManageProfilesCustomDialog(){
-//        final Dialog dialog1 = new Dialog(context);
-//        dialog1.setContentView(R.layout.dialog_profile_management);
-//
-//        Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
-//        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog1.dismiss();
-//            }
-//        });
-//
-//        dialog1.show();
-//    }
-    public void SwitchToGraphViewLine(Context context, int graphType){
+
+    public void SwitchToGraphViewLine(Context context, int graphType) {
         Fragment fr = GraphViewFragment.newInstance(graphType);
         FragmentManager fm;
 
@@ -187,7 +171,4 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
     }
-
-
-
 }
