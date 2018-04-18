@@ -23,8 +23,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     public static final String MANAGE_CATEGORY = "edu.csuci.myci.cashflow.category";
     public static final String REMOVE_CATEGORY = "edu.csuci.myci.cahsflow.categoryID";
 
-    private EditText sEditName;
-    private RadioGroup mCategoryRadioGroup;
+    private EditText mNewCategoryName;
 
     private CategoryList categoryList;
     private List<String> categoryNames;
@@ -43,18 +42,16 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_category_management, container, true);
-        //sEditName = (EditText)view.findViewById(R.id.new_category_name);
-        //mCategoryRadioGroup = (RadioGroup) view.findViewById(R.id.category_management_radioGroup);
-
 
         // acquire layout object references
         this.categories             = (RadioGroup) view.findViewById(R.id.radiogroup_category_list);
         this.buttonAddCategory      = (Button) view.findViewById(R.id.button_add_category);
         this.buttonRemoveCategory   = (Button) view.findViewById(R.id.button_remove_category);
         this.buttonCancel           = (Button) view.findViewById(R.id.button_cancel);
+        this.mNewCategoryName       = (EditText) view.findViewById(R.id.new_category_name);
 
 
-        //Transferring Category Names to spinner
+        //Transferring Category Names to RadioGroup
         categoryList = CategoryList.get(getContext());
 
         //will be removed when we add manipulation of categories.
@@ -75,6 +72,58 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         return view;
     }
 
+    private void populateRadioGroup(List<String>categoryNames) {
+        for ( String currentCategory: categoryNames ) {
+            RadioButton rb = new RadioButton(getContext());
+            rb.setText(currentCategory);
+            categories.addView(rb);
+        }
+    }
+
+    private void onAddCategory() {
+        String name = mNewCategoryName.getText().toString();
+        if(TextUtils.isEmpty(name)) {
+            mNewCategoryName.setError("Name your Category please.");
+            return;
+        }
+
+        Category tempCat = new Category(name,categories.getChildCount());
+
+        categoryList.addCategory(tempCat);
+        RadioButton rb = new RadioButton(getContext());
+        rb.setText(name);
+        categories.addView(rb);
+        sendResult(Activity.RESULT_OK, tempCat);
+    }
+
+    private void onRemoveCategory() {
+        int selectedCat = categories.getCheckedRadioButtonId();
+
+        if(selectedCat == -1){
+            Toast.makeText(getActivity(),"Please selecte category to remove ",Toast.LENGTH_LONG).show();
+
+
+        } else {
+            Toast.makeText(getActivity(), "Category to remove id " + selectedCat, Toast.LENGTH_LONG).show();
+
+            RadioButton button = (RadioButton)categories.findViewById(selectedCat);
+
+            String name = (String)button.getText();
+            Category tempCategory = categoryList.getCategory(name);
+            categoryList.removeCategory(tempCategory.getCategoryId());
+
+            categoryNames.remove(name);
+
+
+            categories.removeViewAt(selectedCat);
+            sendResult2(Activity.RESULT_CANCELED, selectedCat - 1);
+        }
+    }
+
+
+    private void onCancel() {
+        dismiss();
+    }
     private void sendResult(int resultCode, Category category) {
         if (getTargetFragment() == null) {
             return;
@@ -95,59 +144,4 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         //at result update UI.
     }
 
-
-    private void populateRadioGroup(List<String>categoryNames) {
-        for ( String currentCategory: categoryNames ) {
-            RadioButton rb = new RadioButton(getContext());
-            rb.setText(currentCategory);
-            mCategoryRadioGroup.addView(rb);
-        }
-
-
-    }
-
-    private void onAddCategory() {
-        String name = sEditName.getText().toString();
-        if(TextUtils.isEmpty(name)) {
-            sEditName.setError("Name your Category please.");
-            return;
-        }
-        //FIXME: need to remove personal control over categoryID!!!
-        Category tempCat = new Category(name,mCategoryRadioGroup.getChildCount());
-
-        categoryList.addCategory(tempCat);
-        RadioButton rb = new RadioButton(getContext());
-        rb.setText(name);
-        mCategoryRadioGroup.addView(rb);
-        sendResult(Activity.RESULT_OK, tempCat);
-    }
-
-    private void onRemoveCategory() {
-        int selectedCat = mCategoryRadioGroup.getCheckedRadioButtonId();
-
-        if(selectedCat == -1){
-            Toast.makeText(getActivity(),"Please selecte category to remove ",Toast.LENGTH_LONG).show();
-
-
-        } else {
-            Toast.makeText(getActivity(), "Category to remove id " + selectedCat, Toast.LENGTH_LONG).show();
-
-            RadioButton button = (RadioButton)mCategoryRadioGroup.findViewById(selectedCat);
-
-            String name = (String)button.getText();
-            Category tempCategory = categoryList.getCategory(name);
-            categoryList.removeCategory(tempCategory.getCategoryId());
-
-            categoryNames.remove(name);
-
-
-            mCategoryRadioGroup.removeViewAt(selectedCat);
-            sendResult2(Activity.RESULT_CANCELED, selectedCat - 1);
-        }
-    }
-
-
-    private void onCancel() {
-        dismiss();
-    }
 }

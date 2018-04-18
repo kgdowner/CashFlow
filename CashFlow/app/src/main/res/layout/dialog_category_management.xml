@@ -26,7 +26,7 @@
             android:id="@+id/radiogroup_category_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/category_management_radioGroup">
+            >
 
         </RadioGroup>
         </ScrollView>
@@ -55,13 +55,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" + "
-            android:id="@+id/add_category_button"/>
+            />
         <Button
             android:id="@+id/button_remove_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" - "
-            android:id="@+id/remove_category_button"/>
+            />
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
