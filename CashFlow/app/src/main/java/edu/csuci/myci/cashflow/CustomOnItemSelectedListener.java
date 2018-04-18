@@ -148,7 +148,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         final Dialog dialog2 = new Dialog(context);
         dialog2.setContentView(R.layout.dialog_category_management);
 
-        Button mDialogCancelButton = (Button) dialog2.findViewById(R.id.manage_categroy_cancel_button);
+        Button mDialogCancelButton = (Button) dialog2.findViewById(R.id.button_cancel);
         mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

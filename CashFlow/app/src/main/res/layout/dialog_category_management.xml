@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <RadioGroup
+            android:id="@+id/radiogroup_category_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <RadioButton
@@ -45,15 +46,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/button_add_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" + "/>
         <Button
+            android:id="@+id/button_remove_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" - "/>
         <Button
-            android:id="@+id/manage_categroy_cancel_button"
+            android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Cancel"/>
