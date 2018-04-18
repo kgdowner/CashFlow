@@ -141,8 +141,8 @@ public class ListViewFragment extends Fragment {
                                         mAdapter.delete(sPosition);
 
                                         // FIXME: rotten code; replace with access to GlobalScopeContainer
-                                        //Profile myProfile = Profile.get(getActivity());
-                                        //myProfile.removeTransaction(mTransaction);
+                                        Profile myProfile = Profile.get(getActivity());
+                                        myProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
 
@@ -291,8 +291,8 @@ public class ListViewFragment extends Fragment {
                 //Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
             }
             if(resultCode == Activity.RESULT_CANCELED){
-                int categoryID = (int)data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
-                CategoryList.get(getActivity()).removeCategory(categoryID);
+                String categoryName = (String) data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
+                CategoryList.get(getActivity()).removeCategory(categoryName);
                 Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
                 updateUI();
 

@@ -100,10 +100,11 @@ public class CategoryList {
 
     }
 
-    public void removeCategory(int categoryID){
-        String uuidString = String.valueOf( categoryID);
-        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.IDCATEGORY + " = ?", new String[] {uuidString});
-        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString});
+    public void removeCategory(String categoryName){
+        String uuidString = categoryName;
+        String uuidString2 = String.valueOf( sCategoryList.getCategory(categoryName).getCategoryId());
+        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[] {uuidString});
+        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }
 
 

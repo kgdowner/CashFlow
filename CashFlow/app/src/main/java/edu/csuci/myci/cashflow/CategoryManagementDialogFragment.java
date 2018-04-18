@@ -33,10 +33,13 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private Button buttonRemoveCategory;
     private Button buttonCancel;
 
+    private int checkedButtonId = -1;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
     }
 
     @Override
@@ -62,6 +65,13 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
         //RadioGroup Set up
         populateRadioGroup(categoryNames);
+
+        this.categories.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checkedButtonId = checkedId;
+            }
+        });
 
         // register button listener functions
         this.buttonAddCategory.setOnClickListener(     new View.OnClickListener() {@Override public void onClick(View v) {onAddCategory();      }});
@@ -97,26 +107,30 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     }
 
     private void onRemoveCategory() {
-        int selectedCat = categories.getCheckedRadioButtonId();
+        int selectedCat = checkedButtonId;
 
         if(selectedCat == -1){
             Toast.makeText(getActivity(),"Please selecte category to remove ",Toast.LENGTH_LONG).show();
 
 
         } else {
-            Toast.makeText(getActivity(), "Category to remove id " + selectedCat, Toast.LENGTH_LONG).show();
 
             RadioButton button = (RadioButton)categories.findViewById(selectedCat);
 
             String name = (String)button.getText();
-            Category tempCategory = categoryList.getCategory(name);
-            categoryList.removeCategory(tempCategory.getCategoryId());
 
+            View o = categories.getChildAt(selectedCat);
+            if (o instanceof RadioButton) {
+                categories.removeViewAt(selectedCat);
+            }
+            //categories.removeViewAt(selectedCat);
+
+            categoryList.removeCategory(name);
             categoryNames.remove(name);
 
 
-            categories.removeViewAt(selectedCat);
-            sendResult2(Activity.RESULT_CANCELED, selectedCat - 1);
+            sendResult2(Activity.RESULT_CANCELED, name);
+            dismiss();
         }
     }
 
@@ -135,10 +149,10 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     }
 
 
-    private void sendResult2(int resultCode, int categoryID){
+    private void sendResult2(int resultCode, String categoryName){
         if(getTargetFragment() == null){return;}
         Intent intent = new Intent();
-        intent.putExtra(REMOVE_CATEGORY, categoryID);
+        intent.putExtra(REMOVE_CATEGORY, categoryName);
 
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
         //at result update UI.
