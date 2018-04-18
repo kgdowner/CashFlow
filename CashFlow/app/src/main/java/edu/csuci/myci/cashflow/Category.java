@@ -1,10 +1,12 @@
     package edu.csuci.myci.cashflow;
 
-/**
+    import java.io.Serializable;
+
+    /**
  * Created by john.miller415 on 3/28/18.
  */
 
-public class Category {
+public class Category implements Serializable{
 
     private String categoryName;
     private int categoryId;

@@ -35,11 +35,16 @@
 
     </LinearLayout>
     <!---Select Categories drop down list-->
+
     <EditText
         android:id="@+id/transaction_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:hint="Enter transaction Name" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_category_names"/>
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"

@@ -3,7 +3,6 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,11 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.Date;
-import java.util.List;
-
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
-import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;
 
 
 /**
@@ -29,7 +24,8 @@ import static edu.csuci.myci.cashflow.ListViewFragment.sDeleteFlag;
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
     private static final int REQUEST_TRANSACTION = 0;
-    private static final int DELETE_TRANSACTION = 1;
+    private static final int CATEGORY_MANIPULATE = 1;
+
 
 
 
@@ -46,9 +42,11 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true) {
-                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                        image.setImageResource(R.drawable.graph_view_line);
-                        } else {SwitchToGraphViewLine(context, 1);}
+                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+                            image.setImageResource(R.drawable.graph_view_line);
+                        } else {
+                            SwitchToGraphViewLine(context, 1);
+                        }
                         parent.setSelection(0);
                         break;
 
@@ -140,26 +138,18 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
     public void AddTransactionCustomDialog(){
 
-        DialogFragment df = new AddTransactionFragment();
+        DialogFragment df = new AddTransactionDialogFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
-        df.show(ft,"Add Transaction Fragment");
+        df.show(ft,"Add_Transaction_Fragment");
     }
 
 
     public void ManageCategoriesCustomDialog(){
-        final Dialog dialog2 = new Dialog(context);
-        dialog2.setContentView(R.layout.dialog_category_management);
-
-        Button mDialogCancelButton = (Button) dialog2.findViewById(R.id.manage_categroy_cancel_button);
-        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog2.dismiss();
-            }
-        });
-
-        dialog2.show();
+        DialogFragment df = new CategoryManagementDialogFragment();
+        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), CATEGORY_MANIPULATE);
+        df.show(ft,"Category_Management_Fragment");
 
     }
 //    public void ManageProfilesCustomDialog(){

@@ -16,11 +16,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -38,6 +44,7 @@ import java.util.UUID;
 
         private EditText sEditAmount;
         private EditText sEditName;
+        private TextView mSelectedCategoryTextView;
         private Spinner mCategorySpinner;
 
         private CategoryList categoryList;
@@ -60,15 +67,18 @@ import java.util.UUID;
             sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
             sEditName = (EditText)view.findViewById(R.id.transaction_name);
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
+            mSelectedCategoryTextView = (TextView)view.findViewById(R.id.selected_category_names);
+            mSelectedCategoryTextView.setText("");
+            mSelectedCategoryTextView.setVisibility(View.INVISIBLE);
 
 
             //Transfering Category Names to spinner
             categoryList = CategoryList.get(getContext());
 
-            //will be removed when we add all categories
+            //will be removed when we add manipulation of categories.
             if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
 
-            List<String> categoryNames = new ArrayList<String>();
+            final List<String> categoryNames = new ArrayList<String>();
             categoryNames.add("");
             categoryNames.addAll(categoryList.getCategories());
 
@@ -78,6 +88,7 @@ import java.util.UUID;
 
             mCategorySpinner.setAdapter(dataAdapter);
             final UUID tid = UUID.randomUUID();
+            final Map<Integer, String> temCatStorage=new LinkedHashMap<Integer, String>();
 
 
             //Spinner action
@@ -85,12 +96,12 @@ import java.util.UUID;
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+
+
                     if(position!=0) {
-                        // FIXME move the adding of labels to ok button action
-
-                        categoryList.addCategoryTransaction(position - 1, tid.toString());
-
-                        //TODO: ADD window to see all selected categories in add transaction dialog
+                        temCatStorage.put(position-1, tid.toString());
+                       mSelectedCategoryTextView.append(categoryNames.get(position)+", ");
+                       mSelectedCategoryTextView.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -125,11 +136,15 @@ import java.util.UUID;
                         return;
                     }
 
-                    //FIXME: need to reestablish check on empty spinner
-//                    if(tempCats.size()==0){
-//                        ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
-//                        return;
-//                    }
+                    for (Map.Entry<Integer,String> entry:temCatStorage.entrySet())
+                    {
+                        categoryList.addCategoryTransaction(entry.getKey(), entry.getValue());
+                    }
+
+                    if(temCatStorage.size()==0){
+                        ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
+                        return;
+                    }
 
                     Transaction resultTransaction = new Transaction(actualAmount,null, name);
                     resultTransaction.setID(tid);

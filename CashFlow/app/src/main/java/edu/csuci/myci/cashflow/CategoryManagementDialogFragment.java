@@ -8,18 +8,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-
-import java.math.BigDecimal;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 /**
  * Created by viktoriya on 4/16/18.
@@ -28,6 +24,7 @@ import java.util.UUID;
 public class CategoryManagementDialogFragment extends DialogFragment{
     //tag for passing Transaction Object from CategoryManagement to ListFragment
     public static final String MANAGE_CATEGORY = "edu.csuci.myci.cashflow.category";
+    public static final String REMOVE_CATEGORY = "edu.csuci.myci.cahsflow.categoryID";
 
 
     private EditText sEditName;
@@ -49,7 +46,7 @@ public class CategoryManagementDialogFragment extends DialogFragment{
         View view = inflater.inflate(R.layout.dialog_category_management, container, true);
 
         Button addCategoryButton = (Button) view.findViewById(R.id.add_category_button);
-        Button removeCategoryButthon = (Button) view.findViewById(R.id.remove_category_button);
+        final Button removeCategoryButthon = (Button) view.findViewById(R.id.remove_category_button);
         Button cancelButton = (Button) view.findViewById(R.id.manage_categroy_cancel_button);
 
         sEditName = (EditText)view.findViewById(R.id.new_category_name);
@@ -67,7 +64,7 @@ public class CategoryManagementDialogFragment extends DialogFragment{
 
         //RadioGroup Set up
 
-        populateRadioGrou(categoryNames);
+        populateRadioGroup(categoryNames);
 
 
 
@@ -84,7 +81,8 @@ public class CategoryManagementDialogFragment extends DialogFragment{
                     return;
                 }
                 //FIXME: need to remove personal control over categoryID!!!
-                Category tempCat = new Category(name,9);
+                Category tempCat = new Category(name,mCategoryRadioGroup.getChildCount());
+                Toast.makeText(getActivity(),"you are adding id"+mCategoryRadioGroup.getChildCount(),Toast.LENGTH_LONG).show();
 
                 categoryList.addCategory(tempCat);
                 RadioButton rb = new RadioButton(getContext());
@@ -95,10 +93,42 @@ public class CategoryManagementDialogFragment extends DialogFragment{
             }
         });
 
+        removeCategoryButthon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                int selectedCat = mCategoryRadioGroup.getCheckedRadioButtonId();
+
+                if(selectedCat == -1){
+                    Toast.makeText(getActivity(),"Please selecte category to remove ",Toast.LENGTH_LONG).show();
+
+
+                } else {
+                    Toast.makeText(getActivity(), "Category to remove id " + selectedCat, Toast.LENGTH_LONG).show();
+
+                    RadioButton button = (RadioButton)mCategoryRadioGroup.findViewById(selectedCat);
+
+                    String name = (String)button.getText();
+                    Category tempCategory = categoryList.getCategory(name);
+                    categoryList.removeCategory(tempCategory.getCategoryId());
+
+                    categoryNames.remove(name);
+
+
+                    mCategoryRadioGroup.removeViewAt(selectedCat);
+                    sendResult2(Activity.RESULT_CANCELED, selectedCat - 1);
+                }
+
+
+            }
+        });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+
                 dismiss();
             }
         });
@@ -107,7 +137,6 @@ public class CategoryManagementDialogFragment extends DialogFragment{
     }
 
     private void sendResult(int resultCode, Category category){
-        //TODO: need to pass categoryList to ListView.... :(
         if(getTargetFragment() == null){return;}
         Intent intent = new Intent();
         intent.putExtra(MANAGE_CATEGORY, category);
@@ -115,14 +144,24 @@ public class CategoryManagementDialogFragment extends DialogFragment{
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
         //at result update UI.
     }
+    private void sendResult2(int resultCode, int categoryID){
+        if(getTargetFragment() == null){return;}
+        Intent intent = new Intent();
+        intent.putExtra(REMOVE_CATEGORY, categoryID);
 
-    private void populateRadioGrou(List<String>categoryNames){
+        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
+        //at result update UI.
+    }
+
+    private void populateRadioGroup(List<String>categoryNames){
         for ( String currentCategory: categoryNames ) {
             RadioButton rb = new RadioButton(getContext());
             rb.setText(currentCategory);
             mCategoryRadioGroup.addView(rb);
         }
 
+
     }
+
 
 }

@@ -111,6 +111,7 @@ public class Profile {
     public void removeTransaction(Transaction t){
         String uuidString = t.getID().toString();
         mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.IDTRANSACTION + " = ?", new String[] {uuidString});
+        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDTRANSACTION + " = ? ", new String[]{uuidString});
 
     }
     public void addTransaction(Transaction t){
@@ -121,7 +122,7 @@ public class Profile {
         ContentValues values = new ContentValues();
         values.put(TransactionTable.Cols.IDTRANSACTION, crime.getID().toString());
         values.put(TransactionTable.Cols.TITLE, crime.getName());
-        values.put(TransactionTable.Cols.DATE, crime.getDate().toString());
+        values.put(TransactionTable.Cols.DATE, crime.getDate().getTime());
         values.put(TransactionTable.Cols.AMOUNT, crime.getAmount().toString());
 
         return values;

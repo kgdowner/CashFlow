@@ -1,5 +1,6 @@
 package edu.csuci.myci.cashflow;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.Serializable;
@@ -44,8 +45,9 @@ public class Transaction implements Serializable {
         return this.amount;
     }
 
-//    public Set<Category> getCategories() {
-//        return this.categories;
+//    public Set<Category> getCategories(Context context) {
+//        Set<Category> categories = Profile.get(context).getAllCategoriesForTransaction(getID().toString());
+//        return categories;
 //    }
 
     public UUID getID() {

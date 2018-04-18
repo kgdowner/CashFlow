@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CashFlow</string>
     <string name="default_profile_name">default profile</string>
+    <string name="add_new_category">Add new category</string>
 
     <string-array name="category_array">
         <item>Sort by</item>

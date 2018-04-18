@@ -67,7 +67,7 @@ public class LoaderFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode != Activity.RESULT_OK){return;}
         if(requestCode == REQUEST_TRANSACTION){
-            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(date);
             //TODO: display list fragment after receiving new transacton on loader page.
 

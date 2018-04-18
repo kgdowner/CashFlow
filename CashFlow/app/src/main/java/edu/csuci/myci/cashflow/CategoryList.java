@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.csuci.myci.cashflow.database.TransactionBaseHelper;
 import edu.csuci.myci.cashflow.database.TransactionCursorWrapper;
@@ -66,6 +67,22 @@ public class CategoryList {
 
 
     }
+    public Category getCategory(String name) {
+        TransactionCursorWrapper cursor = querryCategories(
+                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                new String[]{name}
+        );
+
+        try {
+            if (cursor.getCount() == 0){
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getCategory();
+        } finally {
+            cursor.close();
+        }
+    }
 
 
     public void addCategory(Category t){
@@ -83,8 +100,10 @@ public class CategoryList {
 
     }
 
-    public void removeCategory(Category t){
-      //  mCategories.remove(t);
+    public void removeCategory(int categoryID){
+        String uuidString = String.valueOf( categoryID);
+        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.IDCATEGORY + " = ?", new String[] {uuidString});
+        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString});
     }
 
 
@@ -123,5 +142,4 @@ public class CategoryList {
         addCategory(new Category("computer", 7));
     }
 
-    //TODO: remove category/transaction combination
 }

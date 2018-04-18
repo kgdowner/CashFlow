@@ -29,6 +29,7 @@ import java.util.Set;
 public class ListViewFragment extends Fragment {
 
     private static final int REQUEST_TRANSACTION = 0;
+    private static final int CATEGORY_MANIPULATE = 1;
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
@@ -176,6 +177,7 @@ public class ListViewFragment extends Fragment {
             }
 
             public void bind(Transaction transaction) {
+
                 // TODO: if you want this, redo this section; only fixed merge conflict
                 SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
 
@@ -226,6 +228,7 @@ public class ListViewFragment extends Fragment {
 
     private void updateUI() {
         Profile currentProfile = Profile.get(getActivity());
+        //TODO: pull from global scope...
         List<Transaction> transactions = currentProfile.getTransactions();
 
         mAdapter = new TransactionAdapter(transactions);
@@ -283,6 +286,24 @@ public class ListViewFragment extends Fragment {
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(transaction);
             updateUI();
+
+
+        }
+        if(requestCode == CATEGORY_MANIPULATE){
+
+            if(resultCode == Activity.RESULT_OK) {
+                Category category = (Category) data.getSerializableExtra(CategoryManagementDialogFragment.MANAGE_CATEGORY);
+                CategoryList.get(getActivity()).addCategory(category);
+                updateUI();
+                //Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
+            }
+            if(resultCode == Activity.RESULT_CANCELED){
+                int categoryID = (int)data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
+                CategoryList.get(getActivity()).removeCategory(categoryID);
+                Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
+                updateUI();
+
+            }
 
 
         }
