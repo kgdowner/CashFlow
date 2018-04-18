@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
         <RadioGroup
+            android:id="@+id/radiogroup_category_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/category_management_radioGroup">
@@ -50,17 +51,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            android:id="@+id/button_add_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" + "
             android:id="@+id/add_category_button"/>
         <Button
+            android:id="@+id/button_remove_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text=" - "
             android:id="@+id/remove_category_button"/>
         <Button
-            android:id="@+id/manage_categroy_cancel_button"
+            android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Cancel" />

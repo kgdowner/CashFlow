@@ -1,6 +1,9 @@
 package edu.csuci.myci.cashflow;
 
 import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
+
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,16 +22,22 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.TransactionTable;
 
-/**
- * Created by viktoriya on 3/3/18.
- */
-
 public class Profile {
+    private String name;
     private static Profile sProfile;
     private Context mContext;
     private List<Transaction> mTransactions;
     private SQLiteDatabase mDatabase;
 
+
+    public Profile(String name) {
+        this.name = name;
+
+        // TODO: this!
+        // Look for a database file of this name in the file system
+            // if not found, create a new database for this profile
+            // if found, load the database and store it in this.database
+    }
 
     public static Profile get(Context context) {
         if(sProfile == null) {
@@ -43,22 +52,22 @@ public class Profile {
 
     }
 
-   public List<Transaction> getTransactions() {
-       List<Transaction> transactions = new ArrayList<>();
+    public List<Transaction> getTransactions() {
+        List<Transaction> transactions = new ArrayList<>();
 
-       TransactionCursorWrapper cursor = querryCrimes(null, null);
+        TransactionCursorWrapper cursor = querryCrimes(null, null);
 
-       try {
-           cursor.moveToFirst();
-           while (!cursor.isAfterLast()){
-               transactions.add(cursor.getTransaction());
-               cursor.moveToNext();
-           }
-       } finally {
-           cursor.close();
-       }
-       return transactions;
-   }
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                transactions.add(cursor.getTransaction());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return transactions;
+    }
 
     public Transaction getTransactions(UUID id) {
         TransactionCursorWrapper cursor = querryCrimes(
@@ -95,6 +104,10 @@ public class Profile {
         return  catNames;
 
 
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public void updateTransaction(Transaction crime){
@@ -143,3 +156,4 @@ public class Profile {
 
 
 }
+

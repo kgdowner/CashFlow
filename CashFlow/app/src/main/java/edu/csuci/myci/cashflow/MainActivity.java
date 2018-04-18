@@ -6,14 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 
-/**
- * Created by viktoriya on 3/26/18.
- */
+import java.util.Arrays;        // FIXME: remove this when hardcoded test arrays are taken out
+import java.util.Set;           // FIXME: " "
+import java.util.HashSet;       // FIXME: " "
+import java.math.BigDecimal;    // FIXME: " "
 
 public class MainActivity extends AppCompatActivity {
     private Button mListViewButton;
@@ -22,39 +21,54 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // restore previous instance of application
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mGraphViewSpinner = (Spinner)findViewById(R.id.graph_view_spinner);
-        mMainMenuSpinner = (Spinner)findViewById(R.id.menu_spinner);
-        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
-
-        mListViewButton=(Button)findViewById(R.id.list_view_button);
-
         if(savedInstanceState==null) {
             Fragment fr = new LoaderFragment();
-            fragBuilder(fr);
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
+            fragmentTransaction.commit();
         }
+
+
+        // Initialize values in the GlobalScopeContainer
+        //GlobalScopeContainer.activeProfile = ?;       // TODO: set as active profile from last app run
+        //GlobalScopeContainer.profileList = ?;         // TODO: implement gathering of profile list based on local databases
+        //GlobalScopeContainer.categoryList = ?;        // TODO: implement gathering of categories from loaded profile
+        //GlobalScopeContainer.transactionBuffer = ?;   // TODO: filling this from database queries
+
+        // FIXME: temp values for the above actions that _really_ need the database hooked up
+        GlobalScopeContainer.activeProfile = new Profile("TestProfile01");
+        GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
+        GlobalScopeContainer.categoryList = Arrays.asList(new Category("TestCat01", 0), new Category("TestCat02", 1), new Category("TestCat03", 2));
+        GlobalScopeContainer.transactionBuffer = new Transaction[GlobalScopeContainer.TRANSACTION_BUFFER_SIZE];
+        for(int i=0; i<GlobalScopeContainer.TRANSACTION_BUFFER_SIZE; i++) {
+            Set<Category> tempCats = new HashSet();
+            tempCats.add(GlobalScopeContainer.categoryList.get(i%3));
+            GlobalScopeContainer.transactionBuffer[i] = new Transaction(new BigDecimal(0.25*i), tempCats, String.format("Transaction%02d", i));
+        }
+
+
+        // TODO: move this menu bar to a new java file
+        // top-bar button registration
+        mGraphViewSpinner = (Spinner) findViewById(R.id.graph_view_spinner);
+        mMainMenuSpinner = (Spinner) findViewById(R.id.menu_spinner);
+        mListViewButton = (Button) findViewById(R.id.list_view_button);
+
+        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
         mListViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fr = new ListViewFragment();
-                fragBuilder(fr);
-                            }
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
+                fragmentTransaction.commit();
+            }
         });
-        mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
     }
-
-    private void fragBuilder(Fragment fr) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
-        fragmentTransaction.commit();
-    }
-
-
-
-
-
-
 }

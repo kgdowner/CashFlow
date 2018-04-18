@@ -17,10 +17,6 @@ import android.widget.Toast;
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
 
 
-/**
- * Created by viktoriya on 3/13/18.
- */
-
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
     private static final int REQUEST_TRANSACTION = 0;
@@ -122,7 +118,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-    public void LimitsCustomDialog(){
+
+    public void LimitsCustomDialog() {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_set_alert);
 
@@ -136,8 +133,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         dialog.show();
 
     }
-    public void AddTransactionCustomDialog(){
 
+    public void AddTransactionCustomDialog() {
         DialogFragment df = new AddTransactionDialogFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
@@ -145,28 +142,14 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
 
 
-    public void ManageCategoriesCustomDialog(){
+    public void ManageCategoriesCustomDialog() {
         DialogFragment df = new CategoryManagementDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), CATEGORY_MANIPULATE);
-        df.show(ft,"Category_Management_Fragment");
-
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), CATEGORY_MANIPULATE);
+        df.show(ft, "Category_Management_Fragment");
     }
-//    public void ManageProfilesCustomDialog(){
-//        final Dialog dialog1 = new Dialog(context);
-//        dialog1.setContentView(R.layout.dialog_profile_management);
-//
-//        Button mDialogCancelButton = (Button) dialog1.findViewById(R.id.manage_profile_cancel_button);
-//        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog1.dismiss();
-//            }
-//        });
-//
-//        dialog1.show();
-//    }
-    public void SwitchToGraphViewLine(Context context, int graphType){
+
+    public void SwitchToGraphViewLine(Context context, int graphType) {
         Fragment fr = GraphViewFragment.newInstance(graphType);
         FragmentManager fm;
 
@@ -177,7 +160,4 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
     }
-
-
-
 }

@@ -20,9 +20,8 @@ public class LoaderFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_loader, container, false);
@@ -33,12 +32,10 @@ public class LoaderFragment extends Fragment {
 
         addListenerOnDialogButton(getActivity());
 
-
         return v;
     }
 
     public void addListenerOnDialogButton(final Context context) {
-
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +60,7 @@ public class LoaderFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode != Activity.RESULT_OK){return;}
@@ -70,6 +68,9 @@ public class LoaderFragment extends Fragment {
             Transaction date = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(date);
             //TODO: display list fragment after receiving new transacton on loader page.
+            //Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
+            //Profile.get(getActivity()).addTransaction(date);
+            //TODO: not 100% sure what this was trying to accomplish, but it needs to be done differently
 
 
         }
