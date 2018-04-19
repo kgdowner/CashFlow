@@ -326,13 +326,13 @@ public class ListViewFragment extends Fragment {
 
             if(resultCode == Activity.RESULT_OK) {
                 Category category = (Category) data.getSerializableExtra(CategoryManagementDialogFragment.MANAGE_CATEGORY);
-                CategoryList.get(getActivity()).addCategory(category);
+                //CategoryList.get(getActivity()).addCategory(category);
                 updateUI();
                 //Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
             }
             if(resultCode == Activity.RESULT_CANCELED){
                 String categoryName = (String) data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
-                CategoryList.get(getActivity()).removeCategory(categoryName);
+                //CategoryList.get(getActivity()).removeCategory(categoryName);
                 Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
                 updateUI();
 

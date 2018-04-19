@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.UUID;
 
 
 public class CategoryManagementDialogFragment extends DialogFragment {
@@ -28,7 +28,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private CategoryList categoryList;
     private List<String> categoryNames;
 
-    private RadioGroup categories;
+    private RadioGroup mCategoriesRadioGroup;
     private Button buttonAddCategory;
     private Button buttonRemoveCategory;
     private Button buttonCancel;
@@ -47,7 +47,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_category_management, container, true);
 
         // acquire layout object references
-        this.categories             = (RadioGroup) view.findViewById(R.id.radiogroup_category_list);
+        this.mCategoriesRadioGroup = (RadioGroup) view.findViewById(R.id.radiogroup_category_list);
         this.buttonAddCategory      = (Button) view.findViewById(R.id.button_add_category);
         this.buttonRemoveCategory   = (Button) view.findViewById(R.id.button_remove_category);
         this.buttonCancel           = (Button) view.findViewById(R.id.button_cancel);
@@ -57,7 +57,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         //Transferring Category Names to RadioGroup
         categoryList = CategoryList.get(getContext());
 
-        //will be removed when we add manipulation of categories.
+        //will be removed when we add manipulation of mCategoriesRadioGroup.
         if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
 
         categoryNames = new ArrayList<String>();
@@ -66,7 +66,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         //RadioGroup Set up
         populateRadioGroup(categoryNames);
 
-        this.categories.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        this.mCategoriesRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 checkedButtonId = checkedId;
@@ -86,7 +86,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         for ( String currentCategory: categoryNames ) {
             RadioButton rb = new RadioButton(getContext());
             rb.setText(currentCategory);
-            categories.addView(rb);
+            mCategoriesRadioGroup.addView(rb);
         }
     }
 
@@ -101,14 +101,17 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             return;
         }
 
-        Category tempCat = new Category(name,categories.getChildCount());
+        Category tempCat = new Category(name, UUID.randomUUID());
+        //FIXME: this can cause category overlay.... get some other method of setting id.
 
         categoryList.addCategory(tempCat);
+
         RadioButton rb = new RadioButton(getContext());
         rb.setText(name);
-        categories.addView(rb);
+        mCategoriesRadioGroup.addView(rb);
+
         sendResult(Activity.RESULT_OK, tempCat);
-        mNewCategoryName.clearComposingText();
+        //mNewCategoryName.clearComposingText();
     }
 
     private void onRemoveCategory() {
@@ -120,13 +123,13 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
         } else {
 
-            RadioButton button = (RadioButton)categories.findViewById(selectedCat);
+            RadioButton button = (RadioButton) mCategoriesRadioGroup.findViewById(selectedCat);
 
             String name = (String)button.getText();
 
             categoryList.removeCategory(name);
             categoryNames.remove(name);
-            //FIXME: when removing categories, make sure to remove correct cat/transaction link and correct category
+            //FIXME: when removing mCategoriesRadioGroup, make sure to remove correct cat/transaction link and correct category
 
             sendResult2(Activity.RESULT_CANCELED, name);
             dismiss();

@@ -92,7 +92,7 @@ public class CategoryList {
     }
     private static ContentValues getContentValues(Category crime){
         ContentValues values = new ContentValues();
-        values.put(CategoryTable.Cols.IDCATEGORY, crime.getCategoryId());
+        values.put(CategoryTable.Cols.IDCATEGORY, crime.getCategoryId().toString());
         values.put(CategoryTable.Cols.CATEGORYNAME, crime.getCategoryName());
 
 
@@ -124,23 +124,23 @@ public class CategoryList {
         );
         return new TransactionCursorWrapper(cursor);
     }
-    public void addCategoryTransaction(int categoryId, String transactionId){
+    public void addCategoryTransaction(UUID categoryId, String transactionId){
         ContentValues values = new ContentValues();
-        values.put(CategoryTransactionTable.Cols.IDCATEGORY, categoryId);
+        values.put(CategoryTransactionTable.Cols.IDCATEGORY, categoryId.toString());
         values.put(CategoryTransactionTable.Cols.IDTRANSACTION, transactionId);
         mDatabase.insert(CategoryTransactionTable.NAME, null, values);
 
     }
 
     public void populateCatList(){
-        addCategory(new Category("groceries", 0));
-        addCategory(new Category("gas", 1));
-        addCategory(new Category("bullshit", 2));
-        addCategory(new Category("housing", 3));
-        addCategory(new Category("clothes", 4));
-        addCategory(new Category("drinking", 5));
-        addCategory(new Category("makeup", 6));
-        addCategory(new Category("computer", 7));
+        addCategory(new Category("groceries", UUID.randomUUID()));
+        addCategory(new Category("gas", UUID.randomUUID()));
+        addCategory(new Category("bullshit", UUID.randomUUID()));
+        addCategory(new Category("housing", UUID.randomUUID()));
+        addCategory(new Category("clothes", UUID.randomUUID()));
+        addCategory(new Category("drinking", UUID.randomUUID()));
+        addCategory(new Category("makeup", UUID.randomUUID()));
+        addCategory(new Category("computer", UUID.randomUUID()));
     }
 
 }

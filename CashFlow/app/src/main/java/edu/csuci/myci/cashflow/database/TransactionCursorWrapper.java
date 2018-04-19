@@ -37,10 +37,10 @@ public class TransactionCursorWrapper extends CursorWrapper {
     }
 
     public Category getCategory(){
-        int uuidString = getInt(getColumnIndex(CategoryTable.Cols.IDCATEGORY));
+        String uuidString = getString(getColumnIndex(CategoryTable.Cols.IDCATEGORY));
         String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
 
-        Category category = new Category(title, uuidString);
+        Category category = new Category(title, UUID.fromString(uuidString));
 
         return category;
 

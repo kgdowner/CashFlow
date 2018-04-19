@@ -67,6 +67,7 @@ import java.util.UUID;
             sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
             sEditName = (EditText)view.findViewById(R.id.transaction_name);
             mCategorySpinner = (Spinner)view.findViewById(R.id.category_spinner);
+
             mSelectedCategoryTextView = (TextView)view.findViewById(R.id.selected_category_names);
             mSelectedCategoryTextView.setText("");
             mSelectedCategoryTextView.setVisibility(View.INVISIBLE);
@@ -87,8 +88,8 @@ import java.util.UUID;
                     android.R.layout.simple_spinner_item, categoryNames);
 
             mCategorySpinner.setAdapter(dataAdapter);
-            final UUID tid = UUID.randomUUID();
-            final Map<Integer, String> temCatStorage=new LinkedHashMap<Integer, String>();
+            final UUID tempTransactionID = UUID.randomUUID();
+            final ArrayList<UUID>temCatStorage=new ArrayList<>();
 
 
             //Spinner action
@@ -99,7 +100,7 @@ import java.util.UUID;
 
 
                     if(position!=0) {
-                        temCatStorage.put(position-1, tid.toString());
+                        temCatStorage.add(categoryList.getCategory(mCategorySpinner.getSelectedItem().toString()).getCategoryId());
                        mSelectedCategoryTextView.append(categoryNames.get(position)+", ");
                        mSelectedCategoryTextView.setVisibility(View.VISIBLE);
                        //mSelectedCategoryTextView.setLayoutParams();
@@ -137,9 +138,9 @@ import java.util.UUID;
                         return;
                     }
 
-                    for (Map.Entry<Integer,String> entry:temCatStorage.entrySet())
+                    for (UUID id : temCatStorage)
                     {
-                        categoryList.addCategoryTransaction(entry.getKey(), entry.getValue());
+                        categoryList.addCategoryTransaction(id, tempTransactionID.toString());
                     }
 
                     if(temCatStorage.size()==0){
@@ -148,7 +149,7 @@ import java.util.UUID;
                     }
 
                     Transaction resultTransaction = new Transaction(actualAmount,null, name);
-                    resultTransaction.setID(tid);
+                    resultTransaction.setID(tempTransactionID);
                     sendResult(Activity.RESULT_OK, resultTransaction);
                     dismiss();
                 }

@@ -29,27 +29,21 @@ public class MainActivity extends AppCompatActivity {
             Fragment fr = new LoaderFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_place, fr, "Loader_View_Fragment");
+            fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment"); //this needs to remain for now - insures we can add transactions from loader
             fragmentTransaction.commit();
         }
 
 
-        // Initialize values in the GlobalScopeContainer
-        //GlobalScopeContainer.activeProfile = ?;       // TODO: set as active profile from last app run
-        //GlobalScopeContainer.profileList = ?;         // TODO: implement gathering of profile list based on local databases
-        //GlobalScopeContainer.categoryList = ?;        // TODO: implement gathering of categories from loaded profile
-        //GlobalScopeContainer.transactionBuffer = ?;   // TODO: filling this from database queries
-
         // FIXME: temp values for the above actions that _really_ need the database hooked up
         GlobalScopeContainer.activeProfile = new Profile("TestProfile01");
         GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
-        GlobalScopeContainer.categoryList = Arrays.asList(new Category("TestCat01", 0), new Category("TestCat02", 1), new Category("TestCat03", 2));
+        //GlobalScopeContainer.categoryList = Arrays.asList(new Category("TestCat01", 0), new Category("TestCat02", 1), new Category("TestCat03", 2));
         GlobalScopeContainer.transactionBuffer = new Transaction[GlobalScopeContainer.TRANSACTION_BUFFER_SIZE];
-        for(int i=0; i<GlobalScopeContainer.TRANSACTION_BUFFER_SIZE; i++) {
-            Set<Category> tempCats = new HashSet();
-            tempCats.add(GlobalScopeContainer.categoryList.get(i%3));
-            GlobalScopeContainer.transactionBuffer[i] = new Transaction(new BigDecimal(0.25*i), tempCats, String.format("Transaction%02d", i));
-        }
+//        for(int i=0; i<GlobalScopeContainer.TRANSACTION_BUFFER_SIZE; i++) {
+//            Set<Category> tempCats = new HashSet();
+//            tempCats.add(GlobalScopeContainer.categoryList.get(i%3));
+//            GlobalScopeContainer.transactionBuffer[i] = new Transaction(new BigDecimal(0.25*i), tempCats, String.format("Transaction%02d", i));
+//        }
 
 
         // TODO: move this menu bar to a new java file

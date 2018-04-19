@@ -1,6 +1,7 @@
     package edu.csuci.myci.cashflow;
 
     import java.io.Serializable;
+    import java.util.UUID;
 
     /**
  * Created by john.miller415 on 3/28/18.
@@ -9,9 +10,9 @@
 public class Category implements Serializable{
 
     private String categoryName;
-    private int categoryId;
+    private UUID categoryId;
 
-    public Category(String categoryName, int categoryId){
+    public Category(String categoryName, UUID categoryId){
         this.categoryName = categoryName;
         this.categoryId= categoryId;
     }
@@ -20,7 +21,7 @@ public class Category implements Serializable{
         return this.categoryName;
     }
 
-    public int getCategoryId(){
+    public UUID getCategoryId(){
         return this.categoryId;
     }
 
@@ -28,7 +29,7 @@ public class Category implements Serializable{
         this.categoryName = categoryName;
     }
 
-    public void setCategoryId(int categoryId){
+    public void setCategoryId(UUID categoryId){
         this.categoryId = categoryId;
     }
 
