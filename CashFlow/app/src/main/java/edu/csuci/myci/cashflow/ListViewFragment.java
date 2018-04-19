@@ -46,6 +46,7 @@ public class ListViewFragment extends Fragment {
     private static int sPosition;
     public static boolean sDeleteFlag = false;
     private static int sSortOrder = 0;
+    public static boolean sListIsInFront;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        sListIsInFront = true;
+
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
 
         mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
@@ -193,8 +196,7 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
 
-                // TODO: if you want this, redo this section; only fixed merge conflict
-                SimpleDateFormat df = new SimpleDateFormat( "EEE, MMM d, yyyy");
+                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
 
                 mTransaction = transaction;
 
@@ -230,8 +232,14 @@ public class ListViewFragment extends Fragment {
     public void onResume(){
         super.onResume();
         //mAdapter.notifyDataSetChanged();
+        sListIsInFront = true;
 
         updateUI();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        sListIsInFront = false;
     }
     @Override
     public void onSaveInstanceState(Bundle outState){

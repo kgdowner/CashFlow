@@ -70,7 +70,7 @@ public class LoaderFragment extends Fragment {
             //TODO: display list fragment after receiving new transacton on loader page.
             //Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
             //Profile.get(getActivity()).addTransaction(date);
-            //TODO: not 100% sure what this was trying to accomplish, but it needs to be done differently
+            //TODO: Get Profile from GlobalScope for adding transaction from Loader Fragment
 
 
         }

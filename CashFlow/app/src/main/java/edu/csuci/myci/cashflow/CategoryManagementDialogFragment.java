@@ -96,6 +96,10 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             mNewCategoryName.setError("Name your Category please.");
             return;
         }
+        if(categoryList.getCategory(name)!=null){
+            mNewCategoryName.setError("Pick a different name please");
+            return;
+        }
 
         Category tempCat = new Category(name,categories.getChildCount());
 
@@ -104,6 +108,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         rb.setText(name);
         categories.addView(rb);
         sendResult(Activity.RESULT_OK, tempCat);
+        mNewCategoryName.clearComposingText();
     }
 
     private void onRemoveCategory() {
@@ -119,15 +124,9 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
             String name = (String)button.getText();
 
-//            View o = categories.getChildAt(selectedCat);
-//            if (o instanceof RadioButton) {
-//                categories.removeViewAt(selectedCat);
-//            }
-            //categories.removeViewAt(selectedCat);
-
             categoryList.removeCategory(name);
             categoryNames.remove(name);
-
+            //FIXME: when removing categories, make sure to remove correct cat/transaction link and correct category
 
             sendResult2(Activity.RESULT_CANCELED, name);
             dismiss();

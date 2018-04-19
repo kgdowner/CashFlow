@@ -64,9 +64,14 @@ public class Profile {
     }
     public List<Transaction> getTransactionsInOrder(String order) {
         List<Transaction> transactions = new ArrayList<>();
+        TransactionCursorWrapper cursor;
 
-        TransactionCursorWrapper cursor = queryTransactionsInOrder(null, null, order);
+        if(order.equals("amount")){
+            cursor = queryTransactionsInOrderByDate(null, null, order);
 
+        }else {
+            cursor = queryTransactionsInOrder(null, null, order);
+        }
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
@@ -174,6 +179,18 @@ public class Profile {
                 null,
                 null,
                 orderBy + " DESC"
+        );
+        return new TransactionCursorWrapper(cursor);
+    }
+    private TransactionCursorWrapper queryTransactionsInOrderByDate(String whereClause, String[] whereArgs, String orderBy){
+        Cursor cursor = mDatabase.query(
+                TransactionTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                "CAST ( "+orderBy+" AS NUMERICAL )" + " DESC"
         );
         return new TransactionCursorWrapper(cursor);
     }

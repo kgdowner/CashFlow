@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
+import static edu.csuci.myci.cashflow.ListViewFragment.sListIsInFront;
+
 
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
@@ -75,8 +77,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         AddTransactionCustomDialog(); break;
 
                     case 4:
-                        //TODO: Set delete transaction to be impossible anywhere other than ListViewFragment
-                        if(GraphisInFront ==true)break;
+
+                        if( sListIsInFront == false)break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         break;

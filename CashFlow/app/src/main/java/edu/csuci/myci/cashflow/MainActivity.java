@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
             Fragment fr = new LoaderFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
+            fragmentTransaction.replace(R.id.fragment_place, fr, "Loader_View_Fragment");
             fragmentTransaction.commit();
         }
 
