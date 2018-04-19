@@ -3,21 +3,15 @@ package edu.csuci.myci.cashflow;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
-import java.math.BigDecimal;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import edu.csuci.myci.cashflow.database.TransactionBaseHelper;
 import edu.csuci.myci.cashflow.database.TransactionCursorWrapper;
-import edu.csuci.myci.cashflow.database.TransactionDbSchema;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.TransactionTable;
@@ -55,7 +49,23 @@ public class Profile {
     public List<Transaction> getTransactions() {
         List<Transaction> transactions = new ArrayList<>();
 
-        TransactionCursorWrapper cursor = querryCrimes(null, null);
+        TransactionCursorWrapper cursor = queryTransactions(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                transactions.add(cursor.getTransaction());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return transactions;
+    }
+    public List<Transaction> getTransactionsInOrder(String order) {
+        List<Transaction> transactions = new ArrayList<>();
+
+        TransactionCursorWrapper cursor = queryTransactionsInOrder(null, null, order);
 
         try {
             cursor.moveToFirst();
@@ -70,7 +80,7 @@ public class Profile {
     }
 
     public Transaction getTransactions(UUID id) {
-        TransactionCursorWrapper cursor = querryCrimes(
+        TransactionCursorWrapper cursor = queryTransactions(
                 TransactionTable.Cols.IDTRANSACTION + " = ?",
                 new String[]{id.toString()}
         );
@@ -121,6 +131,7 @@ public class Profile {
     }
 
 
+
     public void removeTransaction(Transaction t){
         String uuidString = t.getID().toString();
         mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.IDTRANSACTION + " = ?", new String[] {uuidString});
@@ -141,7 +152,7 @@ public class Profile {
         return values;
 
     }
-    private TransactionCursorWrapper querryCrimes(String whereClause, String[] whereArgs){
+    private TransactionCursorWrapper queryTransactions(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(
                 TransactionTable.NAME,
                 null,
@@ -153,6 +164,20 @@ public class Profile {
         );
         return new TransactionCursorWrapper(cursor);
     }
+
+    private TransactionCursorWrapper queryTransactionsInOrder(String whereClause, String[] whereArgs, String orderBy){
+        Cursor cursor = mDatabase.query(
+                TransactionTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                orderBy + " DESC"
+        );
+        return new TransactionCursorWrapper(cursor);
+    }
+
 
 
 }

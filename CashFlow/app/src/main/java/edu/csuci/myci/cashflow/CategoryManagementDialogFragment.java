@@ -119,10 +119,10 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
             String name = (String)button.getText();
 
-            View o = categories.getChildAt(selectedCat);
-            if (o instanceof RadioButton) {
-                categories.removeViewAt(selectedCat);
-            }
+//            View o = categories.getChildAt(selectedCat);
+//            if (o instanceof RadioButton) {
+//                categories.removeViewAt(selectedCat);
+//            }
             //categories.removeViewAt(selectedCat);
 
             categoryList.removeCategory(name);

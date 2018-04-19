@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class ListViewFragment extends Fragment {
 
     private static int sPosition;
     public static boolean sDeleteFlag = false;
+    private static int sSortOrder = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,13 +62,28 @@ public class ListViewFragment extends Fragment {
         updateUI();
 
         mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
-        mCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
         mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
         mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
         mSetLimits = (Button) v.findViewById(R.id.set_allert_button);
 
+        mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sSortOrder = position;
+                if(position!=0){updateUI();}
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         addListenerOnDialogButton(getActivity());
+
+
 
 
 
@@ -224,10 +241,25 @@ public class ListViewFragment extends Fragment {
     }
 
 
-    private void updateUI() {
+    public void updateUI() {
         Profile currentProfile = Profile.get(getActivity());
+        List<Transaction> transactions;
         //TODO: pull from global scope...
-        List<Transaction> transactions = currentProfile.getTransactions();
+        if(sSortOrder ==0){
+         transactions= currentProfile.getTransactions();
+        } else if(sSortOrder==1)
+        {
+            transactions = currentProfile.getTransactionsInOrder("date");
+
+        }else if(sSortOrder==3){
+            transactions = currentProfile.getTransactionsInOrder("amount");
+
+        } else
+        {
+            //TODO: Sort by transactionCategory
+            transactions= currentProfile.getTransactions();
+
+        }
 
         mAdapter = new TransactionAdapter(transactions);
         mTransactionRecyclerView.setAdapter(mAdapter);

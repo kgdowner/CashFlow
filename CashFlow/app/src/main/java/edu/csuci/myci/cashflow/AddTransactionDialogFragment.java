@@ -102,6 +102,7 @@ import java.util.UUID;
                         temCatStorage.put(position-1, tid.toString());
                        mSelectedCategoryTextView.append(categoryNames.get(position)+", ");
                        mSelectedCategoryTextView.setVisibility(View.VISIBLE);
+                       //mSelectedCategoryTextView.setLayoutParams();
                     }
 
                 }

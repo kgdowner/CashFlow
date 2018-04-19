@@ -88,15 +88,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                             Toast.LENGTH_SHORT).show();
                     break;
                 } break;
-            case R.id.sort_list_spinner :
-
-                if(position==0) break;
-                Toast.makeText(parent.getContext(),
-                        "You are attempting to sort by : " + parent.getItemAtPosition(position).toString(),
-                        Toast.LENGTH_SHORT).show();
-                parent.setSelection(0);
-
-                break;
             case R.id.select_category_spinner:
                 if(position==0) break;
                 Toast.makeText(parent.getContext(),
