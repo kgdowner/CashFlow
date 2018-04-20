@@ -20,8 +20,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:clipToPadding="false"
+            android:fillViewport="false"
+            android:scrollbarStyle="insideInset"
             android:layout_weight="1">
         <RadioGroup
             android:id="@+id/radiogroup_category_list"
