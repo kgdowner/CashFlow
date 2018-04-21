@@ -16,17 +16,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="8dp"
-        android:text="Date" />
+        android:text="Date"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/transaction_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:paddingVertical="8dp"
         android:minWidth="60dp"
-
+        android:paddingVertical="8dp"
         android:text="Amount"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toEndOf="@+id/transaction_date"
         tools:layout_editor_absoluteY="0dp"
         tools:paddingVertical="8dp" />
@@ -36,11 +38,12 @@
         android:id="@+id/transaction_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingVertical="8dp"
+        android:layout_marginStart="8dp"
         android:minWidth="40dp"
 
-        android:layout_marginStart="8dp"
+        android:paddingVertical="8dp"
         android:text="Name"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toEndOf="@+id/transaction_amount"
         tools:layout_editor_absoluteY="8dp" />
 
@@ -51,6 +54,7 @@
         android:layout_marginStart="8dp"
         android:paddingVertical="8dp"
         android:text="Category"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toEndOf="@+id/transaction_name"
         tools:layout_editor_absoluteY="0dp" />
 

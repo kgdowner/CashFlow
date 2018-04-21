@@ -161,8 +161,7 @@ public class ListViewFragment extends Fragment {
                                         mAdapter.delete(sPosition);
 
                                         // FIXME: rotten code; replace with access to GlobalScopeContainer
-                                        Profile myProfile = Profile.get(getActivity());
-                                        myProfile.removeTransaction(mTransaction);
+                                        GlobalScopeContainer.activeProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
 
@@ -201,8 +200,8 @@ public class ListViewFragment extends Fragment {
                 mTransaction = transaction;
 
                 mDateTextView.setText(df.format(mTransaction.getDate()).toString());
-                mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-                ArrayList<String> tempString = Profile.get(getActivity()).getAllCategoriesForTransaction(mTransaction.getID().toString());
+                mAmountTextView.setText(String.format("$%7.2f", mTransaction.getAmount()));
+                ArrayList<String> tempString = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
                 for (String s : tempString)
                 {
@@ -233,6 +232,7 @@ public class ListViewFragment extends Fragment {
         super.onResume();
         //mAdapter.notifyDataSetChanged();
         sListIsInFront = true;
+        sSortOrder=0;
 
         updateUI();
     }
@@ -250,7 +250,7 @@ public class ListViewFragment extends Fragment {
 
 
     public void updateUI() {
-        Profile currentProfile = Profile.get(getActivity());
+        Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
         //TODO: pull from global scope...
         if(sSortOrder ==0 || sSortOrder==1)
@@ -317,7 +317,7 @@ public class ListViewFragment extends Fragment {
             if(resultCode != Activity.RESULT_OK){return;}
 
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            Profile.get(getActivity()).addTransaction(transaction);  // FIXME: replace with function to add new transaction directly to the database
+            GlobalScopeContainer.activeProfile.addTransaction(transaction);  // FIXME: replace with function to add new transaction directly to the database
             updateUI();
         }
         if(requestCode == CATEGORY_MANIPULATE){

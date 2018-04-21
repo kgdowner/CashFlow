@@ -26,8 +26,8 @@ public class TransactionBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "transactionDatabase.db";
     private SQLiteDatabase mDatabase;
 
-    public TransactionBaseHelper(Context context) {
-        super(context, DATABASE_NAME, null , VERSION);
+    public TransactionBaseHelper(Context context, String profileName) {
+        super(context, profileName+".db", null , VERSION);
     }
 
     @Override

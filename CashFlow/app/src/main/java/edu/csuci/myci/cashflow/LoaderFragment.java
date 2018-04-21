@@ -68,7 +68,7 @@ public class LoaderFragment extends Fragment {
         if(resultCode != Activity.RESULT_OK){return;}
         if(requestCode == REQUEST_TRANSACTION){
             Transaction date = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            Profile.get(getActivity()).addTransaction(date);
+            GlobalScopeContainer.activeProfile.addTransaction(date);
             Fragment fr = new ListViewFragment();
             FragmentManager fm = (getActivity()).getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();

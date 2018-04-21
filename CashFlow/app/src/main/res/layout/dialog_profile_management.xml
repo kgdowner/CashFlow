@@ -33,7 +33,8 @@
         android:layout_height="200dp"
         android:clipToPadding="false"
         android:fillViewport="false"
-        android:scrollbarStyle="insideInset">
+        android:scrollbarStyle="insideInset"
+        >
 
         <RadioGroup
             android:id="@+id/radio_group"

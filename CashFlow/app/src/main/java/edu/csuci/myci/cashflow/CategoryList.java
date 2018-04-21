@@ -35,7 +35,7 @@ public class CategoryList {
 
     private CategoryList(Context context){
         mContext = context.getApplicationContext();
-        mDatabase =new TransactionBaseHelper(mContext).getWritableDatabase();
+        mDatabase =new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
 
 //        this.mCategories = new ArrayList<>();

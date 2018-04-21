@@ -34,16 +34,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        // FIXME: temp values for the above actions that _really_ need the database hooked up
-        GlobalScopeContainer.activeProfile = new Profile("TestProfile01");
+        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(),"TestProfile01");
         GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
-        //GlobalScopeContainer.categoryList = Arrays.asList(new Category("TestCat01", 0), new Category("TestCat02", 1), new Category("TestCat03", 2));
-        GlobalScopeContainer.transactionBuffer = new Transaction[GlobalScopeContainer.TRANSACTION_BUFFER_SIZE];
-//        for(int i=0; i<GlobalScopeContainer.TRANSACTION_BUFFER_SIZE; i++) {
-//            Set<Category> tempCats = new HashSet();
-//            tempCats.add(GlobalScopeContainer.categoryList.get(i%3));
-//            GlobalScopeContainer.transactionBuffer[i] = new Transaction(new BigDecimal(0.25*i), tempCats, String.format("Transaction%02d", i));
-//        }
+
 
 
         // TODO: move this menu bar to a new java file
