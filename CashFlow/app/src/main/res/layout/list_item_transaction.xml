@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/border"
 
     >
 
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:paddingVertical="8dp"
+        android:minWidth="60dp"
 
         android:text="Amount"
         app:layout_constraintStart_toEndOf="@+id/transaction_date"
@@ -35,6 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="8dp"
+        android:minWidth="40dp"
 
         android:layout_marginStart="8dp"
         android:text="Name"
