@@ -23,6 +23,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     private Context context;
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
+    private static final int PROFILE_MANIPULATE = 2;
+
 
 
 
@@ -70,7 +72,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     //case 1: ManageProfilesCustomDialog();break;
-                    case 1: new ProfileManagementFragment(this.context); break;
+                    case 1: ManageProfilesCustomDialog(); break;
                     case 2: ManageCategoriesCustomDialog();break;
                     case 3:
                         if(GraphisInFront ==true)break;
@@ -132,6 +134,12 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add_Transaction_Fragment");
+    }
+    public void ManageProfilesCustomDialog() {
+        DialogFragment df = new ProfileManagementFragment();
+        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), PROFILE_MANIPULATE);
+        df.show(ft,"Profile_Management_Fragment");
     }
 
 

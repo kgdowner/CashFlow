@@ -28,6 +28,7 @@ public class ListViewFragment extends Fragment {
 
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
+    private static final int PROFILE_MANIPULATE = 2;
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
@@ -160,7 +161,6 @@ public class ListViewFragment extends Fragment {
                                         sPosition = getAdapterPosition();
                                         mAdapter.delete(sPosition);
 
-                                        // FIXME: rotten code; replace with access to GlobalScopeContainer
                                         GlobalScopeContainer.activeProfile.removeTransaction(mTransaction);
 
                                         sDeleteFlag = false;
@@ -252,7 +252,7 @@ public class ListViewFragment extends Fragment {
     public void updateUI() {
         Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
-        //TODO: pull from global scope...
+
         if(sSortOrder ==0 || sSortOrder==1)
         {
             transactions = currentProfile.getTransactionsInOrder("date");
@@ -262,7 +262,7 @@ public class ListViewFragment extends Fragment {
 
         } else
         {
-            //TODO: Sort by transactionCategory
+            //FIXME: verify what kind of results we want
             transactions= currentProfile.getTransactionsInOrder("category");
 
         }
@@ -317,7 +317,7 @@ public class ListViewFragment extends Fragment {
             if(resultCode != Activity.RESULT_OK){return;}
 
             Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            GlobalScopeContainer.activeProfile.addTransaction(transaction);  // FIXME: replace with function to add new transaction directly to the database
+            GlobalScopeContainer.activeProfile.addTransaction(transaction);
             updateUI();
         }
         if(requestCode == CATEGORY_MANIPULATE){
@@ -337,6 +337,9 @@ public class ListViewFragment extends Fragment {
             }
 
 
+        }
+        if(requestCode == PROFILE_MANIPULATE){
+            updateUI();
         }
     }
 }

@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
 
-
-        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(),"TestProfile01");
-        GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
-
+        if(GlobalScopeContainer.activeProfile ==null) {
+            GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), "TestProfile01");
+            GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
+        }
 
 
         // TODO: move this menu bar to a new java file
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mGraphViewSpinner = (Spinner) findViewById(R.id.graph_view_spinner);
         mMainMenuSpinner = (Spinner) findViewById(R.id.menu_spinner);
         mListViewButton = (Button) findViewById(R.id.list_view_button);
+
 
         mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
         mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));

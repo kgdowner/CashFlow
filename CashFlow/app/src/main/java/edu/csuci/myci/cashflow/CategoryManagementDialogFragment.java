@@ -129,7 +129,6 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
             categoryList.removeCategory(name);
             categoryNames.remove(name);
-            //FIXME: when removing mCategoriesRadioGroup, make sure to remove correct cat/transaction link and correct category
 
             sendResult2(Activity.RESULT_CANCELED, name);
             dismiss();

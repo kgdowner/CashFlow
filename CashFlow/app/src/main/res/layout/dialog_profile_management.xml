@@ -44,20 +44,10 @@
             android:checkedButton="@+id/default_radio_button"
             android:gravity="center_horizontal">
 
-            <RadioButton
-                android:id="@+id/default_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/default_profile_name"
-                android:textAlignment="textStart" />
-
-
         </RadioGroup>
 
     </ScrollView>
 
-    <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,12 +65,22 @@
             android:layout_height="match_parent"
             android:text=" - " />
 
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="OK" />
+
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Cancel" />
-
-
     </LinearLayout>
 </LinearLayout>

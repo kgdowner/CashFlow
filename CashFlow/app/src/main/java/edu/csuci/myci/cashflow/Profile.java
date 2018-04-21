@@ -26,7 +26,7 @@ public class Profile {
 
 
     public static Profile get(Context context, String profileName) {
-        if(sProfile == null) {
+        if(sProfile == null || !(sProfile.getName().equals(profileName))) {
             sProfile = new Profile(context, profileName);
         }
         return  sProfile;
