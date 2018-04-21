@@ -111,7 +111,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         mCategoriesRadioGroup.addView(rb);
 
         sendResult(Activity.RESULT_OK, tempCat);
-        //mNewCategoryName.clearComposingText();
+        mNewCategoryName.setText("");
     }
 
     private void onRemoveCategory() {
