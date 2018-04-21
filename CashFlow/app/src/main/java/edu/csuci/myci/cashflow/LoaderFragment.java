@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +69,11 @@ public class LoaderFragment extends Fragment {
         if(requestCode == REQUEST_TRANSACTION){
             Transaction date = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
             Profile.get(getActivity()).addTransaction(date);
+            Fragment fr = new ListViewFragment();
+            FragmentManager fm = (getActivity()).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
+            fragmentTransaction.commit();
             //TODO: display list fragment after receiving new transacton on loader page.
             //Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
             //Profile.get(getActivity()).addTransaction(date);
