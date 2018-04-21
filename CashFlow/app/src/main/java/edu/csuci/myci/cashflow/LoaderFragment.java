@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class LoaderFragment extends Fragment {
     private static final int REQUEST_TRANSACTION = 0;
@@ -18,6 +21,9 @@ public class LoaderFragment extends Fragment {
     private Button mManageProfiles;
     private Button mManageCategories;
     private Button mAddTransaction;
+
+    private TextView mCurrentProfileName;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,9 @@ public class LoaderFragment extends Fragment {
         mManageCategories = (Button)v.findViewById(R.id.manage_category_button);
         mManageProfiles = (Button)v.findViewById(R.id.manage_profile_button);
         mAddTransaction = (Button)v.findViewById(R.id.add_transaction_button);
+        mCurrentProfileName = (TextView)v.findViewById(R.id.profile_name);
+
+        mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
 
         addListenerOnDialogButton(getActivity());
 
@@ -74,12 +83,6 @@ public class LoaderFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
             fragmentTransaction.commit();
-            //TODO: display list fragment after receiving new transacton on loader page.
-            //Transaction date = (Transaction) data.getSerializableExtra(AddTransactionFragment.ADD_TRANSACTION);
-            //Profile.get(getActivity()).addTransaction(date);
-            //TODO: Get Profile from GlobalScope for adding transaction from Loader Fragment
-
-
         }
     }
 }

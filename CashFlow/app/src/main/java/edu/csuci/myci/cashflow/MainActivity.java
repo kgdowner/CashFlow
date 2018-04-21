@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.Arrays;        // FIXME: remove this when hardcoded test arrays are taken out
-import java.util.Set;           // FIXME: " "
-import java.util.HashSet;       // FIXME: " "
-import java.math.BigDecimal;    // FIXME: " "
+
 
 public class MainActivity extends AppCompatActivity {
     private Button mListViewButton;
