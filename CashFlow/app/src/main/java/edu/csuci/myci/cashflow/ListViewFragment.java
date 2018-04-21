@@ -253,9 +253,7 @@ public class ListViewFragment extends Fragment {
         Profile currentProfile = Profile.get(getActivity());
         List<Transaction> transactions;
         //TODO: pull from global scope...
-        if(sSortOrder ==0){
-         transactions= currentProfile.getTransactions();
-        } else if(sSortOrder==1)
+        if(sSortOrder ==0 || sSortOrder==1)
         {
             transactions = currentProfile.getTransactionsInOrder("date");
 
@@ -265,7 +263,7 @@ public class ListViewFragment extends Fragment {
         } else
         {
             //TODO: Sort by transactionCategory
-            transactions= currentProfile.getTransactions();
+            transactions= currentProfile.getTransactionsInOrder("category");
 
         }
 
