@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">CashFlow</string>
+    <string name="profile_prompt">current profile:</string>
+    <string name="button_add_transaction">Add Transaction</string>
+    <string name="button_manage_profiles">Manage Profiles</string>
+    <string name="button_manage_categories">Manage Categories</string>
     <string name="default_profile_name">default profile</string>
     <string name="add_new_category">Add new category</string>
 
