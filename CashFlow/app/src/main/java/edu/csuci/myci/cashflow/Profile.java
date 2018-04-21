@@ -69,8 +69,10 @@ public class Profile {
         if(order.equals("amount")){
             cursor = queryTransactionsInOrderByDate(null, null, order);
 
-        }else {
+        }else if(order.equals("date")){
             cursor = queryTransactionsInOrder(null, null, order);
+        } else{
+            cursor = queryTransactionsInOrderByCategory();
         }
         try {
             cursor.moveToFirst();
@@ -195,6 +197,17 @@ public class Profile {
         return new TransactionCursorWrapper(cursor);
     }
 
+    private TransactionCursorWrapper queryTransactionsInOrderByCategory(){
+        String query = "SELECT * FROM Transactions " +
+                "INNER JOIN Cat_Transaction ON Transactions.idTransaction = Cat_Transaction.idTransaction " +
+                "INNER JOIN Categories ON Categories.idCategory = Cat_Transaction.idCategory " +
+                "ORDER BY Categories.categoryName DESC";
+        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+//    String query = "SELECT * FROM Categories, Cat_Transaction " +
+//            "WHERE Cat_Transaction.idTransaction =? " +
+//            "AND Categories.idCategory =  Cat_Transaction.idCategory";
 
 
 }
