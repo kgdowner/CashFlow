@@ -5,15 +5,18 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.UUID;
 
 
 public class ProfileManagementFragment extends android.support.v4.app.DialogFragment{
@@ -24,6 +27,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
     private Button button_remove_profile;
     private Button button_cancel;
     private Button button_ok;
+    private EditText mNewProfileName;
 
     private int checkedButtonId;
 
@@ -46,6 +50,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         this.button_add_profile     = (Button) view.findViewById(R.id.button_add_profile);
         this.button_remove_profile  = (Button) view.findViewById(R.id.button_remove_profile);
         this.button_cancel          = (Button) view.findViewById(R.id.button_cancel);
+        this.mNewProfileName        = (EditText)view.findViewById(R.id.new_profile_name);
 
         // register button listener functions
         this.button_add_profile.setOnClickListener(     new View.OnClickListener() {@Override public void onClick(View v) {onButtonAddProfile();    }});
@@ -65,7 +70,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         });
 
         // update the profile list
-        populateRadioGroup(GlobalScopeContainer.profileList);
+        populateRadioGroup();
         profiles.check(profiles.getChildAt(0).getId()); //sets default to 1st; FIXME: do we want default profile set to active?
 
         // show the dialog
@@ -81,24 +86,69 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         }
         if(checkedButtonId != -1){
             RadioButton button = (RadioButton) profiles.findViewById(checkedButtonId);
-            Toast.makeText(context, "current active profile is "+button.getText().toString(), Toast.LENGTH_LONG).show();
 
             GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString());
+
             Toast.makeText(context, "current active profile is "+GlobalScopeContainer.activeProfile.getName(), Toast.LENGTH_LONG).show();
             //dismiss();
             sendResult(Activity.RESULT_OK, "test");
+
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }
 
     }
 
     private void onButtonAddProfile() {
-        // TODO: add database here
+        String name = mNewProfileName.getText().toString();
+        if(TextUtils.isEmpty(name)) {
+            mNewProfileName.setError("Name your Category please.");
+            return;
+        }
+        if(GlobalScopeContainer.profileList.contains(name)){
+            mNewProfileName.setError("Pick a different name please");
+            return;
+        }
+
+        GlobalScopeContainer.profileList.add(name);
+        Profile tempProfile = Profile.get(getContext(),name+".db");
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : GlobalScopeContainer.profileList)
+        {
+            sb.append(s);
+            sb.append(" ,");
+        }
+
+        Toast.makeText(getActivity(),sb.toString(),Toast.LENGTH_LONG).show();
+
+        RadioButton rb = new RadioButton(getContext());
+        rb.setText(name);
+        profiles.addView(rb);
+
+        sendResult(Activity.RESULT_OK, "test");
+        mNewProfileName.setText("");
     }
 
     private void onButtonRemoveProfile() {
-        // TODO: remove database here + confirm dialog
-    }
+        int selectedCat = checkedButtonId;
+
+        if(selectedCat == -1){
+            Toast.makeText(getActivity(),"Please selecte Profile to remove ",Toast.LENGTH_LONG).show();
+
+
+        } else {
+
+            RadioButton button = (RadioButton) profiles.findViewById(selectedCat);
+
+            String name = (String)button.getText();
+
+            GlobalScopeContainer.profileList.remove(name);
+            GlobalScopeContainer.activeProfile.removeProfile(name);
+
+
+            sendResult(Activity.RESULT_CANCELED, name);
+            dismiss();
+        }    }
 
     private void onButtonCancel() {
         //dismiss();
@@ -106,8 +156,8 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
     }
 
-    private void populateRadioGroup(List<String> profileNames) {
-        for ( String currentProfile: profileNames ) {
+    private void populateRadioGroup() {
+        for ( String currentProfile: GlobalScopeContainer.profileList ) {
             RadioButton rb = new RadioButton(getContext());
             rb.setText(currentProfile);
             profiles.addView(rb);

@@ -1,15 +1,21 @@
 package edu.csuci.myci.cashflow;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;        // FIXME: remove this when hardcoded test arrays are taken out
+
+import javax.microedition.khronos.opengles.GL;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +37,21 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
 
-        if(GlobalScopeContainer.activeProfile ==null) {
+        if(GlobalScopeContainer.activeProfile == null) {
             GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), "TestProfile01");
-            GlobalScopeContainer.profileList = Arrays.asList("TestProfile01", "TestProfile02", "TestProfile03");
-        }
+            GlobalScopeContainer.profileList = new ArrayList<String>();
+            for(String s : getApplicationContext().databaseList()) {
+                if(!s.contains("journal"))
+                    GlobalScopeContainer.profileList.add(s);
+            }        }
+//
+//        Toast.makeText(getApplicationContext(), Arrays.toString(getApplicationContext().databaseList()),
+//                Toast.LENGTH_LONG).show();
 
+
+
+        Toast.makeText(getApplicationContext(), GlobalScopeContainer.profileList.toString(),
+                Toast.LENGTH_LONG).show();
 
         // TODO: move this menu bar to a new java file
         // top-bar button registration

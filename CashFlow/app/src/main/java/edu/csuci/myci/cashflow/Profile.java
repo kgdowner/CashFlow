@@ -131,6 +131,13 @@ public class Profile {
 
     }
 
+    public void removeProfile(String name){
+
+        mContext.deleteDatabase(name);
+
+
+    }
+
 
 
     public void removeTransaction(Transaction t){
@@ -194,7 +201,7 @@ public class Profile {
     private TransactionCursorWrapper queryTransactionsInOrderByCategory(){
         String query = "SELECT * FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Transactions.idTransaction = Cat_Transaction.idTransaction " +
-                "INNER JOIN Categories ON Categories.idCategory = Cat_Transaction.idCategory GROUP BY Transactions.idTransaction " +
+                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory GROUP BY Transactions.idTransaction " +
                 "ORDER BY Categories.categoryName DESC";
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
