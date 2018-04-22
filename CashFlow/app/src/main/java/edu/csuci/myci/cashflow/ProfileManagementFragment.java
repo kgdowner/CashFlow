@@ -87,7 +87,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         if(checkedButtonId != -1){
             RadioButton button = (RadioButton) profiles.findViewById(checkedButtonId);
 
-            GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString());
+            GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString()+".db");
 
             Toast.makeText(context, "current active profile is "+GlobalScopeContainer.activeProfile.getName(), Toast.LENGTH_LONG).show();
             //dismiss();
@@ -109,7 +109,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             return;
         }
 
-        GlobalScopeContainer.profileList.add(name);
+        GlobalScopeContainer.profileList.add(name+".db");
         Profile tempProfile = Profile.get(getContext(),name+".db");
 
         StringBuilder sb = new StringBuilder();
@@ -142,8 +142,8 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
             String name = (String)button.getText();
 
-            GlobalScopeContainer.profileList.remove(name);
-            GlobalScopeContainer.activeProfile.removeProfile(name);
+            GlobalScopeContainer.profileList.remove(name+".db");
+            GlobalScopeContainer.activeProfile.removeProfile(name+".db");
 
 
             sendResult(Activity.RESULT_CANCELED, name);
@@ -159,7 +159,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
     private void populateRadioGroup() {
         for ( String currentProfile: GlobalScopeContainer.profileList ) {
             RadioButton rb = new RadioButton(getContext());
-            rb.setText(currentProfile);
+            rb.setText(currentProfile.replace(".db",""));
             profiles.addView(rb);
         }
     }

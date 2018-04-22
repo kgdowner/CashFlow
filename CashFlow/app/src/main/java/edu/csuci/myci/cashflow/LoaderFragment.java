@@ -41,7 +41,7 @@ public class LoaderFragment extends Fragment {
         mAddTransaction = (Button)v.findViewById(R.id.add_transaction_button);
         mCurrentProfileName = (TextView)v.findViewById(R.id.profile_name);
 
-        mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
+        mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName().replace(".db",""));
 
         addListenerOnDialogButton(getActivity());
 
