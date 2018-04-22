@@ -104,7 +104,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             mNewProfileName.setError("Name your Category please.");
             return;
         }
-        if(GlobalScopeContainer.profileList.contains(name)){
+        if(GlobalScopeContainer.profileList.contains(name+".db")){
             mNewProfileName.setError("Pick a different name please");
             return;
         }
