@@ -1,79 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|center_vertical">
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <!---Text View add transaction-->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/prompt_add_transaction"/>
+        android:text="@string/prompt_add_transaction"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textSize="18sp" />
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:text="@string/prompt_amount"/>
+        android:layout_height="match_parent">
 
         <EditText
-            android:id="@+id/amountEntry"
+            android:id="@+id/transaction_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/transaction_amount_hint" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:hint="@string/transaction_name_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="567dp" />
 
+    </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:text="@string/prompt_amount"
+                android:textAlignment="textEnd"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/amountEntry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="0.4"
+                android:hint="@string/transaction_amount_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
     <!---Select Categories drop down list-->
 
-    <EditText
-        android:id="@+id/transaction_name"
+    <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/transaction_name_hint" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/selected_category_names"/>
+        android:layout_height="4dp" />
+
     <Spinner
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/default_categories"
-        >
+        android:entries="@array/default_categories">
 
 
     </Spinner>
-    <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp">
+
+        <TextView
+            android:id="@+id/selected_category_names"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="567dp" />
+    </android.support.constraint.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/add_transaction_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/button_ok"/>
+
         <Button
             android:id="@+id/add_transaction_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/button_cancel"/>
+            android:layout_weight=".5"
+            android:text="@string/button_cancel" />
 
+        <Button
+            android:id="@+id/add_transaction_ok"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:text="@string/button_ok" />
 
 
     </LinearLayout>
-
 
 
 </LinearLayout>

@@ -80,7 +80,7 @@ import java.util.UUID;
             if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
 
             final List<String> categoryNames = new ArrayList<String>();
-            categoryNames.add("");
+            categoryNames.add(getResources().getString(R.string.category_hint));
             categoryNames.addAll(categoryList.getCategories());
 
             //Spinner set up
