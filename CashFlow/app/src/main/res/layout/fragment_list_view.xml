@@ -63,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"
-                android:enabled="false"
                 android:padding="8dp"
                 android:text="@string/button_limits" />
         </LinearLayout>

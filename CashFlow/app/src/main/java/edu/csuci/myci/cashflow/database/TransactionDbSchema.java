@@ -25,6 +25,7 @@ public class TransactionDbSchema {
         public static final class Cols{
             public static final String IDCATEGORY = "idCategory";
             public static final String CATEGORYNAME = "categoryName";
+            public static final String LIMITAMOUNT = "limits";
 
         }
     }

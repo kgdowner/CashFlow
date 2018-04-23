@@ -126,7 +126,7 @@ public class LimitsDialogFragment extends DialogFragment {
             actualAmount = new BigDecimal(button.getText().toString());
 
         }
-        categoryList.updateCategoryLimits(spinnerSelect,actualAmount);
+        //categoryList.updateCategoryLimits(spinnerSelect,actualAmount);
         dismiss();
         //input actualAmount and spinnerSelect (string) to database,
         //put checkLimits into updateUI method.

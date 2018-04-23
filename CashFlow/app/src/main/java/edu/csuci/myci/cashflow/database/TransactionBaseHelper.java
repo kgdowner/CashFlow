@@ -62,7 +62,9 @@ public class TransactionBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if(oldVersion ==1){
+            db.execSQL("ALTER TABLE " + CategoryTable.NAME + " ADD COLUMN limits ");
+        }
     }
 
 }

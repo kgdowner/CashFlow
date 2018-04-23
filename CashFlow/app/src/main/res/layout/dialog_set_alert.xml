@@ -26,27 +26,21 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alert_15"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alert_150"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alert_1500"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/limits_radioGroup">
+
 
     </RadioGroup>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/alert_custom_amount_hint"/>
-
+        android:hint="@string/alert_custom_amount_hint"
+        android:id="@+id/custom_amount_limits"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/limits_display"/>
     <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
     <LinearLayout
         android:layout_width="wrap_content"
