@@ -138,7 +138,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add_Transaction_Fragment");
-        return;
     }
     public void ManageProfilesCustomDialog() {
         DialogFragment df = new ProfileManagementFragment();
