@@ -55,7 +55,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
 
         //Transferring Category Names to RadioGroup
-        categoryList = CategoryList.get(getContext());
+        categoryList = CategoryList.get(getActivity());
 
         //will be removed when we add manipulation of mCategoriesRadioGroup.
         if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
@@ -84,7 +84,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
     private void populateRadioGroup(List<String>categoryNames) {
         for ( String currentCategory: categoryNames ) {
-            RadioButton rb = new RadioButton(getContext());
+            RadioButton rb = new RadioButton(getActivity());
             rb.setText(currentCategory);
             mCategoriesRadioGroup.addView(rb);
         }
@@ -106,7 +106,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
         categoryList.addCategory(tempCat);
 
-        RadioButton rb = new RadioButton(getContext());
+        RadioButton rb = new RadioButton(getActivity());
         rb.setText(name);
         mCategoriesRadioGroup.addView(rb);
 

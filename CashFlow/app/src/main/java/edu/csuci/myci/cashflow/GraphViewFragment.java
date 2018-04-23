@@ -42,12 +42,12 @@ public class GraphViewFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
 
-        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
-        if(graphType==1){
-            imageView.setImageResource(R.drawable.graph_view_line);
-        } else {
-            imageView.setImageResource(R.drawable.graph_view_bar);
-        }
+//        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
+//        if(graphType==1){
+//            imageView.setImageResource(R.drawable.graph_view_line);
+//        } else {
+//            imageView.setImageResource(R.drawable.graph_view_bar);
+//        }
         mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
         mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
 

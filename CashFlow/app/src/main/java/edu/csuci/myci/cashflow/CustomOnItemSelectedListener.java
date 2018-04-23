@@ -44,8 +44,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true) {
-                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                            image.setImageResource(R.drawable.graph_view_line);
+//                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+//                            image.setImageResource(R.drawable.graph_view_line);
                         } else {
                             SwitchToGraphViewLine(context, 1);
                         }
@@ -54,8 +54,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
                     case 2: if(GraphisInFront ==true){
-                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                        image.setImageResource(R.drawable.graph_view_bar);
+//                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+//                        image.setImageResource(R.drawable.graph_view_bar);
                     } else {
                         SwitchToGraphViewLine(context, 2);
 
@@ -85,18 +85,16 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         parent.setSelection(0);
                         break;
                     case 3:
-                        Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
-                        //ManageProfilesCustomDialog();
-                        //parent.setSelection(0);
+                        ManageProfilesCustomDialog();
+                        parent.setSelection(0);
                         break;
                     case 4:
                         ManageCategoriesCustomDialog();
                         parent.setSelection(0);
                         break;
                     case 5:
-                        Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
-                        //LimitsCustomDialog();
-                        //parent.setSelection(0);
+                        LimitsCustomDialog();
+                        parent.setSelection(0);
                         break;
                     case 6: System.exit(0);break;
                     default:
