@@ -1,5 +1,6 @@
 package edu.csuci.myci.cashflow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,7 +78,7 @@ public class GraphViewFragment extends Fragment {
         GraphisInFront = false;
     }
     @Override
-    public void onAttach(Context activity) {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = activity;
     }

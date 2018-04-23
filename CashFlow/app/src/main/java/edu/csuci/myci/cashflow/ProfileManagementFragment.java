@@ -104,7 +104,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         }
 
         GlobalScopeContainer.profileList.add(name+".db");
-        Profile tempProfile = Profile.get(getContext(),name+".db");
+        Profile tempProfile = Profile.get(getActivity(),name+".db");
 
         StringBuilder sb = new StringBuilder();
         for (String s : GlobalScopeContainer.profileList)
@@ -115,7 +115,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
         Toast.makeText(getActivity(),sb.toString(),Toast.LENGTH_LONG).show();
 
-        RadioButton rb = new RadioButton(getContext());
+        RadioButton rb = new RadioButton(getActivity());
         rb.setText(name);
         profiles.addView(rb);
 
@@ -152,7 +152,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
     private void populateRadioGroup() {
         for ( String currentProfile: GlobalScopeContainer.profileList ) {
-            RadioButton rb = new RadioButton(getContext());
+            RadioButton rb = new RadioButton(getActivity());
             rb.setText(currentProfile.replace(".db",""));
             rb.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
             profiles.addView(rb);

@@ -74,7 +74,7 @@ import java.util.UUID;
 
 
             //Transfering Category Names to spinner
-            categoryList = CategoryList.get(getContext());
+            categoryList = CategoryList.get(getActivity());
 
             //will be removed when we add manipulation of categories.
             if(categoryList.getCategories().size()==0){categoryList.populateCatList();}

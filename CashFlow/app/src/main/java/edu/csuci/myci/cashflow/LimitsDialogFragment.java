@@ -54,7 +54,7 @@ public class LimitsDialogFragment extends DialogFragment {
         this.mCancelButton = (Button)view.findViewById(R.id.add_limit_cancel);
         this.mLimitsDisplay = (TextView)view.findViewById(R.id.limits_display);
 
-        categoryList = CategoryList.get(getContext());
+        categoryList = CategoryList.get(getActivity());
         final List<String> categoryNames = new ArrayList<String>();
         categoryNames.add("");
         categoryNames.addAll(categoryList.getCategories());
@@ -107,7 +107,7 @@ public class LimitsDialogFragment extends DialogFragment {
 
 
         if(spinnerSelect.isEmpty()){
-            Toast.makeText(getContext(),"please make a selection", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"please make a selection", Toast.LENGTH_LONG).show();
         }
 
         if(radioSelect == -1){
@@ -136,7 +136,7 @@ public class LimitsDialogFragment extends DialogFragment {
     private void populateRadioButtons(){
         String[] amounts = {"100","200","500","1000","1500"};
         for(String c : amounts) {
-            RadioButton button = new RadioButton(getContext());
+            RadioButton button = new RadioButton(getActivity());
             button.setText(c);
             mAmountRadioGroup.addView(button);
         }
