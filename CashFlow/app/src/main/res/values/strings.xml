@@ -1,48 +1,81 @@
 <resources>
+    <!-- Global Application Strings -->
     <string name="app_name">CashFlow</string>
-    <string name="profile_prompt">current profile:</string>
-    <string name="button_add_transaction">Add Transaction</string>
-    <string name="button_manage_profiles">Manage Profiles</string>
-    <string name="button_manage_categories">Manage Categories</string>
-    <string name="default_profile_name">default profile</string>
+    <string name="button_ok">ok</string>
+    <string name="button_cancel">cancel</string>
+    <string name="button_add">+</string>
+    <string name="button_remove">-</string>
+
+    <string name="category_hint">Categories</string>
+    <string-array name="default_categories">
+        <item>@string/category_hint</item>
+    </string-array>
+
+    <!-- dialog_add_transaction.xml -->
+    <string name="prompt_add_transaction">Enter a new Transaction:</string>
+    <string name="prompt_amount">amount: </string>
+    <string name="transaction_amount_hint">$0.00</string>
+    <string name="transaction_name_hint">Transaction Name or Description</string>
+
+    <!-- dialog_category_management.xml -->
+    <string name="categories_dialog_title">Categories</string>
     <string name="add_new_category">Add new category</string>
 
-    <string-array name="category_array">
-        <item>Sort by</item>
-        <item>Date</item>
-        <item>Category</item>
-        <item>Amount</item>
-    </string-array>
+    <!-- dialog_profile_management.xml -->
+    <string name="profiles_dialog_title">Profiles</string>
+    <string name="profiles_name_hint">Enter new Profile Name</string>
 
-    <string-array name="category_array2">
-        <item>Choose Category</item>
-        <item>Category1</item>
-        <item>Category2</item>
-        <item>Category3</item>
-        <item>Category4</item>
-        <item>Category5</item>
-    </string-array>
+    <!-- dialog_set_alert.xml -->
+    <string name="alert_dialog_title">Limits</string>
+    <string name="alert_15">$15.00</string>
+    <string name="alert_150">$150.00</string>
+    <string name="alert_1500">$1500.00</string>
+    <string name="alert_custom_amount_hint">$  Custom Amount</string>
 
-    <string-array name="graph_view">
-        <item>Graph v</item>
-        <item>Line</item>
-        <item>Bar</item>
-    </string-array>
-
-    <string-array name="main_menu">
-        <item>myProfileName</item>
-        <item>Manage Profile</item>
-        <item>Manage Categories</item>
-        <item>Add Transaction</item>
-        <item>Remove Transaction</item>
-        <item>Set Limits by Category</item>
-        <item>Exit</item>
-    </string-array>
-
+    <!-- fragment_graph_view.xml -->
     <string-array name="time_options">
         <item>Last Month</item>
         <item>All Time</item>
         <item>Custom</item>
     </string-array>
 
+    <!-- fragment_list_view.xml -->
+    <string name="button_limits">!</string>
+    <string-array name="category_sort_options">
+        <item>Sort by</item>
+        <item>Date</item>
+        <item>Category</item>
+        <item>Amount</item>
+    </string-array>
+
+    <!-- fragment_loader.xml -->
+    <string name="profile_prompt">current profile:</string>
+    <string name="button_add_transaction">Add Transaction</string>
+    <string name="button_manage_profiles">Manage Profiles</string>
+    <string name="button_manage_categories">Manage Categories</string>
+    <string name="default_profile_name">default profile</string>
+
+    <!-- list_item_transaction.xml -->
+    <string name="list_item_date">Date</string>
+    <string name="list_item_amount">Amount</string>
+    <string name="list_item_name">Name</string>
+    <string name="list_item_category">Category</string>
+
+    <!-- main.xml -->
+    <string name="button_transaction_list">Transactions</string>
+    <string name="button_graph_list">Graphs</string>
+    <string-array name="graph_view">
+        <item>GRAPHS</item>
+        <item>Line</item>
+        <item>Bar</item>
+    </string-array>
+    <string-array name="main_menu">
+        <item>@string/default_profile_name</item>
+        <item>Add Transaction</item>
+        <item>Remove Transaction</item>
+        <item>Manage Profiles</item>
+        <item>Manage Categories</item>
+        <item>Set Limits on Categories</item>
+        <item>Exit</item>
+    </string-array>
 </resources>

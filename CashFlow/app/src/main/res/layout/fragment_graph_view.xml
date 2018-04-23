@@ -45,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:entries="@array/category_array2"
+                android:entries="@array/default_categories"
                 android:padding="8dp" />
 
         </LinearLayout>

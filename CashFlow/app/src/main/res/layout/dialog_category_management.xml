@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Categories"/>
+        android:text="@string/categories_dialog_title"/>
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
@@ -58,19 +58,19 @@
             android:id="@+id/button_add_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text=" + "
+            android:text="@string/button_add"
             />
         <Button
             android:id="@+id/button_remove_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text=" - "
+            android:text="@string/button_remove"
             />
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Cancel" />
+            android:text="@string/button_cancel" />
 
 
 

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Add Transaction"/>
+        android:text="@string/prompt_add_transaction"/>
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
@@ -22,13 +22,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:text="Amount"/>
+            android:text="@string/prompt_amount"/>
 
         <EditText
             android:id="@+id/amountEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="$0.00" />
+            android:hint="@string/transaction_amount_hint" />
 
 
 
@@ -40,7 +40,7 @@
         android:id="@+id/transaction_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="Enter transaction Name" />
+        android:hint="@string/transaction_name_hint" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,8 +49,7 @@
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/category_array2"
-        android:tooltipText="CATEGORY"
+        android:entries="@array/default_categories"
         >
 
 
@@ -64,12 +63,12 @@
             android:id="@+id/add_transaction_ok"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="OK"/>
+            android:text="@string/button_ok"/>
         <Button
             android:id="@+id/add_transaction_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Cancel"/>
+            android:text="@string/button_cancel"/>
 
 
 

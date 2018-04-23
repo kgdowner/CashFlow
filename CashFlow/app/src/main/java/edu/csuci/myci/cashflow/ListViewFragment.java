@@ -69,7 +69,7 @@ public class ListViewFragment extends Fragment {
 
         mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
         mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
-        mSetLimits = (Button) v.findViewById(R.id.set_allert_button);
+        mSetLimits = (Button) v.findViewById(R.id.set_alert_button);
 
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

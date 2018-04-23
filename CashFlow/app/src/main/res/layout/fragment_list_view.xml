@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"
                 android:padding="8dp"
-                android:text=" + " />
+                android:text="@string/button_add" />
 
             <Button
                 android:id="@+id/remove_transaction_button"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"
                 android:padding="8dp"
-                android:text=" - " />
+                android:text="@string/button_remove" />
 
             <Spinner
                 android:id="@+id/sort_list_spinner"
@@ -55,17 +55,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
-                android:entries="@array/category_array"
+                android:entries="@array/category_sort_options"
                 android:padding="8dp" />
 
             <Button
-                android:id="@+id/set_allert_button"
+                android:id="@+id/set_alert_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"
                 android:padding="8dp"
-                android:text=" ! " />
-
+                android:text="@string/button_limits" />
         </LinearLayout>
 
 

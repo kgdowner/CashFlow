@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,34 +10,40 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/menu_spinner"
             style="?attr/buttonStyle"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".20"
+            android:layout_weight=".8"
             android:entries="@array/main_menu"
             android:foreground="@drawable/menu_icon"
             android:padding="8dp" />
 
         <Button
             android:id="@+id/list_view_button"
-            android:layout_width="wrap_content"
+            style="?attr/buttonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".40"
+            android:layout_weight=".5"
             android:padding="8dp"
-            android:text="List" />
+            android:text="@string/button_transaction_list"
+            android:textAlignment="center" />
 
         <Spinner
             android:id="@+id/graph_view_spinner"
             style="?attr/buttonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".40"
+            android:layout_weight=".50"
+            android:contextClickable="false"
             android:entries="@array/graph_view"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:textAllCaps="true"
+            tools:textAlignment="center" />
 
     </LinearLayout>
 

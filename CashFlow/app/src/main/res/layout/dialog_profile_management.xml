@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Profiles"
+        android:text="@string/profiles_dialog_title"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="18sp"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/new_profile_name"
-        android:hint="Enter new profile name"/>
+        android:hint="@string/profiles_name_hint"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,13 +61,13 @@
             android:id="@+id/button_add_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text=" + " />
+            android:text="@string/button_add" />
 
         <Button
             android:id="@+id/button_remove_profile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text=" - " />
+            android:text="@string/button_remove" />
 
 
     </LinearLayout>
@@ -79,12 +79,12 @@
             android:id="@+id/button_ok"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="OK" />
+            android:text="@string/button_ok" />
 
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Cancel" />
+            android:text="@string/button_cancel" />
     </LinearLayout>
 </LinearLayout>
