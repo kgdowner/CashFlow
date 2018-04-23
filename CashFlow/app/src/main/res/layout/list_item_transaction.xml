@@ -18,19 +18,17 @@
 
         <TextView
             android:id="@+id/transaction_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.31"
             android:paddingVertical="8dp"
             android:text="@string/list_item_date"
             android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/transaction_amount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_weight="0.31"
             android:minWidth="60dp"
             android:paddingVertical="8dp"
             android:text="@string/list_item_amount"
@@ -42,10 +40,9 @@
 
         <TextView
             android:id="@+id/transaction_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_weight=".25"
 
             android:minWidth="40dp"
             android:paddingVertical="8dp"
@@ -57,13 +54,12 @@
 
         <TextView
             android:id="@+id/transaction_category"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_weight=".27"
             android:paddingVertical="8dp"
             android:text="@string/list_item_category"
-            android:textAlignment="textEnd"
+            android:textAlignment="viewStart"
             android:textColor="@android:color/black"
             android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/transaction_name"
