@@ -37,25 +37,25 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.commit();
         }
 
-        if(GlobalScopeContainer.activeProfile == null) {
+
+        // get the stored profiles and the active profile
+        if (GlobalScopeContainer.activeProfile == null) {
             GlobalScopeContainer.profileList = new ArrayList<String>();
-            if(getApplicationContext().databaseList()!=null) {
+            if (getApplicationContext().databaseList() != null) {
                 for (String s : getApplicationContext().databaseList()) {
                     if (!s.contains("journal"))
                         GlobalScopeContainer.profileList.add(s);
                 }
-            } else GlobalScopeContainer.profileList.add("defaultProfile.db");
-        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
+            }
 
+            if(GlobalScopeContainer.profileList.isEmpty()) {
+                GlobalScopeContainer.profileList.add(getResources().getString(R.string.default_profile_name));
+            }
+
+            // TODO: determine method for caching which profile was last active; for now, just get profile 0
+            GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
         }
-//
-//        Toast.makeText(getApplicationContext(), Arrays.toString(getApplicationContext().databaseList()),
-//                Toast.LENGTH_LONG).show();
 
-
-
-        Toast.makeText(getApplicationContext(), GlobalScopeContainer.profileList.toString(),
-                Toast.LENGTH_LONG).show();
 
         // TODO: move this menu bar to a new java file
         // top-bar button registration
