@@ -126,11 +126,17 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
 
     public void LimitsCustomDialog() {
-        DialogFragment df = new LimitsDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), LIMITS_MANIPULATITON);
-        df.show(ft,"Limits_Dialog_Fragment");
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_set_alert);
 
+        Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
+        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     public void AddTransactionCustomDialog() {
@@ -138,7 +144,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add_Transaction_Fragment");
-        return;
     }
     public void ManageProfilesCustomDialog() {
         DialogFragment df = new ProfileManagementFragment();
