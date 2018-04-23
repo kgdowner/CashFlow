@@ -58,15 +58,11 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         this.button_cancel.setOnClickListener(          new View.OnClickListener() {@Override public void onClick(View v) {onButtonCancel();        }});
         this.button_ok.setOnClickListener(              new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onButtonOK(getActivity());
-            }
+            public void onClick(View v) {onButtonOK(getActivity());}
         });
         this.profiles.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checkedButtonId = checkedId;
-            }
+            public void onCheckedChanged(RadioGroup group, int checkedId) {checkedButtonId = checkedId;}
         });
 
         // update the profile list
@@ -143,11 +139,11 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             String name = (String)button.getText();
 
             GlobalScopeContainer.profileList.remove(name+".db");
-            GlobalScopeContainer.activeProfile.removeProfile(name+".db");
+            getActivity().getApplicationContext().deleteDatabase(name+".db");
 
 
             sendResult(Activity.RESULT_CANCELED, name);
-            dismiss();
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }    }
 
     private void onButtonCancel() {

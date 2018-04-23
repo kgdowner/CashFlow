@@ -134,6 +134,7 @@ public class Profile {
     public void removeProfile(String name){
 
         mContext.deleteDatabase(name);
+        GlobalScopeContainer.profileList.remove(name);
 
 
     }

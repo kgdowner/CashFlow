@@ -38,12 +38,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(GlobalScopeContainer.activeProfile == null) {
-            GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), "TestProfile01");
             GlobalScopeContainer.profileList = new ArrayList<String>();
-            for(String s : getApplicationContext().databaseList()) {
-                if(!s.contains("journal"))
-                    GlobalScopeContainer.profileList.add(s);
-            }        }
+            if(getApplicationContext().databaseList()!=null) {
+                for (String s : getApplicationContext().databaseList()) {
+                    if (!s.contains("journal"))
+                        GlobalScopeContainer.profileList.add(s);
+                }
+            } else GlobalScopeContainer.profileList.add("defaultProfile.db");
+        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
+
+        }
 //
 //        Toast.makeText(getApplicationContext(), Arrays.toString(getApplicationContext().databaseList()),
 //                Toast.LENGTH_LONG).show();
