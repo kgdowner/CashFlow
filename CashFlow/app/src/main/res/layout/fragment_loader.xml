@@ -94,20 +94,21 @@
                     android:layout_height="4dp" />
 
                 <Button
-                    android:id="@+id/manage_profile_button"
+                    android:id="@+id/manage_category_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_manage_profiles" />
+                    android:text="@string/button_manage_categories" />
 
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="4dp" />
 
                 <Button
-                    android:id="@+id/manage_category_button"
+                    android:id="@+id/manage_profile_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_manage_categories" />
+                    android:enabled="false"
+                    android:text="@string/button_manage_profiles" />
 
             </LinearLayout>
 

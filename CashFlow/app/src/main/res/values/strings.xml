@@ -19,7 +19,7 @@
 
     <!-- dialog_category_management.xml -->
     <string name="categories_dialog_title">Categories</string>
-    <string name="add_new_category">Add new category</string>
+    <string name="add_new_category">new category name</string>
 
     <!-- dialog_profile_management.xml -->
     <string name="profiles_dialog_title">Profiles</string>

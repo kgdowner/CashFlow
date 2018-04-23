@@ -18,27 +18,34 @@
             style="?attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".8"
+            android:layout_weight="0.8"
             android:entries="@array/main_menu"
-            android:foreground="@drawable/menu_icon"
-            android:padding="8dp" />
+            android:foreground="@drawable/menu_icon" />
 
         <Button
             android:id="@+id/list_view_button"
             style="?attr/buttonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:padding="8dp"
+            android:layout_weight="0.5"
             android:text="@string/button_transaction_list"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/button_graph_list"
+            android:enabled="false"
             android:textAlignment="center" />
 
         <Spinner
             android:id="@+id/graph_view_spinner"
             style="?attr/buttonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".50"
+            android:layout_weight="0"
             android:contextClickable="false"
             android:entries="@array/graph_view"
             android:padding="8dp"
