@@ -134,13 +134,13 @@ public class CategoryList {
 
     public void populateCatList(){
         addCategory(new Category("groceries", UUID.randomUUID()));
-        addCategory(new Category("gas", UUID.randomUUID()));
-        addCategory(new Category("bullshit", UUID.randomUUID()));
-        addCategory(new Category("housing", UUID.randomUUID()));
-        addCategory(new Category("clothes", UUID.randomUUID()));
-        addCategory(new Category("drinking", UUID.randomUUID()));
-        addCategory(new Category("makeup", UUID.randomUUID()));
-        addCategory(new Category("computer", UUID.randomUUID()));
+        addCategory(new Category("transportation", UUID.randomUUID()));
+        addCategory(new Category("utilities", UUID.randomUUID()));
+        addCategory(new Category("entertainment", UUID.randomUUID()));
+//        addCategory(new Category("clothes", UUID.randomUUID()));
+//        addCategory(new Category("drinking", UUID.randomUUID()));
+//        addCategory(new Category("makeup", UUID.randomUUID()));
+//        addCategory(new Category("computer", UUID.randomUUID()));
     }
 
 }
