@@ -69,7 +69,7 @@ public class ListViewFragment extends Fragment {
 
         mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
         mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
-        mSetLimits = (Button) v.findViewById(R.id.set_allert_button);
+        mSetLimits = (Button) v.findViewById(R.id.set_alert_button);
 
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -195,19 +195,23 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
 
-                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
+                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
+                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
 
                 mTransaction = transaction;
 
                 mDateTextView.setText(df.format(mTransaction.getDate()).toString());
-                mAmountTextView.setText(String.format("$%7.2f", mTransaction.getAmount()));
+                //mAmountTextView.setText(String.format("$%7.2f", mTransaction.getAmount()));
+                mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
                 ArrayList<String> tempString = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
                 for (String s : tempString)
                 {
                     sb.append(s);
-                    sb.append(" ,");
+                    sb.append(", ");
                 }
+                sb.setLength(sb.length()-2);
+                sb.append(" ");
                 if(!tempString.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
                 }

@@ -73,28 +73,30 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.menu_spinner:
                 switch (position) {
                     case 0: break;
-                    case 1: ManageProfilesCustomDialog();
-                        parent.setSelection(0);
-                        break;
-                    case 2: ManageCategoriesCustomDialog();
-                        parent.setSelection(0);
-                        break;
-                    case 3:
+                    case 1:
                         if(GraphisInFront ==true)break;
                         AddTransactionCustomDialog();
                         parent.setSelection(0);
                         break;
-
-                    case 4:
-
-                        if( sListIsInFront == false)break;
+                    case 2:
+                        if(sListIsInFront == false)break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         parent.setSelection(0);
-
                         break;
-                    case 5: LimitsCustomDialog();
+                    case 3:
+                        Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
+                        //ManageProfilesCustomDialog();
+                        //parent.setSelection(0);
+                        break;
+                    case 4:
+                        ManageCategoriesCustomDialog();
                         parent.setSelection(0);
+                        break;
+                    case 5:
+                        Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
+                        //LimitsCustomDialog();
+                        //parent.setSelection(0);
                         break;
                     case 6: System.exit(0);break;
                     default:
@@ -126,11 +128,17 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
 
     public void LimitsCustomDialog() {
-        DialogFragment df = new LimitsDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), LIMITS_MANIPULATITON);
-        df.show(ft,"Limits_Dialog_Fragment");
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_set_alert);
 
+        Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
+        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     public void AddTransactionCustomDialog() {

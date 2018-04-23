@@ -11,52 +11,61 @@
 
     >
 
-    <TextView
-        android:id="@+id/transaction_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingVertical="8dp"
-        android:text="Date"
-        android:textColor="@android:color/black" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/transaction_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:minWidth="60dp"
-        android:paddingVertical="8dp"
-        android:text="Amount"
-        android:textAlignment="textEnd"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toEndOf="@+id/transaction_date"
-        tools:layout_editor_absoluteY="0dp"
-        tools:paddingVertical="8dp" />
-    />
+        <TextView
+            android:id="@+id/transaction_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:text="@string/list_item_date"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/transaction_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:minWidth="40dp"
+        <TextView
+            android:id="@+id/transaction_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:minWidth="60dp"
+            android:paddingVertical="8dp"
+            android:text="@string/list_item_amount"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@+id/transaction_date"
+            tools:layout_editor_absoluteY="0dp"
+            tools:paddingVertical="8dp" />
 
-        android:paddingVertical="8dp"
-        android:text="Name"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toEndOf="@+id/transaction_amount"
-        tools:layout_editor_absoluteY="8dp" />
+        <TextView
+            android:id="@+id/transaction_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
 
-    <TextView
-        android:id="@+id/transaction_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:paddingVertical="8dp"
-        android:text="Category"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toEndOf="@+id/transaction_name"
-        tools:layout_editor_absoluteY="0dp" />
+            android:minWidth="40dp"
+            android:paddingVertical="8dp"
+            android:text="@string/list_item_name"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@+id/transaction_amount"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <TextView
+            android:id="@+id/transaction_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:paddingVertical="8dp"
+            android:text="@string/list_item_category"
+            android:textAlignment="viewStart"
+            android:textColor="@android:color/black"
+            android:visibility="visible"
+            app:layout_constraintStart_toEndOf="@+id/transaction_name"
+            tools:ellipsize="end"
+            tools:layout_editor_absoluteY="0dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
 
