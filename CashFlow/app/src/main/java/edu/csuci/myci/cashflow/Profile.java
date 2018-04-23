@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,6 +59,26 @@ public class Profile {
         }
         return transactions;
     }
+
+    public LineGraphSeries<DataPoint> getSeries(){
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactions(null,null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                series.appendData(cursor.getDataPoint(),true,100);
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
+
     public List<Transaction> getTransactionsInOrder(String order) {
         List<Transaction> transactions = new ArrayList<>();
         TransactionCursorWrapper cursor;
@@ -207,9 +230,6 @@ public class Profile {
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
-//    String query = "SELECT * FROM Categories, Cat_Transaction " +
-//            "WHERE Cat_Transaction.idTransaction =? " +
-//            "AND Categories.idCategory =  Cat_Transaction.idCategory";
 
 
 }

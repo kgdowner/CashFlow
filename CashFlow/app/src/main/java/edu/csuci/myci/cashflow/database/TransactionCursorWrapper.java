@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 
+import com.jjoe64.graphview.series.DataPoint;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -45,6 +46,18 @@ public class TransactionCursorWrapper extends CursorWrapper {
         return category;
 
 
+
+    }
+
+    public DataPoint getDataPoint(){
+        //date, amount
+        //
+        Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
+        BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
+
+
+        DataPoint dataPoint = new DataPoint(date, amount.doubleValue());
+        return dataPoint;
 
     }
 

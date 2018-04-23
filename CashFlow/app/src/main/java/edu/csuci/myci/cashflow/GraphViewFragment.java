@@ -10,6 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 /**
  * Created by viktoriya on 3/26/18.
  */
@@ -41,6 +46,14 @@ public class GraphViewFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
+
+        GraphView graph = (GraphView)v.findViewById(R.id.graph);
+
+        //graph view gets fed
+        LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
+        graph.addSeries(series);
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+
 
 //        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
 //        if(graphType==1){
