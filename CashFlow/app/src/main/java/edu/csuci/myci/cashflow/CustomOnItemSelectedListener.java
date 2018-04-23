@@ -3,6 +3,7 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +25,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
     private static final int PROFILE_MANIPULATE = 2;
+    private static final int LIMITS_MANIPULATITON = 3;
 
 
 
@@ -71,20 +73,29 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
             case R.id.menu_spinner:
                 switch (position) {
                     case 0: break;
-                    //case 1: ManageProfilesCustomDialog();break;
-                    case 1: ManageProfilesCustomDialog(); break;
-                    case 2: ManageCategoriesCustomDialog();break;
+                    case 1: ManageProfilesCustomDialog();
+                        parent.setSelection(0);
+                        break;
+                    case 2: ManageCategoriesCustomDialog();
+                        parent.setSelection(0);
+                        break;
                     case 3:
                         if(GraphisInFront ==true)break;
-                        AddTransactionCustomDialog(); break;
+                        AddTransactionCustomDialog();
+                        parent.setSelection(0);
+                        break;
 
                     case 4:
 
                         if( sListIsInFront == false)break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
+                        parent.setSelection(0);
+
                         break;
-                    case 5: LimitsCustomDialog(); break;
+                    case 5: LimitsCustomDialog();
+                        parent.setSelection(0);
+                        break;
                     case 6: System.exit(0);break;
                     default:
                     Toast.makeText(parent.getContext(),
@@ -115,17 +126,10 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     }
 
     public void LimitsCustomDialog() {
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_set_alert);
-
-        Button mDialogCancelButton = (Button) dialog.findViewById(R.id.add_limit_cancel);
-        mDialogCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+        DialogFragment df = new LimitsDialogFragment();
+        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), LIMITS_MANIPULATITON);
+        df.show(ft,"Limits_Dialog_Fragment");
 
     }
 
@@ -134,6 +138,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
         df.show(ft,"Add_Transaction_Fragment");
+        return;
     }
     public void ManageProfilesCustomDialog() {
         DialogFragment df = new ProfileManagementFragment();
@@ -154,7 +159,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         Fragment fr = GraphViewFragment.newInstance(graphType);
         FragmentManager fm;
 
-        fm = ((FragmentActivity)context).getSupportFragmentManager();
+        fm = ((FragmentActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_place, fr);
         fragmentTransaction.commit();
