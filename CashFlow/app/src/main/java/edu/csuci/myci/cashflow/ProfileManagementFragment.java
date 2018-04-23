@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -53,13 +54,10 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         this.mNewProfileName        = (EditText)view.findViewById(R.id.new_profile_name);
 
         // register button listener functions
-        this.button_add_profile.setOnClickListener(     new View.OnClickListener() {@Override public void onClick(View v) {onButtonAddProfile();    }});
-        this.button_remove_profile.setOnClickListener(  new View.OnClickListener() {@Override public void onClick(View v) {onButtonRemoveProfile(); }});
-        this.button_cancel.setOnClickListener(          new View.OnClickListener() {@Override public void onClick(View v) {onButtonCancel();        }});
-        this.button_ok.setOnClickListener(              new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {onButtonOK(getActivity());}
-        });
+        this.button_add_profile.setOnClickListener(     new View.OnClickListener() {@Override public void onClick(View v) {onButtonAddProfile();        }});
+        this.button_remove_profile.setOnClickListener(  new View.OnClickListener() {@Override public void onClick(View v) {onButtonRemoveProfile();     }});
+        this.button_cancel.setOnClickListener(          new View.OnClickListener() {@Override public void onClick(View v) {onButtonCancel();            }});
+        this.button_ok.setOnClickListener(              new View.OnClickListener() {@Override public void onClick(View v) {onButtonOK(getActivity());   }});
         this.profiles.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {checkedButtonId = checkedId;}
@@ -156,6 +154,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         for ( String currentProfile: GlobalScopeContainer.profileList ) {
             RadioButton rb = new RadioButton(getContext());
             rb.setText(currentProfile.replace(".db",""));
+            rb.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
             profiles.addView(rb);
         }
     }
