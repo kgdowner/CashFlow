@@ -102,8 +102,6 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         }
 
         Category tempCat = new Category(name, UUID.randomUUID());
-        //FIXME: this can cause category overlay.... get some other method of setting id.
-
         categoryList.addCategory(tempCat);
 
         RadioButton rb = new RadioButton(getActivity());

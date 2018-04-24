@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
 
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -70,12 +72,51 @@ public class Profile {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
                 series.appendData(cursor.getDataPoint(),true,100);
+
+
                 cursor.moveToNext();
             }
         } finally {
             cursor.close();
         }
         return series;
+
+    }
+
+    public BarGraphSeries<DataPoint> getBarSeries(){
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsSumByCategory();
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+
+                //FIXME: need to redo query.
+                String uuid  = cursor.getString(cursor.getColumnIndex(CategoryTransactionTable.Cols.IDCATEGORY));
+                Category category = CategoryList.get(mContext).getCategorybyID(uuid);
+
+                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+
+                DataPoint temp = new DataPoint(i,y);
+
+                String tempString = i+", "+ y.toString();
+                sb.append(tempString+"...");
+
+                series.appendData(temp, true,100);
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        Toast.makeText(mContext,sb.toString(), Toast.LENGTH_LONG).show();
+
+        return series;
+
 
     }
 
@@ -230,6 +271,15 @@ public class Profile {
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
+    private TransactionCursorWrapper queryTransactionsSumByCategory(){
+        String query = "SELECT Cat_Transaction.idCategory, SUM(Transactions.amount) AS temp " +
+                "FROM Transactions " +
+                "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
+                "GROUP BY Cat_Transaction.idCategory ";
+        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+
 
 
 }

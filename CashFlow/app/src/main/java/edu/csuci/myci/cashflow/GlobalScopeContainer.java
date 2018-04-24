@@ -15,5 +15,6 @@ public class GlobalScopeContainer {
 
     public static Profile activeProfile;               // currently active profile
     public static List<String> profileList;            // list of profiles (databases)
+    //public static CategoryList activeCategoryList;           //currently active category list - needed 3 times therefore global
     public static Transaction[] transactionBuffer;     // latest set of transactions pulled from the database
 }

@@ -13,8 +13,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;        // FIXME: remove this when hardcoded test arrays are taken out
-
 import javax.microedition.khronos.opengles.GL;
 
 
@@ -47,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
                         GlobalScopeContainer.profileList.add(s);
                 }
             }
+        }
 
             if(GlobalScopeContainer.profileList.isEmpty()) {
-                GlobalScopeContainer.profileList.add(getResources().getString(R.string.default_profile_name));
-            }
+                GlobalScopeContainer.profileList.add("defaultProfile.db");
 
-            // TODO: determine method for caching which profile was last active; for now, just get profile 0
-            GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
-        }
+            }
+        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
+
 
 
         // TODO: move this menu bar to a new java file

@@ -2,6 +2,7 @@ package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -49,18 +52,12 @@ public class GraphViewFragment extends Fragment {
 
         GraphView graph = (GraphView)v.findViewById(R.id.graph);
 
-        //graph view gets fed
-        LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
-        graph.addSeries(series);
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
-
-//        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
-//        if(graphType==1){
-//            imageView.setImageResource(R.drawable.graph_view_line);
-//        } else {
-//            imageView.setImageResource(R.drawable.graph_view_bar);
-//        }
+        if(graphType==1){
+            setLineGraph(graph);
+        } else {
+            setBarGraph(graph);
+        }
         mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
         mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
 
@@ -71,6 +68,22 @@ public class GraphViewFragment extends Fragment {
 
         return v;
     }
+
+    public void setBarGraph(GraphView graph) {
+        BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
+        graph.addSeries(series);
+        series.setSpacing(10);
+        series.setDrawValuesOnTop(true);
+        series.setValuesOnTopColor(Color.RED);
+    }
+
+    public void setLineGraph(GraphView graph) {
+        LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
+        graph.addSeries(series);
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -210,11 +210,10 @@ public class ListViewFragment extends Fragment {
                     sb.append(s);
                     sb.append(", ");
                 }
-                sb.setLength(sb.length()-2);
-                sb.append(" ");
+
                 if(!tempString.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
-                }
+                } else mCategoryTextView.setText("NULL");
 
                 mNameTextView.setText(mTransaction.getName().toString());
             }
@@ -234,7 +233,6 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        //mAdapter.notifyDataSetChanged();
         sListIsInFront = true;
         sSortOrder=0;
 
@@ -328,14 +326,10 @@ public class ListViewFragment extends Fragment {
 
             if(resultCode == Activity.RESULT_OK) {
                 Category category = (Category) data.getSerializableExtra(CategoryManagementDialogFragment.MANAGE_CATEGORY);
-                //CategoryList.get(getActivity()).addCategory(category);
                 updateUI();
-                //Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
             }
             if(resultCode == Activity.RESULT_CANCELED){
                 String categoryName = (String) data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
-                //CategoryList.get(getActivity()).removeCategory(categoryName);
-                Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
                 updateUI();
 
             }

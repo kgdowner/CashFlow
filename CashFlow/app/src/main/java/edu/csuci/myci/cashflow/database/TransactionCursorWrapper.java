@@ -2,6 +2,7 @@ package edu.csuci.myci.cashflow.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.provider.ContactsContract;
 
 
 import com.jjoe64.graphview.series.DataPoint;
@@ -60,5 +61,7 @@ public class TransactionCursorWrapper extends CursorWrapper {
         return dataPoint;
 
     }
+
+
 
 }

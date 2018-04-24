@@ -95,7 +95,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
     private void onButtonAddProfile() {
         String name = mNewProfileName.getText().toString();
         if(TextUtils.isEmpty(name)) {
-            mNewProfileName.setError("Name your Category please.");
+            mNewProfileName.setError("Name your Profile please.");
             return;
         }
         if(GlobalScopeContainer.profileList.contains(name+".db")){
