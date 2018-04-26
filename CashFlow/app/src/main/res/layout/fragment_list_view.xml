@@ -59,12 +59,12 @@
                 android:padding="8dp" />
 
             <Button
-                android:id="@+id/set_alert_button"
+                android:id="@+id/edit_transaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".10"
                 android:padding="8dp"
-                android:text="@string/button_limits" />
+                android:text="@string/button_edit_transaction" />
         </LinearLayout>
 
 

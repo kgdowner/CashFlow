@@ -19,9 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 
 public class ListViewFragment extends Fragment {
@@ -40,11 +39,13 @@ public class ListViewFragment extends Fragment {
 
     private Button mAddTransaction;
     private Button mRemoveTransaction;
-    private Button mSetLimits;
+    private Button mEditTransaction;
 
     private Spinner mCategorySpinner;
 
     private static int sPosition;
+    private UUID editTransactionID;
+
     public static boolean sDeleteFlag = false;
     private static int sSortOrder = 0;
     public static boolean sListIsInFront;
@@ -63,13 +64,15 @@ public class ListViewFragment extends Fragment {
 
         mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();
 
         mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
 
         mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
         mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
-        mSetLimits = (Button) v.findViewById(R.id.set_alert_button);
+        mEditTransaction = (Button) v.findViewById(R.id.edit_transaction);
+        mRemoveTransaction.setEnabled(false);
+        mEditTransaction.setEnabled(false);
+        updateUI();
 
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -151,33 +154,14 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        if(sDeleteFlag == true) {
+                        mRemoveTransaction.setEnabled(true);
+                        mEditTransaction.setEnabled(true);
+                        sPosition = getAdapterPosition();
+                        editTransactionID = mTransaction.getID();
 
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which){
-                                    case DialogInterface.BUTTON_POSITIVE:
-                                        sPosition = getAdapterPosition();
-                                        mAdapter.delete(sPosition);
 
-                                        GlobalScopeContainer.activeProfile.removeTransaction(mTransaction);
 
-                                        sDeleteFlag = false;
 
-                                        updateUI();
-                                        break;
-
-                                    case DialogInterface.BUTTON_NEGATIVE:
-                                        sDeleteFlag = false;
-                                        break;
-                                }
-                            }
-                        };
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                                .setNegativeButton("No", dialogClickListener).show();
 
 
                             //TODO: delete more than 1 transaction
@@ -186,7 +170,7 @@ public class ListViewFragment extends Fragment {
                             //press trash can again
                             //are you sure dialog
                             //on ok, delete shit.
-                        }
+
                     }
                 });
 
@@ -286,6 +270,8 @@ public class ListViewFragment extends Fragment {
 
         mTransactionRecyclerView.setAdapter(new TransactionAdapter(transactions));
         mTransactionRecyclerView.invalidate();
+        mRemoveTransaction.setEnabled(false);
+        mEditTransaction.setEnabled(false);
     }
 
 
@@ -298,20 +284,44 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        mSetLimits.setOnClickListener(new View.OnClickListener(){
+        mEditTransaction.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).LimitsCustomDialog();
+                //new CustomOnItemSelectedListener(context).LimitsCustomDialog();
+                Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
             }
         });
 
         mRemoveTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sDeleteFlag = true;
-                Toast.makeText(getActivity(), "Please make a selection", Toast.LENGTH_LONG).show();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                mAdapter.delete(sPosition);
+                                Transaction temp = GlobalScopeContainer.activeProfile.getTransactions(editTransactionID);
+                                GlobalScopeContainer.activeProfile.removeTransaction(temp);
+
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                        updateUI();
+
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
+
+
         });
     }
 

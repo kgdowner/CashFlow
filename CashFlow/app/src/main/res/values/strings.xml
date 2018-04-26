@@ -40,7 +40,7 @@
     </string-array>
 
     <!-- fragment_list_view.xml -->
-    <string name="button_limits">!</string>
+    <string name="button_edit_transaction">Edit</string>
     <string-array name="category_sort_options">
         <item>Sort by</item>
         <item>Date</item>
