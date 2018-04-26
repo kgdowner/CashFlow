@@ -84,6 +84,23 @@ public class CategoryList {
         }
     }
 
+    public Category getCategorybyID(String id) {
+        TransactionCursorWrapper cursor = querryCategories(
+                CategoryTable.Cols.IDCATEGORY + " = ?",
+                new String[]{id}
+        );
+
+        try {
+            if (cursor.getCount() == 0){
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getCategory();
+        } finally {
+            cursor.close();
+        }
+    }
+
 
     public void addCategory(Category t){
 
@@ -142,5 +159,6 @@ public class CategoryList {
 //        addCategory(new Category("makeup", UUID.randomUUID()));
 //        addCategory(new Category("computer", UUID.randomUUID()));
     }
+
 
 }

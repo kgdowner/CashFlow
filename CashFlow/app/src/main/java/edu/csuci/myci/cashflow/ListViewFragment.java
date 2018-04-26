@@ -195,8 +195,8 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
 
-                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
-                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
+                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
+                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
 
                 mTransaction = transaction;
 

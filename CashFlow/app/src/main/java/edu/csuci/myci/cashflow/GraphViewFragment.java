@@ -71,10 +71,13 @@ public class GraphViewFragment extends Fragment {
 
     public void setBarGraph(GraphView graph) {
         BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
-        graph.addSeries(series);
         series.setSpacing(10);
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(10);
+        graph.addSeries(series);
+
     }
 
     public void setLineGraph(GraphView graph) {

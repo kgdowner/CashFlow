@@ -91,15 +91,22 @@ public class Profile {
         int i = 0;
         StringBuilder sb = new StringBuilder();
 
+        CategoryList categoryList = CategoryList.get(mContext);
+        List<String> categoryNames = new ArrayList<String>();
+        categoryNames.addAll(categoryList.getCategories());
+
+
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
 
                 //FIXME: need to redo query.
-                String uuid  = cursor.getString(cursor.getColumnIndex(CategoryTransactionTable.Cols.IDCATEGORY));
-                Category category = CategoryList.get(mContext).getCategorybyID(uuid);
+                String name  = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
+                Category category = categoryList.getCategory(name);
+
 
                 Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+                Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
 
                 DataPoint temp = new DataPoint(i,y);
 
@@ -266,16 +273,19 @@ public class Profile {
     private TransactionCursorWrapper queryTransactionsInOrderByCategory(){
         String query = "SELECT * FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Transactions.idTransaction = Cat_Transaction.idTransaction " +
-                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory GROUP BY Transactions.idTransaction " +
+                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
+                "GROUP BY Transactions.idTransaction " +
                 "ORDER BY Categories.categoryName DESC";
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
     private TransactionCursorWrapper queryTransactionsSumByCategory(){
-        String query = "SELECT Cat_Transaction.idCategory, SUM(Transactions.amount) AS temp " +
+        String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp " +
                 "FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
-                "GROUP BY Cat_Transaction.idCategory ";
+                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
+                "GROUP BY Cat_Transaction.idCategory " +
+                "ORDER BY Categories.idCategory ASC";
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }

@@ -57,6 +57,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         //Transferring Category Names to RadioGroup
         categoryList = CategoryList.get(getActivity());
 
+
         //will be removed when we add manipulation of mCategoriesRadioGroup.
         if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
 
