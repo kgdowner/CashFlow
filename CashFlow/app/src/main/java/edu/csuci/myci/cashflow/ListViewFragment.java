@@ -326,24 +326,17 @@ public class ListViewFragment extends Fragment {
         if(requestCode == REQUEST_TRANSACTION){
             if(resultCode != Activity.RESULT_OK){return;}
 
-            Transaction transaction = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            GlobalScopeContainer.activeProfile.addTransaction(transaction);
             updateUI();
         }
         if(requestCode == CATEGORY_MANIPULATE){
 
             if(resultCode == Activity.RESULT_OK) {
-                Category category = (Category) data.getSerializableExtra(CategoryManagementDialogFragment.MANAGE_CATEGORY);
-                //CategoryList.get(getActivity()).addCategory(category);
                 updateUI();
-                //Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
             }
-            if(resultCode == Activity.RESULT_CANCELED){
-                String categoryName = (String) data.getSerializableExtra(CategoryManagementDialogFragment.REMOVE_CATEGORY);
-                //CategoryList.get(getActivity()).removeCategory(categoryName);
+
+            if(resultCode == Activity.RESULT_CANCELED){ //on category-remove
                 Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
                 updateUI();
-
             }
 
 

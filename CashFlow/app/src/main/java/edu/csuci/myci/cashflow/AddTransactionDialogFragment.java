@@ -150,7 +150,9 @@ import java.util.UUID;
 
                     Transaction resultTransaction = new Transaction(actualAmount,null, name);
                     resultTransaction.setID(tempTransactionID);
-                    sendResult(Activity.RESULT_OK, resultTransaction);
+                    GlobalScopeContainer.activeProfile.addTransaction(resultTransaction);
+
+                    sendResult(Activity.RESULT_OK, "test");
                     dismiss();
                 }
             });
@@ -166,10 +168,10 @@ import java.util.UUID;
             return view;
         }
 
-    private void sendResult(int resultCode, Transaction transaction){
+    private void sendResult(int resultCode, String test){
         if(getTargetFragment() == null){return;}
         Intent intent = new Intent();
-        intent.putExtra(ADD_TRANSACTION, transaction);
+        intent.putExtra(ADD_TRANSACTION, test);
 
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
 
