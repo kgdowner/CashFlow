@@ -104,7 +104,8 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         }
 
         GlobalScopeContainer.profileList.add(name+".db");
-        Profile tempProfile = Profile.get(getActivity(),name+".db");
+        Profile newProfile = Profile.get(getActivity(),name+".db");
+        //this instantiates profile with new name; DONT ERASE
 
         StringBuilder sb = new StringBuilder();
         for (String s : GlobalScopeContainer.profileList)
