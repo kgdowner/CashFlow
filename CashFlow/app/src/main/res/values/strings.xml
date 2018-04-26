@@ -53,7 +53,6 @@
     <string name="button_add_transaction">Add Transaction</string>
     <string name="button_manage_profiles">Manage Profiles</string>
     <string name="button_manage_categories">Manage Categories</string>
-    <string name="default_profile_name">default profile</string>
 
     <!-- list_item_transaction.xml -->
     <string name="list_item_date">Date</string>
@@ -70,7 +69,7 @@
         <item>Bar</item>
     </string-array>
     <string-array name="main_menu">
-        <item>@string/default_profile_name</item>
+        <item></item>
         <item>Add Transaction</item>
         <item>Remove Transaction</item>
         <item>Manage Profiles</item>

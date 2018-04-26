@@ -48,13 +48,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            if(GlobalScopeContainer.profileList.isEmpty()) {
-                GlobalScopeContainer.profileList.add(getResources().getString(R.string.default_profile_name));
-            }
+
 
             // TODO: determine method for caching which profile was last active; for now, just get profile 0
-            GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
         }
+        if(GlobalScopeContainer.profileList.isEmpty()) {
+            GlobalScopeContainer.profileList.add("defaultProfile.db");
+        }
+        GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
+
 
 
         // TODO: move this menu bar to a new java file

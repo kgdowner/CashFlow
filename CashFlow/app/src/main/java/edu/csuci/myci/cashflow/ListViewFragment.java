@@ -165,11 +165,7 @@ public class ListViewFragment extends Fragment {
 
 
                             //TODO: delete more than 1 transaction
-                            // press trash can, highlight trashcan, set deleteFlag to true
-                            //select more than 1 item...
-                            //press trash can again
-                            //are you sure dialog
-                            //on ok, delete shit.
+
 
                     }
                 });
@@ -179,8 +175,8 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
 
-                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy kk:mm");
-                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
+                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy   kk:mm");
+                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
 
                 mTransaction = transaction;
 

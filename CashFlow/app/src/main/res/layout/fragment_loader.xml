@@ -57,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="8dp"
-                android:text="@string/default_profile_name"
                 android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textSize="14sp" />
