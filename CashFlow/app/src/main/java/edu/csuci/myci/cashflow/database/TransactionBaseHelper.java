@@ -47,7 +47,9 @@ public class TransactionBaseHelper extends SQLiteOpenHelper {
                 "create table " + CategoryTable.NAME + "(" +
                         " _id integer primary key autoincrement, " +
                         CategoryTable.Cols.IDCATEGORY + ", " +
-                        CategoryTable.Cols.CATEGORYNAME + ")"
+                        CategoryTable.Cols.CATEGORYNAME + ", " +
+                        CategoryTable.Cols.LIMITAMOUNT +
+                        ")"
         );
 
         db.execSQL(
