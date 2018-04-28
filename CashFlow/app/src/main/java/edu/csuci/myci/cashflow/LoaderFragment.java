@@ -16,7 +16,6 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class LoaderFragment extends Fragment {
-    private static final int REQUEST_TRANSACTION = 0;
     private static final int PROFILE_MANIPULATE = 2;
 
 
@@ -76,17 +75,6 @@ public class LoaderFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUEST_TRANSACTION){
-            if(resultCode != Activity.RESULT_OK){return;}
-
-            Transaction date = (Transaction) data.getSerializableExtra(AddTransactionDialogFragment.ADD_TRANSACTION);
-            GlobalScopeContainer.activeProfile.addTransaction(date);
-            Fragment fr = new ListViewFragment();
-            FragmentManager fm = (getActivity()).getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
-            fragmentTransaction.commit();
-        }
         if(requestCode == PROFILE_MANIPULATE){
             mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
 
