@@ -1,11 +1,15 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +32,7 @@ public class ListViewFragment extends Fragment {
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
     private static final int PROFILE_MANIPULATE = 2;
+    private static final int EDIT_TRANSACTION = 3;
 
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
@@ -286,6 +291,12 @@ public class ListViewFragment extends Fragment {
             public void onClick(View v) {
                 //new CustomOnItemSelectedListener(context).LimitsCustomDialog();
                 Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
+
+                Fragment fr = EditTransactionFragment.newInstance(editTransactionID);
+                FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_place, fr, "Edit_transaction_fragment").addToBackStack("Edit_transaction_fragment");
+                ft.commit();
+
             }
         });
 
@@ -329,17 +340,7 @@ public class ListViewFragment extends Fragment {
             updateUI();
         }
         if(requestCode == CATEGORY_MANIPULATE){
-
-            if(resultCode == Activity.RESULT_OK) {
-                updateUI();
-            }
-
-            if(resultCode == Activity.RESULT_CANCELED){ //on category-remove
-                Toast.makeText(getActivity(), "you manipulated category", Toast.LENGTH_LONG).show();
-                updateUI();
-            }
-
-
+            updateUI();
         }
         if(requestCode == PROFILE_MANIPULATE){
             updateUI();
