@@ -37,16 +37,6 @@ public class CategoryList {
         mContext = context.getApplicationContext();
         mDatabase =new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
-
-//        this.mCategories = new ArrayList<>();
-//        addCategory(new Category("groceries", 0));
-//        addCategory(new Category("gas", 1));
-//        addCategory(new Category("bullshit", 2));
-//        addCategory(new Category("housing", 3));
-//        addCategory(new Category("clothes", 4));
-//        addCategory(new Category("drinking", 5));
-//        addCategory(new Category("makeup", 6));
-//        addCategory(new Category("computer", 7));
     }
 
     public List<String> getCategories() {
@@ -142,5 +132,44 @@ public class CategoryList {
 //        addCategory(new Category("makeup", UUID.randomUUID()));
 //        addCategory(new Category("computer", UUID.randomUUID()));
     }
+
+    public void addLimit(Limit limit){
+        //find category in category table by limit.getName()
+        //update category with limit.getAmount
+
+        String name = limit.getName();
+        //ContentValues values = getContentValues(transaction);
+        ContentValues values = new ContentValues();
+        values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
+
+
+        mDatabase.update(CategoryTable.NAME, values,
+                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                new String[] {name});
+
+    }
+    //TODO: removeLimit
+    public List<Limit> getLimits() {
+        List<Limit> limits = new ArrayList<>();
+
+        String query = "SELECT * FROM Categories " +
+                "WHERE Categories.limits IS NOT NULL";
+
+
+        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                limits.add(cursor.getLimit());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return limits;
+    }
+
+
+
 
 }

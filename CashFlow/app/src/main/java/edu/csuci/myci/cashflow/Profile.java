@@ -121,9 +121,9 @@ public class Profile {
         return this.name;
     }
 
-    public void updateTransaction(Transaction crime){
-        String uuidString = crime.getID().toString();
-        ContentValues values = getContentValues(crime);
+    public void updateTransaction(Transaction transaction){
+        String uuidString = transaction.getID().toString();
+        ContentValues values = getContentValues(transaction);
 
         mDatabase.update(TransactionTable.NAME, values,
                 TransactionTable.Cols.IDTRANSACTION + " = ?",
