@@ -82,7 +82,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
                     case 3:
                         //Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
-                        ManageProfilesCustomDialog();
+                        ProfileManagementFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 4:
@@ -122,14 +122,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    public void ManageProfilesCustomDialog() {
-        DialogFragment df = new ProfileManagementFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), PROFILE_MANIPULATE);
-        df.show(ft,"Profile_Management_Fragment");
-    }
-
 
     public void ManageCategoriesCustomDialog() {
         DialogFragment df = new CategoryManagementDialogFragment();
