@@ -16,14 +16,13 @@
         android:padding="8dp"
         android:text="@string/prompt_add_transaction"
         android:textAlignment="textStart"
+        android:layout_gravity="start"
         android:textAllCaps="false"
         android:textSize="18sp" />
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <EditText
             android:id="@+id/transaction_name"
@@ -36,11 +35,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="567dp" />
 
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +65,6 @@
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
 
     <!---Select Categories drop down list-->
 
