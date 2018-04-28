@@ -40,15 +40,6 @@ public class GraphViewFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    public static GraphViewFragment newInstance(int typeOfGraphInt){
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_GRAPHTYPE, typeOfGraphInt);
-
-        GraphViewFragment fragment = new GraphViewFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Bundle args = getArguments();
