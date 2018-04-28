@@ -282,13 +282,8 @@ public class ListViewFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
-
-                Fragment fr = EditTransactionFragment.newInstance(editTransactionID);
-                FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_place, fr, "Edit_transaction_fragment").addToBackStack("Edit_transaction_fragment");
-                ft.commit();
-
+                //Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
+                EditTransactionFragment.display(context, editTransactionID);
             }
         });
 
