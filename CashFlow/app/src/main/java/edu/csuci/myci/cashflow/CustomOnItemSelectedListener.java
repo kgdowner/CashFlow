@@ -25,10 +25,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
     private static final int PROFILE_MANIPULATE = 2;
-    private static final int LIMITS_MANIPULATITON = 3;
-
-
-
 
 
     public CustomOnItemSelectedListener(Context context){
@@ -95,7 +91,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
                     case 5:
                         //Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
-                        LimitsCustomDialog();
+                        LimitsDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 6: System.exit(0);break;
@@ -125,13 +121,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void LimitsCustomDialog() {
-        DialogFragment df = new LimitsDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), LIMITS_MANIPULATITON);
-        df.show(ft,"Limits_Manipulation_Fragment");
     }
 
     public void AddTransactionCustomDialog() {
