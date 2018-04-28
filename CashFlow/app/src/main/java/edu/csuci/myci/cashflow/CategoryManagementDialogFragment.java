@@ -22,10 +22,6 @@ import java.util.UUID;
 
 
 public class CategoryManagementDialogFragment extends DialogFragment {
-    //tag for passing Transaction Object from CategoryManagement to ListFragment
-    public static final String MANAGE_CATEGORY = "edu.csuci.myci.cashflow.category";
-    public static final String REMOVE_CATEGORY = "edu.csuci.myci.cahsflow.categoryID";
-
     private EditText mNewCategoryName;
 
     private CategoryList categoryList;
@@ -119,7 +115,9 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         rb.setText(name);
         mCategoriesRadioGroup.addView(rb);
 
-        sendResult(Activity.RESULT_OK, tempCat);
+        // FIXME: add non-activity-result updating of list\graph views
+        getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+
         mNewCategoryName.setText("");
     }
 
@@ -139,7 +137,9 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             categoryList.removeCategory(name);
             categoryNames.remove(name);
 
-            sendResult2(Activity.RESULT_CANCELED, name);
+            // FIXME: add non-activity-result updating of list\graph views
+            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+
             dismiss();
         }
     }
@@ -148,24 +148,4 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private void onCancel() {
         dismiss();
     }
-    private void sendResult(int resultCode, Category category) {
-        if (getTargetFragment() == null) {
-            return;
-        }
-        Intent intent = new Intent();
-        intent.putExtra(MANAGE_CATEGORY, category);
-
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
-    }
-
-
-    private void sendResult2(int resultCode, String categoryName){
-        if(getTargetFragment() == null){return;}
-        Intent intent = new Intent();
-        intent.putExtra(REMOVE_CATEGORY, categoryName);
-
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
-        //at result update UI.
-    }
-
 }
