@@ -1,9 +1,12 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +38,12 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
     private int checkedButtonId = -1;
 
+    public static void display(Context context) {
+        DialogFragment df = new CategoryManagementDialogFragment();
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), 0);
+        df.show(ft, "Category_Management_Fragment");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

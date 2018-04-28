@@ -86,7 +86,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         parent.setSelection(0);
                         break;
                     case 4:
-                        ManageCategoriesCustomDialog();
+                        CategoryManagementDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 5:
@@ -121,13 +121,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void ManageCategoriesCustomDialog() {
-        DialogFragment df = new CategoryManagementDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), CATEGORY_MANIPULATE);
-        df.show(ft, "Category_Management_Fragment");
     }
 
     public void SwitchToGraphViewLine(Context context, int graphType) {
