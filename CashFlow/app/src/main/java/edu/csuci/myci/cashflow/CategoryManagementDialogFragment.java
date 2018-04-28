@@ -139,8 +139,8 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
             // FIXME: add non-activity-result updating of list\graph views
             getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
-
-            dismiss();
+            
+            mCategoriesRadioGroup.removeView(button);
         }
     }
 
