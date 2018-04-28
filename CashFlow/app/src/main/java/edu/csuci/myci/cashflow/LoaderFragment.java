@@ -16,7 +16,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class LoaderFragment extends Fragment {
-    private static final int REQUEST_TRANSACTION = 0;
+    private static final int REQUEST_TRANSACTION = 1;
     private static final int PROFILE_MANIPULATE = 2;
 
 
@@ -52,7 +52,7 @@ public class LoaderFragment extends Fragment {
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).AddTransactionCustomDialog();
+                AddTransactionDialogFragment.display(context);
             }
         });
 
@@ -60,8 +60,7 @@ public class LoaderFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //new CustomOnItemSelectedListener(context).ManageProfilesCustomDialog();
-                new CustomOnItemSelectedListener(context).ManageProfilesCustomDialog();
+                ProfileManagementFragment.display(context);
             }
         });
 
@@ -69,7 +68,7 @@ public class LoaderFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).ManageCategoriesCustomDialog();
+                CategoryManagementDialogFragment.display(context);
             }
         });
     }
@@ -85,6 +84,7 @@ public class LoaderFragment extends Fragment {
             fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
             fragmentTransaction.commit();
         }
+
         if(requestCode == PROFILE_MANIPULATE){
             mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
 

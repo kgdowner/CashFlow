@@ -47,12 +47,13 @@ public class EditTransactionFragment extends Fragment {
     private String newName; //moving actual changing of stuff to OK button
     private Date   oldDate;
 
+
     public static void display(Context context, UUID transactionID) {
         EditTransactionFragment fragment = new EditTransactionFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_TRANSACTION_ID, transactionID);
-
         fragment.setArguments(args);
+
         FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_place, fragment, "Edit_transaction_fragment").addToBackStack("Edit_transaction_fragment");
         ft.commit();

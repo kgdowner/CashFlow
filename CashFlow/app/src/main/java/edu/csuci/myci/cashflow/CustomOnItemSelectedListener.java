@@ -32,10 +32,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
     private static final int REQUEST_TRANSACTION = 0;
     private static final int CATEGORY_MANIPULATE = 1;
     private static final int PROFILE_MANIPULATE = 2;
-    private static final int LIMITS_MANIPULATITON = 3;
-
-
-
 
 
     public CustomOnItemSelectedListener(Context context){
@@ -59,7 +55,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter((Activity)context));
                             graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
                         } else {
-                            SwitchToGraphViewLine(context, 1);
+                            GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_LINE);
                         }
                         parent.setSelection(0);
                         break;
@@ -76,8 +72,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         series.setDrawValuesOnTop(true);
                         series.setValuesOnTopColor(Color.RED);;
                     } else {
-                        SwitchToGraphViewLine(context, 2);
-
+                        GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
                     }
                         parent.setSelection(0);
 
@@ -94,7 +89,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true)break;
-                        AddTransactionCustomDialog();
+                        AddTransactionDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 2:
@@ -104,15 +99,18 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         parent.setSelection(0);
                         break;
                     case 3:
-                        ManageProfilesCustomDialog();
+
+                        ProfileManagementFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 4:
-                        ManageCategoriesCustomDialog();
+                        CategoryManagementDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 5:
-                        LimitsCustomDialog();
+
+                        //Toast.makeText(context, "Not yet Implemented", Toast.LENGTH_LONG).show();
+                        LimitsDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 6: System.exit(0);break;
@@ -141,46 +139,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void LimitsCustomDialog() {
-        DialogFragment df = new LimitsDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), LIMITS_MANIPULATITON);
-        df.show(ft,"Limits_Manipulation_Fragment");
-    }
-
-    public void AddTransactionCustomDialog() {
-        DialogFragment df = new AddTransactionDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
-        df.show(ft,"Add_Transaction_Fragment");
-    }
-    public void ManageProfilesCustomDialog() {
-        DialogFragment df = new ProfileManagementFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), PROFILE_MANIPULATE);
-        df.show(ft,"Profile_Management_Fragment");
-    }
-
-
-    public void ManageCategoriesCustomDialog() {
-        DialogFragment df = new CategoryManagementDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), CATEGORY_MANIPULATE);
-        df.show(ft, "Category_Management_Fragment");
-    }
-
-    public void SwitchToGraphViewLine(Context context, int graphType) {
-        Fragment fr = GraphViewFragment.newInstance(graphType);
-        FragmentManager fm;
-
-        fm = ((FragmentActivity) context).getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
-        fragmentTransaction.commit();
-
 
     }
 }

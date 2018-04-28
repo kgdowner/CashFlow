@@ -49,6 +49,14 @@
                 android:padding="8dp"
                 android:text="@string/button_remove" />
 
+            <Button
+                android:id="@+id/edit_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".10"
+                android:padding="8dp"
+                android:text="@string/button_edit_transaction" />
+
             <Spinner
                 android:id="@+id/sort_list_spinner"
                 style="?attr/buttonStyle"
@@ -57,14 +65,6 @@
                 android:layout_weight=".40"
                 android:entries="@array/category_sort_options"
                 android:padding="8dp" />
-
-            <Button
-                android:id="@+id/edit_transaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
-                android:padding="8dp"
-                android:text="@string/button_edit_transaction" />
         </LinearLayout>
 
 

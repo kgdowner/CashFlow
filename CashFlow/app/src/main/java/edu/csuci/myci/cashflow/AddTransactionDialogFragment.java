@@ -1,9 +1,12 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,27 +33,21 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Created by viktoriya on 4/8/18.
- */
+
+public class AddTransactionDialogFragment extends DialogFragment {
+    private EditText sEditAmount;
+    private EditText sEditName;
+    private TextView mSelectedCategoryTextView;
+    private Spinner mCategorySpinner;
+    private CategoryList categoryList;
 
 
-
-    public  class AddTransactionDialogFragment extends DialogFragment{
-
-        //tag for passing Transaction Object from AddTransactionDialog to ListFragment
-        public static final String ADD_TRANSACTION = "edu.csuci.myci.cashflow.transaction";
-
-
-        private EditText sEditAmount;
-        private EditText sEditName;
-        private TextView mSelectedCategoryTextView;
-        private Spinner mCategorySpinner;
-
-        private CategoryList categoryList;
-
-
-
+    public static void display(Context context) {
+        DialogFragment df = new AddTransactionDialogFragment();
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), 0);
+        df.show(ft, "Add_Transaction_Fragment");
+    }
 
     @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -152,7 +149,13 @@ import java.util.UUID;
                     resultTransaction.setID(tempTransactionID);
                     GlobalScopeContainer.activeProfile.addTransaction(resultTransaction);
 
-                    sendResult(Activity.RESULT_OK, "test");
+
+                    // TODO: replace this with code calling ListViewFragment.updateUI() here
+                    // TODO: and add similar method + code for the graph views
+                    // update the list view
+                    getTargetFragment().onActivityResult(0, 0, null);
+
+
                     dismiss();
                 }
             });
@@ -167,15 +170,6 @@ import java.util.UUID;
 
             return view;
         }
-
-    private void sendResult(int resultCode, String test){
-        if(getTargetFragment() == null){return;}
-        Intent intent = new Intent();
-        intent.putExtra(ADD_TRANSACTION, test);
-
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
-
-    }
 }
 
 

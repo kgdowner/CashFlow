@@ -28,12 +28,6 @@ import java.util.UUID;
 
 
 public class ListViewFragment extends Fragment {
-
-    private static final int REQUEST_TRANSACTION = 0;
-    private static final int CATEGORY_MANIPULATE = 1;
-    private static final int PROFILE_MANIPULATE = 2;
-    private static final int EDIT_TRANSACTION = 3;
-
     private RecyclerView mTransactionRecyclerView;
     private TransactionAdapter mAdapter;
 
@@ -279,8 +273,7 @@ public class ListViewFragment extends Fragment {
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).AddTransactionCustomDialog();
-
+                AddTransactionDialogFragment.display(context);
             }
         });
 
@@ -288,8 +281,7 @@ public class ListViewFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //new CustomOnItemSelectedListener(context).LimitsCustomDialog();
-                Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
+
 
                 EditTransactionFragment.display(context, editTransactionID);
 
@@ -330,17 +322,11 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUEST_TRANSACTION){
-            if(resultCode != Activity.RESULT_OK){return;}
+        // FIXME: updating the UI like this does not seem logical
+        // FIXME: for instance: it precludes updating the graph view if one of these
+        // FIXME: sub-fragments was opened there, since they can only have one Target Fragment
 
-            updateUI();
-        }
-        if(requestCode == CATEGORY_MANIPULATE){
-            updateUI();
-        }
-        if(requestCode == PROFILE_MANIPULATE){
-            updateUI();
-        }
+        updateUI();
     }
 }
 

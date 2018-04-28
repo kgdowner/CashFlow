@@ -5,6 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,13 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
     private EditText mNewProfileName;
 
     private int checkedButtonId;
+
+    public static void display(Context context) {
+        DialogFragment df = new ProfileManagementFragment();
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), 0);
+        df.show(ft, "Profile_Management_Fragment");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +95,10 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
             Toast.makeText(context, "current active profile is "+GlobalScopeContainer.activeProfile.getName(), Toast.LENGTH_LONG).show();
             //dismiss();
-            sendResult(Activity.RESULT_OK, "test");
+
+            // TODO: this should be the only button where UI needs updating  (OK\"Select" button => selects\changes active profile)
+            // TODO: add update functions for list\graph views here
+            getTargetFragment().onActivityResult(0, 0, null);  // for now this will call updateUI() in ListViewFragment
 
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }
@@ -120,7 +133,6 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         rb.setText(name);
         profiles.addView(rb);
 
-        sendResult(Activity.RESULT_OK, "test");
         mNewProfileName.setText("");
     }
 
@@ -140,8 +152,6 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             GlobalScopeContainer.profileList.remove(name+".db");
             getActivity().getApplicationContext().deleteDatabase(name+".db");
 
-
-            sendResult(Activity.RESULT_CANCELED, name);
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }    }
 
@@ -158,15 +168,5 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             rb.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
             profiles.addView(rb);
         }
-    }
-
-    private void sendResult(int resultCode, String string) {
-        if (getTargetFragment() == null) {
-            return;
-        }
-        Intent intent = new Intent();
-        intent.putExtra(MANAGE_PROFILES, string);
-
-        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

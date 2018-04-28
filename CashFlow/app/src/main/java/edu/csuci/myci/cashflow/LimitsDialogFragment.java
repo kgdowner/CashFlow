@@ -1,7 +1,10 @@
 package edu.csuci.myci.cashflow;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,9 +25,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by viktoriya on 4/21/18.
- */
 
 public class LimitsDialogFragment extends DialogFragment {
     private Spinner mCategorySpinner;
@@ -45,6 +45,13 @@ public class LimitsDialogFragment extends DialogFragment {
     private String spinnerSelect;
     private int radioSelect = -1;
     private BigDecimal customAmount;
+
+    public static void display(Context context) {
+        DialogFragment df = new LimitsDialogFragment();
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), 0);
+        df.show(ft, "Limits_Manipulation_Fragment");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

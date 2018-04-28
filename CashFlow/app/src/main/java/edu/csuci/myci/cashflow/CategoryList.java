@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -155,10 +156,10 @@ public class CategoryList {
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
 
-
-        mDatabase.update(CategoryTable.NAME, values,
-                CategoryTable.Cols.CATEGORYNAME + " = ?",
-                new String[] {name});
+        // FIXME: creating a SQLiteException 'no such column: limits'
+//        mDatabase.update(CategoryTable.NAME, values,
+//                CategoryTable.Cols.CATEGORYNAME + " = ?",
+//                new String[] {name});
 
     }
 
@@ -177,16 +178,20 @@ public class CategoryList {
     public List<Limit> getLimits() {
         List<Limit> limits = new ArrayList<>();
 
-        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                limits.add(cursor.getLimit());
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
+        // FIXME: creating a SQLiteException 'no such column: limits'
+//        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
+//        try {
+//            cursor.moveToFirst();
+//            while (!cursor.isAfterLast()) {
+//                limits.add(cursor.getLimit());
+//                cursor.moveToNext();
+//            }
+//        } finally {
+//            cursor.close();
+//        }
+
+        limits.add(new Limit(new BigDecimal(2500), "Candy"));  // FIXME: remove
+
         return limits;
     }
 

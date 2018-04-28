@@ -5,6 +5,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +27,8 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class GraphViewFragment extends Fragment {
     private static final String ARG_GRAPHTYPE = "type";
-
+    public static final int GRAPH_TYPE_BAR = 0;
+    public static final int GRAPH_TYPE_LINE = 1;
 
     public static boolean GraphisInFront;
     public Context mActivity;
@@ -32,14 +36,16 @@ public class GraphViewFragment extends Fragment {
     private Spinner mTimeRangeSpinner;
     private Spinner mSelectCategorySpinner;
 
-
-    public static GraphViewFragment newInstance(int typeOfGraphInt){
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_GRAPHTYPE, typeOfGraphInt);
-
+    public static void display(Context context, int typeOfGraph) {
         GraphViewFragment fragment = new GraphViewFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_GRAPHTYPE, typeOfGraph);   // FIXME: does this really need to be done this way?  maybe parameters?
         fragment.setArguments(args);
-        return fragment;
+
+        FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_place, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -58,6 +64,8 @@ public class GraphViewFragment extends Fragment {
         } else {
             setBarGraph(graph);
         }
+
+
         mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
         mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
 
@@ -68,6 +76,7 @@ public class GraphViewFragment extends Fragment {
 
         return v;
     }
+
 
     public void setBarGraph(GraphView graph) {
         BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
