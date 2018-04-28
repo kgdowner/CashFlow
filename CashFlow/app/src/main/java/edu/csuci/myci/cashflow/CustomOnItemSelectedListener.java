@@ -71,7 +71,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true)break;
-                        AddTransactionCustomDialog();
+                        AddTransactionDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 2:
@@ -123,12 +123,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
     }
 
-    public void AddTransactionCustomDialog() {
-        DialogFragment df = new AddTransactionDialogFragment();
-        FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-        df.setTargetFragment(  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), REQUEST_TRANSACTION);
-        df.show(ft,"Add_Transaction_Fragment");
-    }
     public void ManageProfilesCustomDialog() {
         DialogFragment df = new ProfileManagementFragment();
         FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();

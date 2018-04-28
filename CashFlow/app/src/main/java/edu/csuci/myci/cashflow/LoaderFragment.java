@@ -51,7 +51,7 @@ public class LoaderFragment extends Fragment {
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CustomOnItemSelectedListener(context).AddTransactionCustomDialog();
+                AddTransactionDialogFragment.display(context);
             }
         });
 
