@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,8 @@ import android.widget.Spinner;
 
 public class GraphViewFragment extends Fragment {
     private static final String ARG_GRAPHTYPE = "type";
-
+    public static final int GRAPH_TYPE_BAR = 0;
+    public static final int GRAPH_TYPE_LINE = 1;
 
     public static boolean GraphisInFront;
     public Context mActivity;
@@ -24,6 +28,17 @@ public class GraphViewFragment extends Fragment {
     private Spinner mTimeRangeSpinner;
     private Spinner mSelectCategorySpinner;
 
+    public static void display(Context context, int typeOfGraph) {
+        GraphViewFragment fragment = new GraphViewFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_GRAPHTYPE, typeOfGraph);   // FIXME: does this really need to be done this way?  maybe parameters?
+        fragment.setArguments(args);
+
+        FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_place, fragment);
+        fragmentTransaction.commit();
+    }
 
     public static GraphViewFragment newInstance(int typeOfGraphInt){
         Bundle args = new Bundle();
@@ -43,11 +58,11 @@ public class GraphViewFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
 
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
-        if(graphType==1){
-            imageView.setImageResource(R.drawable.graph_view_line);
-        } else {
-            imageView.setImageResource(R.drawable.graph_view_bar);
+        switch(graphType) {
+            case GRAPH_TYPE_BAR:    imageView.setImageResource(R.drawable.graph_view_bar);  break;
+            case GRAPH_TYPE_LINE:   imageView.setImageResource(R.drawable.graph_view_line); break;
         }
+
         mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
         mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
 

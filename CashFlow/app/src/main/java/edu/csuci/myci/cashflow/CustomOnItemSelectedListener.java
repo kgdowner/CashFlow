@@ -43,7 +43,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                             ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                             image.setImageResource(R.drawable.graph_view_line);
                         } else {
-                            SwitchToGraphViewLine(context, 1);
+                            GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_LINE);
                         }
                         parent.setSelection(0);
                         break;
@@ -53,8 +53,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
                         image.setImageResource(R.drawable.graph_view_bar);
                     } else {
-                        SwitchToGraphViewLine(context, 2);
-
+                        GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
                     }
                         parent.setSelection(0);
 
@@ -120,18 +119,6 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    public void SwitchToGraphViewLine(Context context, int graphType) {
-        Fragment fr = GraphViewFragment.newInstance(graphType);
-        FragmentManager fm;
-
-        fm = ((FragmentActivity) context).getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fr);
-        fragmentTransaction.commit();
-
 
     }
 }
