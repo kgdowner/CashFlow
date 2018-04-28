@@ -291,10 +291,7 @@ public class ListViewFragment extends Fragment {
                 //new CustomOnItemSelectedListener(context).LimitsCustomDialog();
                 Toast.makeText(getActivity(), "you pressed edit transaction", Toast.LENGTH_LONG).show();
 
-                Fragment fr = EditTransactionFragment.newInstance(editTransactionID);
-                FragmentTransaction ft = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_place, fr, "Edit_transaction_fragment").addToBackStack("Edit_transaction_fragment");
-                ft.commit();
+                EditTransactionFragment.display(context, editTransactionID);
 
             }
         });

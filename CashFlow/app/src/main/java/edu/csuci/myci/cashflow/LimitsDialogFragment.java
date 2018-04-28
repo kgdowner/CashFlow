@@ -177,8 +177,9 @@ public class LimitsDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
 
-                        //TODO: do something at click on categoryLimit
-
+                        categoryList.removeLimit(mLimit);
+                        mLimitAdapter.notifyItemRemoved(getAdapterPosition());
+                        updateList();
 
                     }
                 });
@@ -217,7 +218,7 @@ public class LimitsDialogFragment extends DialogFragment {
         String amount = mCustomAmount.getText().toString();
 
 
-        if(spinnerSelect.isEmpty()){
+        if(spinnerSelect==null){
             Toast.makeText(getActivity(),"please make a selection", Toast.LENGTH_LONG).show();
         }
 

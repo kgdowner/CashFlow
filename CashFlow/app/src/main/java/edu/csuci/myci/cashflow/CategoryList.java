@@ -151,11 +151,7 @@ public class CategoryList {
     }
 
     public void addLimit(Limit limit){
-        //find category in category table by limit.getName()
-        //update category with limit.getAmount
-
         String name = limit.getName();
-        //ContentValues values = getContentValues(transaction);
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
 
@@ -165,7 +161,19 @@ public class CategoryList {
                 new String[] {name});
 
     }
-    //TODO: removeLimit
+
+    public void removeLimit(Limit limit){
+        String name = limit.getName();
+        ContentValues values = new ContentValues();
+        values.put(CategoryTable.Cols.LIMITAMOUNT, "");
+
+
+        mDatabase.update(CategoryTable.NAME, values,
+                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                new String[] {name});
+
+    }
+
     public List<Limit> getLimits() {
         List<Limit> limits = new ArrayList<>();
 

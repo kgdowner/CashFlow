@@ -1,11 +1,13 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -45,15 +47,18 @@ public class EditTransactionFragment extends Fragment {
     private String newName; //moving actual changing of stuff to OK button
     private Date   oldDate;
 
-    public static EditTransactionFragment newInstance(UUID transactionID){
+    public static void display(Context context, UUID transactionID) {
         EditTransactionFragment fragment = new EditTransactionFragment();
-
         Bundle args = new Bundle();
         args.putSerializable(ARG_TRANSACTION_ID, transactionID);
 
         fragment.setArguments(args);
-        return fragment;
+        FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_place, fragment, "Edit_transaction_fragment").addToBackStack("Edit_transaction_fragment");
+        ft.commit();
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
