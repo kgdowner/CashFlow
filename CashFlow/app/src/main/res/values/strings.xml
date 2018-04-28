@@ -40,7 +40,7 @@
     </string-array>
 
     <!-- fragment_list_view.xml -->
-    <string name="button_limits">!</string>
+    <string name="button_edit_transaction">Edit</string>
     <string-array name="category_sort_options">
         <item>Sort by</item>
         <item>Date</item>
@@ -63,6 +63,9 @@
     <!-- main.xml -->
     <string name="button_transaction_list">Transactions</string>
     <string name="button_graph_list">Graphs</string>
+    <string name="transaction_title_label">Transaction Name</string>
+    <string name="transaction_amount_label">Amount</string>
+    <string name="date_picker_title">Transaction Date</string>
     <string-array name="graph_view">
         <item>GRAPHS</item>
         <item>Line</item>

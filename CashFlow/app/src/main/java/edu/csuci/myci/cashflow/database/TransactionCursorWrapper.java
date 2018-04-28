@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import edu.csuci.myci.cashflow.Category;
+import edu.csuci.myci.cashflow.Limit;
 import edu.csuci.myci.cashflow.Transaction;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.TransactionTable;
@@ -46,7 +47,14 @@ public class TransactionCursorWrapper extends CursorWrapper {
 
         return category;
 
+    }
+    public Limit getLimit(){
+        BigDecimal amount = new BigDecimal(getString(getColumnIndex(CategoryTable.Cols.LIMITAMOUNT)));
+        String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
 
+        Limit limit = new Limit(amount, title);
+
+        return limit;
 
     }
 

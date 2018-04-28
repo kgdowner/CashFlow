@@ -37,6 +37,13 @@
         android:layout_height="wrap_content"
         android:hint="@string/alert_custom_amount_hint"
         android:id="@+id/custom_amount_limits"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/limits_recyclerView">
+
+    </android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

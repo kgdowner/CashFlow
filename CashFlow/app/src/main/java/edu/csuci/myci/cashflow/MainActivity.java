@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
 
 
-
         // TODO: move this menu bar to a new java file
         // top-bar button registration
         mGraphViewSpinner = (Spinner) findViewById(R.id.graph_view_spinner);
