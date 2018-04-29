@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -48,7 +49,9 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 1:
                         if(GraphisInFront ==true) {
                             GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
-                            graph.invalidate( );
+
+                            graph.removeAllSeries();
+                            graph.getGridLabelRenderer().resetStyles();
 
                             LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
                             graph.addSeries(series);
@@ -63,10 +66,13 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
                     case 2: if(GraphisInFront ==true){
                         GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
-                        BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
-                        graph.invalidate( );
+                        graph.removeAllSeries();
+                        graph.getGridLabelRenderer().resetStyles();
 
+
+                        BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
                         graph.addSeries(series);
+                        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
                         series.setSpacing(10);
                         series.setDrawValuesOnTop(true);

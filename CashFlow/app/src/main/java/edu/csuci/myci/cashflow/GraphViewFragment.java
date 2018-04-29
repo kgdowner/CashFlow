@@ -79,17 +79,22 @@ public class GraphViewFragment extends Fragment {
 
 
     public void setBarGraph(GraphView graph) {
+        graph.removeAllSeries();
         BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
         series.setSpacing(10);
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.RED);
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMaxX(10);
         graph.addSeries(series);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.getViewport().calcCompleteRange();
+        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
 
     }
 
     public void setLineGraph(GraphView graph) {
+        graph.removeAllSeries();
         LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
         graph.addSeries(series);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
