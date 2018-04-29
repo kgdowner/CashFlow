@@ -53,7 +53,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                             graph.removeAllSeries();
                             graph.getGridLabelRenderer().resetStyles();
 
-                            LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
+                            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
                             graph.addSeries(series);
                             graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter((Activity)context));
                             graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");

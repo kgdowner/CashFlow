@@ -62,16 +62,19 @@ public class Profile {
         return transactions;
     }
 
-    public LineGraphSeries<DataPoint> getSeries(){
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+    public DataPoint[] getSeries(){
+
         TransactionCursorWrapper cursor;
 
-        cursor = queryTransactions(null,null);
+        cursor = queryTransactionsInOrder(null, null, "date ASC");
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i=0;
 
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
-                series.appendData(cursor.getDataPoint(),true,100);
+               series[i] = cursor.getDataPoint();
+               i++;
 
 
                 cursor.moveToNext();
@@ -135,7 +138,7 @@ public class Profile {
             cursor = queryTransactionsInOrderByDate(null, null, order);
 
         }else if(order.equals("date")){
-            cursor = queryTransactionsInOrder(null, null, order);
+            cursor = queryTransactionsInOrder(null, null, order+" DESC");
         } else{
             cursor = queryTransactionsInOrderByCategory();
         }
@@ -278,7 +281,7 @@ public class Profile {
                 whereArgs,
                 null,
                 null,
-                orderBy + " DESC"
+                orderBy
         );
         return new TransactionCursorWrapper(cursor);
     }
@@ -290,7 +293,7 @@ public class Profile {
                 whereArgs,
                 null,
                 null,
-                "CAST ( "+orderBy+" AS NUMERICAL )" + " DESC"
+                "CAST ( "+orderBy+" AS NUMERICAL )"
         );
         return new TransactionCursorWrapper(cursor);
     }

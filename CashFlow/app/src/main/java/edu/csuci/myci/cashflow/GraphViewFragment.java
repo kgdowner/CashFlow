@@ -36,6 +36,10 @@ public class GraphViewFragment extends Fragment {
     private Spinner mTimeRangeSpinner;
     private Spinner mSelectCategorySpinner;
 
+    BarGraphSeries<DataPoint> series1;
+    LineGraphSeries<DataPoint> series2;
+
+
     public static void display(Context context, int typeOfGraph) {
         GraphViewFragment fragment = new GraphViewFragment();
         Bundle args = new Bundle();
@@ -79,24 +83,26 @@ public class GraphViewFragment extends Fragment {
 
 
     public void setBarGraph(GraphView graph) {
-        graph.removeAllSeries();
-        BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
-        series.setSpacing(10);
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
-        graph.addSeries(series);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-
-        graph.getViewport().calcCompleteRange();
-        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+//        graph.removeAllSeries();
+//        series1 = GlobalScopeContainer.activeProfile.getBarSeries();
+//        series1.setSpacing(10);
+//        series1.setDrawValuesOnTop(true);
+//        series1.setValuesOnTopColor(Color.RED);
+//        graph.addSeries(series1);
+//
+//        graph.getViewport().setXAxisBoundsManual(true);
+//
+//        graph.getViewport().calcCompleteRange();
+//        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
 
     }
 
     public void setLineGraph(GraphView graph) {
         graph.removeAllSeries();
-        LineGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getSeries();
-        graph.addSeries(series);
+
+        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+
+        graph.addSeries(series2);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
     }
@@ -113,6 +119,7 @@ public class GraphViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         GraphisInFront = true;
+        //series1.resetData(GlobalScopeContainer.activeProfile.getSeries());
     }
 
     @Override
