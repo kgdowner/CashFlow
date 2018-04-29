@@ -32,6 +32,15 @@
     <string name="alert_1500">$1500.00</string>
     <string name="alert_custom_amount_hint">$  Custom Amount</string>
 
+    <!-- fragment_dropdown_menu.xml -->
+    <string name="dropdown_menu_title">Menu</string>
+    <string name="dropdown_menu_add">Add Transaction</string>
+    <string name="dropdown_menu_remove">Remove Transaction</string>
+    <string name="dropdown_menu_profiles">Manage Profiles</string>
+    <string name="dropdown_menu_categories">Manage Categories</string>
+    <string name="dropdown_menu_limits">Manage Limits</string>
+    <string name="dropdown_menu_exit">Exit</string>
+
     <!-- fragment_graph_view.xml -->
     <string-array name="time_options">
         <item>Last Month</item>
