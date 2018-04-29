@@ -266,6 +266,8 @@ public class ListViewFragment extends Fragment {
         mTransactionRecyclerView.invalidate();
         mRemoveTransaction.setEnabled(false);
         mEditTransaction.setEnabled(false);
+        currentProfile.limitChecker();
+
     }
 
 

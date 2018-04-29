@@ -209,6 +209,31 @@ public class Profile {
 
 
     }
+    public void limitChecker(){
+        TransactionCursorWrapper cursor = querryTransactionLimitsCheck();
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
+                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+                Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMITAMOUNT));
+                if(y>z){
+
+                    Toast.makeText(mContext,"you are over limit in category "+title+" by $"+(y-z),Toast.LENGTH_LONG).show();
+                }
+
+
+
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        //limits.add(new Limit(new BigDecimal(2500), "Candy"));  // FIXME: remove
+
+
+    }
 
 
 
@@ -289,6 +314,19 @@ public class Profile {
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
+
+
+    private TransactionCursorWrapper querryTransactionLimitsCheck(){
+        String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp, Categories.limits " +
+                "FROM Transactions " +
+                "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
+                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
+                "WHERE Categories.limits ";
+        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+
+
 
 
 
