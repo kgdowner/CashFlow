@@ -152,12 +152,19 @@ public class ListViewFragment extends Fragment {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                    if(sDeleteFlag == false) {
+                        sDeleteFlag = true;
                         mRemoveTransaction.setEnabled(true);
                         mEditTransaction.setEnabled(true);
                         sPosition = getAdapterPosition();
                         editTransactionID = mTransaction.getID();
-
+                    } else {
+                        mRemoveTransaction.setEnabled(false);
+                        mEditTransaction.setEnabled(false);
+                        //sPosition = getAdapterPosition();
+                        editTransactionID = null;
+                        sDeleteFlag = false;
+                    }
 
 
 
