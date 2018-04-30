@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -61,7 +62,11 @@ public class DatePickerFragment extends DialogFragment {
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
-                        sendResult(Activity.RESULT_OK, date);
+                        if(date.after(new Date())){
+                            Toast.makeText(getActivity(), "Please choose date before today", Toast.LENGTH_LONG).show();
+                        } else {
+                            sendResult(Activity.RESULT_OK, date);
+                        }
                     }
                 })
                 .create();
