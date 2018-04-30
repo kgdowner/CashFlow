@@ -1,10 +1,12 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -115,7 +117,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         mCategoriesRadioGroup.addView(rb);
 
         // FIXME: add non-activity-result updating of list\graph views
-        getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+        setOnActivityResult();
 
         mNewCategoryName.setText("");
     }
@@ -137,9 +139,19 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             categoryNames.remove(name);
 
             // FIXME: add non-activity-result updating of list\graph views
-            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
-            
+            setOnActivityResult();
             mCategoriesRadioGroup.removeView(button);
+        }
+    }
+
+    private void setOnActivityResult() {
+        if(getTargetFragment() == null){
+            Fragment temp = (Fragment) (getActivity()).getSupportFragmentManager()
+            .findFragmentByTag("List_View_Fragment");
+            temp.onActivityResult(0,0,null);
+
+        } else {
+            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
         }
     }
 
@@ -147,4 +159,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private void onCancel() {
         dismiss();
     }
+
+
+
 }

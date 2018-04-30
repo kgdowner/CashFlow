@@ -48,7 +48,7 @@ public class GraphViewFragment extends Fragment {
 
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fragment);
+        fragmentTransaction.replace(R.id.fragment_place, fragment, "List_View_Fragment");
         fragmentTransaction.commit();
     }
 

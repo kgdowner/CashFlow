@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
                 fragmentTransaction.commit();
+                getSupportFragmentManager().executePendingTransactions();
             }
         });
     }

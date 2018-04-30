@@ -83,6 +83,8 @@ public class LoaderFragment extends Fragment {
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_place, fr, "List_View_Fragment");
             fragmentTransaction.commit();
+            (getActivity()).getSupportFragmentManager().executePendingTransactions();
+
         }
 
         if(requestCode == PROFILE_MANIPULATE){
