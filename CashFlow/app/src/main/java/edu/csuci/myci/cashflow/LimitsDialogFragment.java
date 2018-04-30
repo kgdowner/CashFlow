@@ -247,8 +247,7 @@ public class LimitsDialogFragment extends DialogFragment {
         }
         categoryList.addLimit(new Limit(actualAmount, spinnerSelect));
         dismiss();
-        //input actualAmount and spinnerSelect (string) to database,
-        //put checkLimits into updateUI method.
+
 
 
     }

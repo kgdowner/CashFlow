@@ -235,17 +235,15 @@ public class ListViewFragment extends Fragment {
         Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
 
-        if(sSortOrder ==0 || sSortOrder==1)
-        {
-            transactions = currentProfile.getTransactionsInOrder("date");
-
-        }else if(sSortOrder==3){
-            transactions = currentProfile.getTransactionsInOrder("amount");
-
-        } else
-        {
-            //FIXME: verify what kind of results we want
-            transactions= currentProfile.getTransactionsInOrder("category");
+        switch (sSortOrder){
+            case 3:
+                transactions = currentProfile.getTransactionsInOrder("amount");
+                break;
+            case 2:
+                transactions= currentProfile.getTransactionsInOrder("category");
+                break;
+            default:
+                transactions = currentProfile.getTransactionsInOrder("date");
 
         }
 

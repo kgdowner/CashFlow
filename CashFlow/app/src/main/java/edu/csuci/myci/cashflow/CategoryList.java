@@ -191,8 +191,6 @@ public class CategoryList {
             cursor.close();
         }
 
-        //limits.add(new Limit(new BigDecimal(2500), "Candy"));  // FIXME: remove
-
         return limits;
     }
 
