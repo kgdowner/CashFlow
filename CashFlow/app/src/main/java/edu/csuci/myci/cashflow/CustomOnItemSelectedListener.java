@@ -40,8 +40,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true) {
-                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                            image.setImageResource(R.drawable.graph_view_line);
+//                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+//                            image.setImageResource(R.drawable.graph_view_line);
                         } else {
                             GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_LINE);
                         }
@@ -50,8 +50,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
                     case 2: if(GraphisInFront ==true){
-                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-                        image.setImageResource(R.drawable.graph_view_bar);
+//                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
+//                        image.setImageResource(R.drawable.graph_view_bar);
                     } else {
                         GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
                     }
