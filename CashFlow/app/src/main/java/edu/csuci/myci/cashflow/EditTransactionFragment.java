@@ -138,7 +138,15 @@ public class EditTransactionFragment extends Fragment {
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newAmount!= null){ mTransaction.setAmount(new BigDecimal(newAmount));}
+                if(newAmount!= null){
+                    try {
+                        BigDecimal actualAmount =  new BigDecimal(newAmount);
+                    } catch (NumberFormatException e) {
+                        mEditAmount.setError("Please enter number.");
+                        return;
+                    }
+
+                    mTransaction.setAmount(new BigDecimal(newAmount));}
                 if(newName!=null){mTransaction.setName(newName);}
 
                 mCurrentProfile.updateTransaction(mTransaction);
