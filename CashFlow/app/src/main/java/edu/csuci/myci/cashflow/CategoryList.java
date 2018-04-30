@@ -110,16 +110,10 @@ public class CategoryList {
     }
 
     public void removeCategory(String categoryName){
-        String uuidString = categoryName;
-        String uuidString2 = String.valueOf( (sCategoryList.getCategory(categoryName)).getCategoryId());
-        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[] {uuidString});
+        String uuidString2 = String.valueOf( (getCategory(categoryName)).getCategoryId());
+        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[] {categoryName});
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }
-
-
-    //            Category tempCat = new Category("category"+i, i);
-//            Set<Category> tempCats = new HashSet();
-//            tempCats.add(tempCat);
 
     private TransactionCursorWrapper querryCategories(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(

@@ -12,6 +12,7 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -208,9 +209,14 @@ public class Profile {
     }
 
     public void removeProfile(String name){
-
+        mDatabase.close();
         mContext.deleteDatabase(name);
         GlobalScopeContainer.profileList.remove(name);
+
+        if(GlobalScopeContainer.profileList.isEmpty()){
+            GlobalScopeContainer.profileList.add("defaultProfile"+(new Date().toString())+".db");
+            GlobalScopeContainer.activeProfile = Profile.get(mContext, GlobalScopeContainer.profileList.get(0));
+        }
 
 
     }
