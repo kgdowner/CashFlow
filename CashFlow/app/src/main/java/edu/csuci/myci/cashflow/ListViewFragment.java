@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -117,6 +118,16 @@ public class ListViewFragment extends Fragment {
         public void onBindViewHolder(TransactionHolder holder, final int position) {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
+            if(position %2 == 1)
+            {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            else
+            {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+                //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+            }
 
 
 
