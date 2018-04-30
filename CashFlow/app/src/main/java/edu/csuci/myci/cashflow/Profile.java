@@ -96,7 +96,7 @@ public class Profile {
         int i = 0;
         StringBuilder sb = new StringBuilder();
 
-        CategoryList categoryList = CategoryList.get(mContext);
+        CategoryList categoryList = new CategoryList(mContext);
         List<String> categoryNames = new ArrayList<String>();
         categoryNames.addAll(categoryList.getCategories());
 

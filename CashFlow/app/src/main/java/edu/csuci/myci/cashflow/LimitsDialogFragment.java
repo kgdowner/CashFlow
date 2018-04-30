@@ -80,7 +80,7 @@ public class LimitsDialogFragment extends DialogFragment {
 
 
 
-        categoryList = CategoryList.get(getActivity());
+        categoryList = new CategoryList(getActivity());
         updateList();
 
         final List<String> categoryNames = new ArrayList<String>();

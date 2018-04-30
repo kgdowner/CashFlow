@@ -27,17 +27,17 @@ public class CategoryList {
 
     private SQLiteDatabase mDatabase;
 
-    public static CategoryList get(Context context) {
-        if(sCategoryList == null) {
-            sCategoryList = new CategoryList(context);
-        }
-        return  sCategoryList;
+//    public static CategoryList get(Context context) {
+//        if(sCategoryList == null) {
+//            sCategoryList = new CategoryList(context);
+//        }
+//        return  sCategoryList;
+//
+//    }
 
-    }
-
-    private CategoryList(Context context){
+    public CategoryList(Context context){
         mContext = context.getApplicationContext();
-        mDatabase =new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
+        mDatabase = new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
     }
 
