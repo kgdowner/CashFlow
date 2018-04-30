@@ -84,14 +84,17 @@ public class GraphViewFragment extends Fragment {
 
     public void setBarGraph(GraphView graph) {
         graph.removeAllSeries();
+        graph.getGridLabelRenderer().resetStyles();
+        //graph.invalidate();
+
         series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
         series1.setSpacing(10);
         series1.setDrawValuesOnTop(true);
         series1.setValuesOnTopColor(Color.RED);
+
         graph.addSeries(series1);
 
         graph.getViewport().setXAxisBoundsManual(true);
-
         graph.getViewport().calcCompleteRange();
         graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
 
@@ -99,12 +102,18 @@ public class GraphViewFragment extends Fragment {
 
     public void setLineGraph(GraphView graph) {
         graph.removeAllSeries();
+        graph.getGridLabelRenderer().resetStyles();
+        //graph.invalidate();
+
 
         series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+
 
         graph.addSeries(series2);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+        graph.getViewport().setScrollable(true);
+
     }
 
     @Override
@@ -119,7 +128,9 @@ public class GraphViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         GraphisInFront = true;
-        //series1.resetData(GlobalScopeContainer.activeProfile.getSeries());
+        if(series2!=null){series2.resetData(GlobalScopeContainer.activeProfile.getSeries());}
+
+        if(series1!=null){series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());}
     }
 
     @Override
