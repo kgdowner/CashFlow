@@ -70,7 +70,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         graph.getGridLabelRenderer().resetStyles();
 
 
-                        BarGraphSeries<DataPoint> series = GlobalScopeContainer.activeProfile.getBarSeries();
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
                         graph.addSeries(series);
                         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
                         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");

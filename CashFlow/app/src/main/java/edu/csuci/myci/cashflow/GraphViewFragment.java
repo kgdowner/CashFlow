@@ -83,17 +83,17 @@ public class GraphViewFragment extends Fragment {
 
 
     public void setBarGraph(GraphView graph) {
-//        graph.removeAllSeries();
-//        series1 = GlobalScopeContainer.activeProfile.getBarSeries();
-//        series1.setSpacing(10);
-//        series1.setDrawValuesOnTop(true);
-//        series1.setValuesOnTopColor(Color.RED);
-//        graph.addSeries(series1);
-//
-//        graph.getViewport().setXAxisBoundsManual(true);
-//
-//        graph.getViewport().calcCompleteRange();
-//        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+        graph.removeAllSeries();
+        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+        series1.setSpacing(10);
+        series1.setDrawValuesOnTop(true);
+        series1.setValuesOnTopColor(Color.RED);
+        graph.addSeries(series1);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+
+        graph.getViewport().calcCompleteRange();
+        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
 
     }
 
