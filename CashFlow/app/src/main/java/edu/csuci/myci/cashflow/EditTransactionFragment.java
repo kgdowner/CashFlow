@@ -110,7 +110,6 @@ public class EditTransactionFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //TODO: Verification!!!
                 newAmount = s.toString();
             }
 

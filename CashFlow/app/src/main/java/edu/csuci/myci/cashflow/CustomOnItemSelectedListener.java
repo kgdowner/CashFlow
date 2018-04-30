@@ -52,6 +52,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
                             graph.removeAllSeries();
                             graph.getGridLabelRenderer().resetStyles();
+                            //graph.invalidate();
+
 
                             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
                             graph.addSeries(series);
@@ -68,6 +70,8 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
                         graph.removeAllSeries();
                         graph.getGridLabelRenderer().resetStyles();
+                        //graph.invalidate();
+
 
 
                         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
