@@ -149,8 +149,8 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
             String name = (String)button.getText();
 
-            GlobalScopeContainer.profileList.remove(name+".db");
-            getActivity().getApplicationContext().deleteDatabase(name+".db");
+            GlobalScopeContainer.activeProfile.removeProfile(name+".db");
+
 
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }    }
