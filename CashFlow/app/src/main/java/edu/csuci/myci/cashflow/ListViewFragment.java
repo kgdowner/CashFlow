@@ -153,15 +153,18 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        mRemoveTransaction.setEnabled(true);
-                        mEditTransaction.setEnabled(true);
-                        sPosition = getAdapterPosition();
-                        editTransactionID = mTransaction.getID();
-
-
-
-
-
+                        if(sDeleteFlag == false) {
+                            sDeleteFlag = true;
+                            mRemoveTransaction.setEnabled(true);
+                            mEditTransaction.setEnabled(true);
+                            sPosition = getAdapterPosition();
+                            editTransactionID = mTransaction.getID();
+                        } else {
+                            mRemoveTransaction.setEnabled(false);
+                            mEditTransaction.setEnabled(false);
+                            editTransactionID = null;
+                            sDeleteFlag = false;
+                        }
 
                             //TODO: delete more than 1 transaction
 
