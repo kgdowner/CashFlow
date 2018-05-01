@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
 import static edu.csuci.myci.cashflow.ListViewFragment.sListIsInFront;
@@ -40,8 +48,17 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0: break;
                     case 1:
                         if(GraphisInFront ==true) {
-//                            ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-//                            image.setImageResource(R.drawable.graph_view_line);
+                            GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
+
+                            graph.removeAllSeries();
+                            graph.getGridLabelRenderer().resetStyles();
+                            //graph.invalidate();
+
+
+                            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+                            graph.addSeries(series);
+                            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter((Activity)context));
+                            graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
                         } else {
                             GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_LINE);
                         }
@@ -50,8 +67,20 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
                     case 2: if(GraphisInFront ==true){
-//                        ImageView image = (ImageView)((Activity)context).findViewById(R.id.imageView);
-//                        image.setImageResource(R.drawable.graph_view_bar);
+                        GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
+                        graph.removeAllSeries();
+                        graph.getGridLabelRenderer().resetStyles();
+                        //graph.invalidate();
+
+
+
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+                        graph.addSeries(series);
+                        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
+                        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+                        series.setSpacing(10);
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.RED);
                     } else {
                         GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
                     }
