@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|center_vertical"
-    android:weightSum="2"
-    >
+    android:weightSum="2">
 
     <!---Text View categories title-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/categories_dialog_title"/>
-
-    <!---Amount Label-->     <!---Amount EditableText Field-->
+        android:text="@string/categories_dialog_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="200dp"
             android:clipToPadding="false"
             android:fillViewport="false"
             android:scrollbarStyle="insideInset"
             android:layout_weight="1">
-        <RadioGroup
-            android:id="@+id/radiogroup_category_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
 
-        </RadioGroup>
+            <RadioGroup
+                android:id="@+id/radiogroup_category_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </RadioGroup>
         </ScrollView>
 
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/add_new_category"
-        android:id="@+id/new_category_name"
-        />
-    </LinearLayout>
 
-    <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_new_category"
+            android:id="@+id/new_category_name" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/button_add_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/button_add"
-            />
+            android:text="@string/button_add" />
+
         <Button
             android:id="@+id/button_remove_category"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/button_remove"
-            />
+            android:text="@string/button_remove" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/button_cancel" />
 
-
-
+        <Button
+            android:id="@+id/button_rename_category"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/rename_category" />
     </LinearLayout>
-
-
 
 </LinearLayout>

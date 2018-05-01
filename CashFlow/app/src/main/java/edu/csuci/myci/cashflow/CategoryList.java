@@ -26,20 +26,20 @@ public class CategoryList {
     private SQLiteDatabase mDatabase;
 
 
-
-    public CategoryList(Context context){
+    public CategoryList(Context context) {
         mContext = context.getApplicationContext();
-        mDatabase =new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
+        mDatabase = new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
     }
 
+    //Category Manipulation
     public List<String> getCategories() {
         List<String> tempList = new ArrayList<String>();
         TransactionCursorWrapper cursor = querryCategories(null, null);
 
         try {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 tempList.add(cursor.getCategory().getCategoryName());
                 cursor.moveToNext();
             }
@@ -49,8 +49,8 @@ public class CategoryList {
         return tempList;
 
 
-
     }
+
     public Category getCategory(String name) {
         TransactionCursorWrapper cursor = querryCategories(
                 CategoryTable.Cols.CATEGORYNAME + " = ?",
@@ -58,7 +58,7 @@ public class CategoryList {
         );
 
         try {
-            if (cursor.getCount() == 0){
+            if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
@@ -69,12 +69,13 @@ public class CategoryList {
     }
 
 
-    public void addCategory(Category t){
+    public void addCategory(Category t) {
 
         ContentValues values = getContentValues(t);
         mDatabase.insert(CategoryTable.NAME, null, values);
     }
-    private static ContentValues getContentValues(Category crime){
+
+    private static ContentValues getContentValues(Category crime) {
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.IDCATEGORY, crime.getCategoryId().toString());
         values.put(CategoryTable.Cols.CATEGORYNAME, crime.getCategoryName());
@@ -84,31 +85,23 @@ public class CategoryList {
 
     }
 
-    public void removeCategory(String categoryName){
-        String uuidString = categoryName;
-        String uuidString2 = String.valueOf( (getCategory(categoryName)).getCategoryId());
-        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[] {uuidString});
+    public void removeCategory(String categoryName) {
+        String uuidString2 = String.valueOf((getCategory(categoryName)).getCategoryId());
+        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[]{categoryName});
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }
 
+    public void updateCategory(Category category) {
+        String uuidString = category.getCategoryId().toString();
+        ContentValues values = getContentValues(category);
 
-    //            Category tempCat = new Category("category"+i, i);
-//            Set<Category> tempCats = new HashSet();
-//            tempCats.add(tempCat);
+        mDatabase.update(CategoryTable.NAME, values,
+                CategoryTable.Cols.IDCATEGORY + " = ?",
+                new String[]{uuidString});
 
-    private TransactionCursorWrapper querryCategories(String whereClause, String[] whereArgs){
-        Cursor cursor = mDatabase.query(
-                CategoryTable.NAME,
-                null,
-                whereClause,
-                whereArgs,
-                null,
-                null,
-                null
-        );
-        return new TransactionCursorWrapper(cursor);
     }
-    public void addCategoryTransaction(UUID categoryId, String transactionId){
+
+    public void addCategoryTransaction(UUID categoryId, String transactionId) {
         ContentValues values = new ContentValues();
         values.put(CategoryTransactionTable.Cols.IDCATEGORY, categoryId.toString());
         values.put(CategoryTransactionTable.Cols.IDTRANSACTION, transactionId);
@@ -116,33 +109,30 @@ public class CategoryList {
 
     }
 
-    public void populateCatList(){
+    public void populateCatList() {
         addCategory(new Category("groceries", UUID.randomUUID()));
         addCategory(new Category("transportation", UUID.randomUUID()));
         addCategory(new Category("utilities", UUID.randomUUID()));
         addCategory(new Category("entertainment", UUID.randomUUID()));
-//        addCategory(new Category("clothes", UUID.randomUUID()));
-//        addCategory(new Category("drinking", UUID.randomUUID()));
-//        addCategory(new Category("makeup", UUID.randomUUID()));
-//        addCategory(new Category("computer", UUID.randomUUID()));
     }
 
-    public void addLimit(Limit limit){
+
+
+    //Limits Manipulation - exist in CategoryTable, so they are here.
+    public void addLimit(Limit limit) {
         String name = limit.getName();
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
 
-        // FIXME: creating a SQLiteException 'no such column: limits'
         mDatabase.update(CategoryTable.NAME, values,
                 CategoryTable.Cols.CATEGORYNAME + " = ?",
-                new String[] {name});
+                new String[]{name});
 
     }
-    //TODO: removeLimit
+
     public List<Limit> getLimits() {
         List<Limit> limits = new ArrayList<>();
 
-        // FIXME: creating a SQLiteException 'no such column: limits'
         TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
         try {
             cursor.moveToFirst();
@@ -155,7 +145,8 @@ public class CategoryList {
         }
         return limits;
     }
-    public void removeLimit(Limit limit){
+
+    public void removeLimit(Limit limit) {
         String name = limit.getName();
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMITAMOUNT, "");
@@ -163,11 +154,21 @@ public class CategoryList {
 
         mDatabase.update(CategoryTable.NAME, values,
                 CategoryTable.Cols.CATEGORYNAME + " = ?",
-                new String[] {name});
+                new String[]{name});
 
     }
 
-
-
-
+    //QUERIES
+    private TransactionCursorWrapper querryCategories(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(
+                CategoryTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return new TransactionCursorWrapper(cursor);
+    }
 }

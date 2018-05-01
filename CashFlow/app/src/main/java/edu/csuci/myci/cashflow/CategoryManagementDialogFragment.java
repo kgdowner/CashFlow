@@ -1,8 +1,6 @@
 package edu.csuci.myci.cashflow;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +30,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private Button buttonAddCategory;
     private Button buttonRemoveCategory;
     private Button buttonCancel;
+    private Button renameCategoryButton;
 
     private int checkedButtonId = -1;
 
@@ -53,17 +53,20 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
         // acquire layout object references
         this.mCategoriesRadioGroup = (RadioGroup) view.findViewById(R.id.radiogroup_category_list);
-        this.buttonAddCategory      = (Button) view.findViewById(R.id.button_add_category);
-        this.buttonRemoveCategory   = (Button) view.findViewById(R.id.button_remove_category);
-        this.buttonCancel           = (Button) view.findViewById(R.id.button_cancel);
-        this.mNewCategoryName       = (EditText) view.findViewById(R.id.new_category_name);
+        this.buttonAddCategory = (Button) view.findViewById(R.id.button_add_category);
+        this.buttonRemoveCategory = (Button) view.findViewById(R.id.button_remove_category);
+        this.buttonCancel = (Button) view.findViewById(R.id.button_cancel);
+        this.mNewCategoryName = (EditText) view.findViewById(R.id.new_category_name);
+        this.renameCategoryButton = (Button) view.findViewById(R.id.button_rename_category);
 
 
         //Transferring Category Names to RadioGroup
         categoryList = new CategoryList(getContext());
 
         //will be removed when we add manipulation of mCategoriesRadioGroup.
-        if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
+        if (categoryList.getCategories().size() == 0) {
+            categoryList.populateCatList();
+        }
 
         categoryNames = new ArrayList<String>();
         categoryNames.addAll(categoryList.getCategories());
@@ -79,16 +82,37 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         });
 
         // register button listener functions
-        this.buttonAddCategory.setOnClickListener(     new View.OnClickListener() {@Override public void onClick(View v) {onAddCategory();      }});
-        this.buttonRemoveCategory.setOnClickListener(  new View.OnClickListener() {@Override public void onClick(View v) {onRemoveCategory();   }});
-        this.buttonCancel.setOnClickListener(          new View.OnClickListener() {@Override public void onClick(View v) {onCancel();           }});
+        this.buttonAddCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddCategory();
+            }
+        });
+        this.buttonRemoveCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRemoveCategory();
+            }
+        });
+        this.buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCancel();
+            }
+        });
+        this.renameCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRename();
+            }
+        });
 
 
         return view;
     }
 
-    private void populateRadioGroup(List<String>categoryNames) {
-        for ( String currentCategory: categoryNames ) {
+    private void populateRadioGroup(List<String> categoryNames) {
+        for (String currentCategory : categoryNames) {
             RadioButton rb = new RadioButton(getContext());
             rb.setText(currentCategory);
             mCategoriesRadioGroup.addView(rb);
@@ -97,18 +121,16 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
     private void onAddCategory() {
         String name = mNewCategoryName.getText().toString();
-        if(TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(name)) {
             mNewCategoryName.setError("Name your Category please.");
             return;
         }
-        if(categoryList.getCategory(name)!=null){
+        if (categoryList.getCategory(name) != null) {
             mNewCategoryName.setError("Pick a different name please");
             return;
         }
 
         Category tempCat = new Category(name, UUID.randomUUID());
-        //FIXME: this can cause category overlay.... get some other method of setting id.
-
         categoryList.addCategory(tempCat);
 
         RadioButton rb = new RadioButton(getContext());
@@ -124,22 +146,22 @@ public class CategoryManagementDialogFragment extends DialogFragment {
     private void onRemoveCategory() {
         int selectedCat = checkedButtonId;
 
-        if(selectedCat == -1){
-            Toast.makeText(getActivity(),"Please selecte category to remove ",Toast.LENGTH_LONG).show();
+        if (selectedCat == -1) {
+            Toast.makeText(getActivity(), "Please selecte category to remove ", Toast.LENGTH_LONG).show();
 
 
         } else {
 
             RadioButton button = (RadioButton) mCategoriesRadioGroup.findViewById(selectedCat);
 
-            String name = (String)button.getText();
+            String name = (String) button.getText();
 
             categoryList.removeCategory(name);
             categoryNames.remove(name);
 
             // FIXME: add non-activity-result updating of list\graph views
             getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
-            
+
             mCategoriesRadioGroup.removeView(button);
         }
     }
@@ -147,5 +169,39 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
     private void onCancel() {
         dismiss();
+    }
+
+    private void onRename() {
+        if (checkedButtonId == -1) {
+            Toast.makeText(getActivity(), "Please selecte category to rename ", Toast.LENGTH_LONG).show();
+        } else {
+            String newCategoryName = mNewCategoryName.getText().toString();
+            if (TextUtils.isEmpty(newCategoryName)) {
+                mNewCategoryName.setError("Name your Category please.");
+                return;
+            }
+            RadioButton button = (RadioButton) mCategoriesRadioGroup.findViewById(checkedButtonId);
+
+            //get category from button name and rename
+            String oldCategoryName = (String) button.getText();
+            Category category = categoryList.getCategory(oldCategoryName);
+            category.setCategoryName(newCategoryName);
+
+            categoryList.updateCategory(category);
+
+            //remove old button and name from nameList
+            mCategoriesRadioGroup.removeView(button);
+            categoryNames.remove(oldCategoryName);
+
+            //create new Button with new name
+            RadioButton rb = new RadioButton(getContext());
+            rb.setText(newCategoryName);
+            mCategoriesRadioGroup.addView(rb);
+
+            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+
+
+        }
+
     }
 }
