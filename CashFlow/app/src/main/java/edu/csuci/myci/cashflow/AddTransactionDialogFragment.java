@@ -137,7 +137,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
                     for (UUID id : temCatStorage)
                     {
-                        categoryList.addCategoryTransaction(id, tempTransactionID.toString());
+                        categoryList.addCategoryTransaction(id, tempTransactionID);
                     }
 
                     if(temCatStorage.size()==0){

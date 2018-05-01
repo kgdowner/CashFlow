@@ -91,10 +91,10 @@ public class CategoryList {
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }
 
-    public void removeCategoryTransaction(UUID categoryId, UUID transactionId){
+    public void removeCategoryTransaction(UUID categoryId, UUID transactionId) {
         mDatabase.delete(CategoryTransactionTable.NAME,
                 CategoryTransactionTable.Cols.IDCATEGORY + " = ?  " +
-                        "AND "+ CategoryTransactionTable.Cols.IDTRANSACTION + " = ? " ,
+                        "AND " + CategoryTransactionTable.Cols.IDTRANSACTION + " = ? ",
                 new String[]{categoryId.toString(), transactionId.toString()});
     }
 
@@ -109,10 +109,10 @@ public class CategoryList {
 
     }
 
-    public void addCategoryTransaction(UUID categoryId, String transactionId) {
+    public void addCategoryTransaction(UUID categoryId, UUID transactionId) {
         ContentValues values = new ContentValues();
         values.put(CategoryTransactionTable.Cols.IDCATEGORY, categoryId.toString());
-        values.put(CategoryTransactionTable.Cols.IDTRANSACTION, transactionId);
+        values.put(CategoryTransactionTable.Cols.IDTRANSACTION, transactionId.toString());
         mDatabase.insert(CategoryTransactionTable.NAME, null, values);
 
     }
@@ -123,7 +123,8 @@ public class CategoryList {
         addCategory(new Category("utilities", UUID.randomUUID()));
         addCategory(new Category("entertainment", UUID.randomUUID()));
     }
-    public List<Category> getAllCategoriesForTransaction(String transactionId){
+
+    public List<Category> getAllCategoriesForTransaction(String transactionId) {
         List<Category> catNames = new ArrayList<>();
 
         String query = "SELECT * FROM Categories, Cat_Transaction " +
@@ -137,11 +138,10 @@ public class CategoryList {
 
             } while (c.moveToNext());
         }
-        return  catNames;
+        return catNames;
 
 
     }
-
 
 
     //Limits Manipulation - exist in CategoryTable, so they are here.

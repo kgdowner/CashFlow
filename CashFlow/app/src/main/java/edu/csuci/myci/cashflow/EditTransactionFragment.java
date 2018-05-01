@@ -112,7 +112,7 @@ public class EditTransactionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     Category temp = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
-                    categoryList.addCategoryTransaction(temp.getCategoryId(), mTransaction.getID().toString());
+                    categoryList.addCategoryTransaction(temp.getCategoryId(), mTransaction.getID());
                     updateList();
                 }
             }
