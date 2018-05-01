@@ -1,8 +1,8 @@
 <resources>
     <!-- Global Application Strings -->
     <string name="app_name">CashFlow</string>
-    <string name="button_ok">ok</string>
-    <string name="button_cancel">cancel</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
     <string name="button_add">+</string>
     <string name="button_remove">-</string>
 
@@ -27,9 +27,6 @@
 
     <!-- dialog_set_alert.xml -->
     <string name="alert_dialog_title">Limits</string>
-    <string name="alert_15">$15.00</string>
-    <string name="alert_150">$150.00</string>
-    <string name="alert_1500">$1500.00</string>
     <string name="alert_custom_amount_hint">$  Custom Amount</string>
 
     <!-- fragment_dropdown_menu.xml -->
@@ -75,6 +72,9 @@
     <string name="transaction_title_label">Transaction Name</string>
     <string name="transaction_amount_label">Amount</string>
     <string name="date_picker_title">Transaction Date</string>
+    <string name="transactions">Transactions</string>
+    <string name="empyCategory">NULL</string>
+    <string name="rename_category">Rename</string>
     <string-array name="graph_view">
         <item>GRAPHS</item>
         <item>Line</item>

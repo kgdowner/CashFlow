@@ -4,20 +4,27 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -36,16 +43,21 @@ public class EditTransactionFragment extends Fragment {
 
     private Transaction mTransaction;
     private Profile mCurrentProfile;
+    private CategoryList categoryList;
 
     private EditText mEditTitle;
     private EditText mEditAmount;
     private Button mChangeDate;
     private Button mOkButton;
     private Button mCancelButton;
+    private Spinner categorySpinner;
+
+    private RecyclerView editTransactionRecyclerView;
+    private CategoryAdapter categoryAdapter;
+    private TextView categoryName;
 
     private String newAmount;
     private String newName; //moving actual changing of stuff to OK button
-    private Date   oldDate;
 
 
     public static void display(Context context, UUID transactionID) {
@@ -73,12 +85,44 @@ public class EditTransactionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_transaction, container, false);
+        categoryList = new CategoryList(getActivity());
 
         mEditTitle = (EditText)v.findViewById(R.id.transaction_name);
         mEditAmount = (EditText)v.findViewById(R.id.transaction_amount);
         mChangeDate = (Button)v.findViewById(R.id.transaction_date);
         mOkButton =(Button)v.findViewById(R.id.edit_transaction_ok);
         mCancelButton = (Button)v.findViewById(R.id.edit_transaction_cancel);
+        categorySpinner = (Spinner)v.findViewById(R.id.edit_transaction_category_spinner);
+
+        this.editTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.edit_transaction_recyclerView);
+        editTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        updateList();
+
+        final List<String> categoryNames = new ArrayList<String>();
+        categoryNames.add(getResources().getString(R.string.category_hint));
+        categoryNames.addAll(categoryList.getCategories());
+
+        //Spinner set up
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, categoryNames);
+
+        categorySpinner.setAdapter(dataAdapter);
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position!=0){
+                    Category temp = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
+                    categoryList.addCategoryTransaction(temp.getCategoryId(), mTransaction.getID().toString());
+                    updateList();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         mEditTitle.setText(mTransaction.getName());
         mEditTitle.addTextChangedListener(new TextWatcher() {
@@ -108,7 +152,6 @@ public class EditTransactionFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //TODO: Verification!!!
                 newAmount = s.toString();
             }
 
@@ -160,9 +203,79 @@ public class EditTransactionFragment extends Fragment {
             }
         });
 
+
+
         return v;
     }
 
+    private class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder> {
+        private List<Category> mCategories;
+
+
+        public CategoryAdapter(List<Category> categories) {
+            mCategories = categories;
+
+        }
+
+        @Override
+        public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+            return new CategoryHolder(layoutInflater.from(parent.getContext()), parent);
+        }
+
+        @Override
+        public void onBindViewHolder(CategoryHolder holder, final int position) {
+            Category category = mCategories.get(position);
+            holder.bind(category);
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return mCategories.size();
+
+        }
+
+        //method stub for deleting items from list.
+        public void delete(int position) { //removes the row
+            mCategories.remove(position);
+            notifyItemRemoved(position);
+        }
+
+
+        public class CategoryHolder extends RecyclerView.ViewHolder {
+            private Category mCategory;
+
+            public CategoryHolder(LayoutInflater inflater, ViewGroup parent) {
+                super(inflater.inflate(R.layout.list_item_category, parent, false));
+
+                categoryName = (TextView) itemView.findViewById(R.id.category);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        categoryList.removeCategoryTransaction(mCategory.getCategoryId(), mTransaction.getID());
+                        categoryAdapter.notifyItemRemoved(getAdapterPosition());
+                        updateList();
+                    }
+                });
+            }
+
+            public void bind(Category limit) {
+                mCategory = limit;
+
+                categoryName.setText(mCategory.getCategoryName());
+            }
+
+        }
+
+        public void setCategories(List<Category> categories) {
+            mCategories = categories;
+        }
+    }
     private void updateDate() {
         mChangeDate.setText(mTransaction.getDate().toString());
     }
@@ -183,6 +296,20 @@ public class EditTransactionFragment extends Fragment {
 
         getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
 
+    }
+    public void updateList() {
+        List<Category> categories;
+        categories = categoryList.getAllCategoriesForTransaction(mTransaction.getID().toString());
+
+        categoryAdapter = new CategoryAdapter(categories);
+        editTransactionRecyclerView.setAdapter(categoryAdapter);
+
+        if (categoryAdapter == null) {
+            categoryAdapter = new CategoryAdapter(categories);
+            editTransactionRecyclerView.setAdapter(categoryAdapter);
+        } else {
+            categoryAdapter.setCategories(categories);
+        }
     }
 
 

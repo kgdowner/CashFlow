@@ -91,6 +91,14 @@ public class CategoryList {
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }
 
+    public void removeCategoryTransaction(UUID categoryId, UUID transactionId){
+        mDatabase.delete(CategoryTransactionTable.NAME,
+                CategoryTransactionTable.Cols.IDCATEGORY + " = ?  " +
+                        "AND "+ CategoryTransactionTable.Cols.IDTRANSACTION + " = ? " ,
+                new String[]{categoryId.toString(), transactionId.toString()});
+    }
+
+
     public void updateCategory(Category category) {
         String uuidString = category.getCategoryId().toString();
         ContentValues values = getContentValues(category);
@@ -114,6 +122,24 @@ public class CategoryList {
         addCategory(new Category("transportation", UUID.randomUUID()));
         addCategory(new Category("utilities", UUID.randomUUID()));
         addCategory(new Category("entertainment", UUID.randomUUID()));
+    }
+    public List<Category> getAllCategoriesForTransaction(String transactionId){
+        List<Category> catNames = new ArrayList<>();
+
+        String query = "SELECT * FROM Categories, Cat_Transaction " +
+                "WHERE Cat_Transaction.idTransaction =? " +
+                "AND Categories.idCategory =  Cat_Transaction.idCategory";
+        Cursor c = mDatabase.rawQuery(query, new String[]{transactionId});
+        if (c.moveToFirst()) {
+            do {
+
+                catNames.add(getCategory(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORYNAME))));
+
+            } while (c.moveToNext());
+        }
+        return  catNames;
+
+
     }
 
 
