@@ -1,8 +1,6 @@
 package edu.csuci.myci.cashflow;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -17,20 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 
@@ -70,7 +57,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
             mSelectedCategoryTextView.setVisibility(View.INVISIBLE);
 
 
-            //Transfering Category Names to spinner
+            //Transferring Category Names to spinner
             categoryList = new CategoryList(getActivity());
 
             //will be removed when we add manipulation of categories.
@@ -145,14 +132,13 @@ public class AddTransactionDialogFragment extends DialogFragment {
                         return;
                     }
 
-                    Transaction resultTransaction = new Transaction(actualAmount,null, name);
+                    Transaction resultTransaction = new Transaction(actualAmount, name);
                     resultTransaction.setID(tempTransactionID);
                     GlobalScopeContainer.activeProfile.addTransaction(resultTransaction);
 
 
                     // TODO: replace this with code calling ListViewFragment.updateUI() here
                     // TODO: and add similar method + code for the graph views
-                    // update the list view
                     getTargetFragment().onActivityResult(0, 0, null);
 
 

@@ -26,7 +26,7 @@ public class TransactionCursorWrapper extends CursorWrapper {
         String title = getString(getColumnIndex(TransactionTable.Cols.TITLE));
         Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
-        Transaction transaction = new Transaction(amount,null,title);
+        Transaction transaction = new Transaction(amount,title);
         transaction.setDate(new Date(date));
         transaction.setID(UUID.fromString(uuidString));
 
