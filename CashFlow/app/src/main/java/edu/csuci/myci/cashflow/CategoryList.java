@@ -21,20 +21,13 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionT
  */
 
 public class CategoryList {
-    private static CategoryList sCategoryList;
     private Context mContext;
 
     private SQLiteDatabase mDatabase;
 
-    public static CategoryList get(Context context) {
-        if(sCategoryList == null) {
-            sCategoryList = new CategoryList(context);
-        }
-        return  sCategoryList;
 
-    }
 
-    private CategoryList(Context context){
+    public CategoryList(Context context){
         mContext = context.getApplicationContext();
         mDatabase =new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
@@ -93,7 +86,7 @@ public class CategoryList {
 
     public void removeCategory(String categoryName){
         String uuidString = categoryName;
-        String uuidString2 = String.valueOf( (sCategoryList.getCategory(categoryName)).getCategoryId());
+        String uuidString2 = String.valueOf( (getCategory(categoryName)).getCategoryId());
         mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[] {uuidString});
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
     }

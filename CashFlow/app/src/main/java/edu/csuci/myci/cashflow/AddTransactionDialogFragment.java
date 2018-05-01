@@ -71,7 +71,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
 
             //Transfering Category Names to spinner
-            categoryList = CategoryList.get(getActivity());
+            categoryList = new CategoryList(getActivity());
 
             //will be removed when we add manipulation of categories.
             if(categoryList.getCategories().size()==0){categoryList.populateCatList();}
