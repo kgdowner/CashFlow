@@ -155,6 +155,17 @@ public class CategoryList {
         }
         return limits;
     }
+    public void removeLimit(Limit limit){
+        String name = limit.getName();
+        ContentValues values = new ContentValues();
+        values.put(CategoryTable.Cols.LIMITAMOUNT, "");
+
+
+        mDatabase.update(CategoryTable.NAME, values,
+                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                new String[] {name});
+
+    }
 
 
 

@@ -184,8 +184,9 @@ public class LimitsDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
 
-                        //TODO: do something at click on categoryLimit
-
+                        categoryList.removeLimit(mLimit);
+                        mLimitAdapter.notifyItemRemoved(getAdapterPosition());
+                        updateList();
 
                     }
                 });
