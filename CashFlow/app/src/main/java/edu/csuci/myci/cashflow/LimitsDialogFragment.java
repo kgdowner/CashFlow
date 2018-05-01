@@ -30,7 +30,6 @@ public class LimitsDialogFragment extends DialogFragment {
     private Spinner mCategorySpinner;
     private RadioGroup mAmountRadioGroup;
     private EditText mCustomAmount;
-    private TextView mLimitsDisplay;
     private Button mOkButton;
     private Button mCancelButton;
 
@@ -44,7 +43,7 @@ public class LimitsDialogFragment extends DialogFragment {
     private CategoryList categoryList;
     private String spinnerSelect;
     private int radioSelect = -1;
-    private BigDecimal customAmount;
+    private BigDecimal amountFromRadioButton;
 
     public static void display(Context context) {
         DialogFragment df = new LimitsDialogFragment();
@@ -56,7 +55,6 @@ public class LimitsDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
     }
 
     @Override
@@ -68,19 +66,11 @@ public class LimitsDialogFragment extends DialogFragment {
         this.mCustomAmount = (EditText)view.findViewById(R.id.custom_amount_limits);
         this.mOkButton = (Button)view.findViewById(R.id.add_limit_ok);
         this.mCancelButton = (Button)view.findViewById(R.id.add_limit_cancel);
-        this.mLimitsDisplay = (TextView)view.findViewById(R.id.limits_display);
 
         this.mLimitsRecyclerView = (RecyclerView)view.findViewById(R.id.limits_recyclerView);
         mLimitsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-
-
-
-
-
-
-        categoryList = new CategoryList(getActivity());;
+        categoryList = new CategoryList(getActivity());
         updateList();
 
         final List<String> categoryNames = new ArrayList<String>();
@@ -109,14 +99,14 @@ public class LimitsDialogFragment extends DialogFragment {
                 radioSelect = checkedId;
                 RadioButton button = (RadioButton) mAmountRadioGroup.findViewById(checkedId);
 
-                customAmount = new BigDecimal((String)button.getText());
+                amountFromRadioButton = new BigDecimal((String)button.getText());
             }
         });
 
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLimitonOkButton();
+                setLimitOnOkButton();
             }
         });
         mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -164,21 +154,17 @@ public class LimitsDialogFragment extends DialogFragment {
         public void delete(int position) { //removes the row
             mLimits.remove(position);
             notifyItemRemoved(position);
-
         }
 
 
         public class LimitHolder extends RecyclerView.ViewHolder {
             private Limit mLimit;
 
-
-
             public LimitHolder(LayoutInflater inflater, ViewGroup parent) {
                 super(inflater.inflate(R.layout.list_item_limit, parent, false));
 
                 categoryName = (TextView) itemView.findViewById(R.id.limit_category);
                 categoryLimitAmount = (TextView) itemView.findViewById(R.id.limit_amount);
-
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -187,40 +173,24 @@ public class LimitsDialogFragment extends DialogFragment {
                         categoryList.removeLimit(mLimit);
                         mLimitAdapter.notifyItemRemoved(getAdapterPosition());
                         updateList();
-
                     }
                 });
-
-
             }
 
             public void bind(Limit limit) {
-
-                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
-
                 mLimit = limit;
 
                 categoryLimitAmount.setText(String.format("$%.2f", mLimit.getAmount()));
-
-                categoryName.setText(mLimit.getName().toString());
+                categoryName.setText(mLimit.getName());
             }
 
-
-
-
-
         }
-        public void setLimits(List<Limit> transactions){
-            mLimits =transactions;
+        public void setLimits(List<Limit> limits){
+            mLimits =limits;
         }
-
-
-
     }
 
-
-
-    private void setLimitonOkButton(){
+    private void setLimitOnOkButton(){
         BigDecimal actualAmount;
         String amount = mCustomAmount.getText().toString();
 
@@ -241,18 +211,13 @@ public class LimitsDialogFragment extends DialogFragment {
                 return;
             }
         } else {
-            Button button = (Button)mAmountRadioGroup.findViewById(radioSelect);
-            actualAmount = new BigDecimal(button.getText().toString());
+            actualAmount = amountFromRadioButton;
 
         }
         categoryList.addLimit(new Limit(actualAmount, spinnerSelect));
         updateList();
-        //dismiss();
-        //input actualAmount and spinnerSelect (string) to database,
-        //put checkLimits into updateUI method.
-
-
     }
+
     private void populateRadioButtons(){
         String[] amounts = {"100","200","500","1000","1500"};
         for(String c : amounts) {
@@ -267,15 +232,12 @@ public class LimitsDialogFragment extends DialogFragment {
 
         mLimitAdapter = new LimitAdapter(limits);
         mLimitsRecyclerView.setAdapter(mLimitAdapter);
-        //List<Transaction> transactions = Arrays.asList(GlobalScopeContainer.transactionBuffer);
 
         if(mLimitAdapter==null) {
             mLimitAdapter = new LimitAdapter(limits);
             mLimitsRecyclerView.setAdapter(mLimitAdapter);
         } else {
             mLimitAdapter.setLimits(limits);
-            //mCrimeRecyclerView.swapAdapter(mAdapter,true);
-
         }
     }
 
