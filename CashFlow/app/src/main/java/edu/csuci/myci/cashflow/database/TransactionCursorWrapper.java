@@ -42,27 +42,21 @@ public class TransactionCursorWrapper extends CursorWrapper {
         String uuidString = getString(getColumnIndex(CategoryTable.Cols.IDCATEGORY));
         String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
 
-        Category category = new Category(title, UUID.fromString(uuidString));
-
-        return category;
+        return new Category(title, UUID.fromString(uuidString));
 
     }
     public Limit getLimit(){
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(CategoryTable.Cols.LIMITAMOUNT)));
         String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
 
-        Limit limit = new Limit(amount, title);
-
-        return limit;
+        return new Limit(amount, title);
 
     }
     public DataPoint getDataPoint(){
         Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
 
-        DataPoint dataPoint = new DataPoint(date, amount.doubleValue());
-
-        return dataPoint;
+        return new DataPoint(date, amount.doubleValue());
 
     }
 
