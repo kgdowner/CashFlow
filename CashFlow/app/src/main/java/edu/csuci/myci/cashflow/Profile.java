@@ -86,7 +86,7 @@ public class Profile {
 
     public Transaction getTransactions(UUID id) {
         TransactionCursorWrapper cursor = queryTransactions(
-                TransactionTable.Cols.IDTRANSACTION + " = ?",
+                TransactionTable.Cols.ID_TRANSACTION + " = ?",
                 new String[]{id.toString()}
         );
 
@@ -112,7 +112,7 @@ public class Profile {
         if (c.moveToFirst()) {
             do {
 
-                catNames.add(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORYNAME)));
+                catNames.add(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME)));
 
             } while (c.moveToNext());
         }
@@ -131,7 +131,7 @@ public class Profile {
         ContentValues values = getContentValues(transaction);
 
         mDatabase.update(TransactionTable.NAME, values,
-                TransactionTable.Cols.IDTRANSACTION + " = ?",
+                TransactionTable.Cols.ID_TRANSACTION + " = ?",
                 new String[] {uuidString});
 
     }
@@ -153,8 +153,8 @@ public class Profile {
 
     public void removeTransaction(Transaction t){
         String uuidString = t.getID().toString();
-        mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.IDTRANSACTION + " = ?", new String[] {uuidString});
-        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDTRANSACTION + " = ? ", new String[]{uuidString});
+        mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.ID_TRANSACTION + " = ?", new String[] {uuidString});
+        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ", new String[]{uuidString});
 
     }
     public void addTransaction(Transaction t){
@@ -163,7 +163,7 @@ public class Profile {
     }
     private static ContentValues getContentValues(Transaction crime){
         ContentValues values = new ContentValues();
-        values.put(TransactionTable.Cols.IDTRANSACTION, crime.getID().toString());
+        values.put(TransactionTable.Cols.ID_TRANSACTION, crime.getID().toString());
         values.put(TransactionTable.Cols.TITLE, crime.getName());
         values.put(TransactionTable.Cols.DATE, crime.getDate().getTime());
         values.put(TransactionTable.Cols.AMOUNT, crime.getAmount().toString());
@@ -210,13 +210,13 @@ public class Profile {
 //            "WHERE Cat_Transaction.idTransaction =? " +
 //            "AND Categories.idCategory =  Cat_Transaction.idCategory";
     public void limitChecker(){
-        TransactionCursorWrapper cursor = querryTransactionLimitsCheck();
+        TransactionCursorWrapper cursor = queryTransactionLimitsCheck();
         try {
             cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
+            String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
             Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
-            Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMITAMOUNT));
+            Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT));
             if(y>z){
 
                 Toast.makeText(mContext,"you are over limit in category "+title+" by $"+(y-z),Toast.LENGTH_LONG).show();
@@ -230,7 +230,7 @@ public class Profile {
             cursor.close();
         }
     }
-    private TransactionCursorWrapper querryTransactionLimitsCheck(){
+    private TransactionCursorWrapper queryTransactionLimitsCheck(){
         String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp, Categories.limits " +
                 "FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
@@ -287,7 +287,7 @@ public class Profile {
 
                 //FIXME: need to redo query.
                 //TODO: Needs a different wrapper for BarGraph Data Point
-                String name  = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
+                String name  = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
                 Category category = categoryList.getCategory(name);
 
 

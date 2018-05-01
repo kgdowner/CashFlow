@@ -5,20 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import edu.csuci.myci.cashflow.database.TransactionBaseHelper;
 import edu.csuci.myci.cashflow.database.TransactionCursorWrapper;
-import edu.csuci.myci.cashflow.database.TransactionDbSchema;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionTable;
-
-/**
- * Created by viktoriya on 4/9/18.
- */
 
 public class CategoryList {
     private Context mContext;
@@ -35,7 +29,7 @@ public class CategoryList {
     //Category Manipulation
     public List<String> getCategories() {
         List<String> tempList = new ArrayList<String>();
-        TransactionCursorWrapper cursor = querryCategories(null, null);
+        TransactionCursorWrapper cursor = queryCategories(null, null);
 
         try {
             cursor.moveToFirst();
@@ -52,8 +46,8 @@ public class CategoryList {
     }
 
     public Category getCategory(String name) {
-        TransactionCursorWrapper cursor = querryCategories(
-                CategoryTable.Cols.CATEGORYNAME + " = ?",
+        TransactionCursorWrapper cursor = queryCategories(
+                CategoryTable.Cols.CATEGORY_NAME + " = ?",
                 new String[]{name}
         );
 
@@ -77,8 +71,8 @@ public class CategoryList {
 
     private static ContentValues getContentValues(Category crime) {
         ContentValues values = new ContentValues();
-        values.put(CategoryTable.Cols.IDCATEGORY, crime.getCategoryId().toString());
-        values.put(CategoryTable.Cols.CATEGORYNAME, crime.getCategoryName());
+        values.put(CategoryTable.Cols.ID_CATEGORY, crime.getCategoryId().toString());
+        values.put(CategoryTable.Cols.CATEGORY_NAME, crime.getCategoryName());
 
 
         return values;
@@ -87,14 +81,14 @@ public class CategoryList {
 
     public void removeCategory(String categoryName) {
         String uuidString2 = String.valueOf((getCategory(categoryName)).getCategoryId());
-        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORYNAME + " = ?", new String[]{categoryName});
-        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.IDCATEGORY + " = ? ", new String[]{uuidString2});
+        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORY_NAME + " = ?", new String[]{categoryName});
+        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_CATEGORY + " = ? ", new String[]{uuidString2});
     }
 
     public void removeCategoryTransaction(UUID categoryId, UUID transactionId) {
         mDatabase.delete(CategoryTransactionTable.NAME,
-                CategoryTransactionTable.Cols.IDCATEGORY + " = ?  " +
-                        "AND " + CategoryTransactionTable.Cols.IDTRANSACTION + " = ? ",
+                CategoryTransactionTable.Cols.ID_CATEGORY + " = ?  " +
+                        "AND " + CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ",
                 new String[]{categoryId.toString(), transactionId.toString()});
     }
 
@@ -104,15 +98,15 @@ public class CategoryList {
         ContentValues values = getContentValues(category);
 
         mDatabase.update(CategoryTable.NAME, values,
-                CategoryTable.Cols.IDCATEGORY + " = ?",
+                CategoryTable.Cols.ID_CATEGORY + " = ?",
                 new String[]{uuidString});
 
     }
 
     public void addCategoryTransaction(UUID categoryId, UUID transactionId) {
         ContentValues values = new ContentValues();
-        values.put(CategoryTransactionTable.Cols.IDCATEGORY, categoryId.toString());
-        values.put(CategoryTransactionTable.Cols.IDTRANSACTION, transactionId.toString());
+        values.put(CategoryTransactionTable.Cols.ID_CATEGORY, categoryId.toString());
+        values.put(CategoryTransactionTable.Cols.ID_TRANSACTION, transactionId.toString());
         mDatabase.insert(CategoryTransactionTable.NAME, null, values);
 
     }
@@ -134,7 +128,7 @@ public class CategoryList {
         if (c.moveToFirst()) {
             do {
 
-                catNames.add(getCategory(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORYNAME))));
+                catNames.add(getCategory(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME))));
 
             } while (c.moveToNext());
         }
@@ -148,10 +142,10 @@ public class CategoryList {
     public void addLimit(Limit limit) {
         String name = limit.getName();
         ContentValues values = new ContentValues();
-        values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
+        values.put(CategoryTable.Cols.LIMIT_AMOUNT, limit.getAmount().toString());
 
         mDatabase.update(CategoryTable.NAME, values,
-                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                CategoryTable.Cols.CATEGORY_NAME + " = ?",
                 new String[]{name});
 
     }
@@ -159,7 +153,7 @@ public class CategoryList {
     public List<Limit> getLimits() {
         List<Limit> limits = new ArrayList<>();
 
-        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
+        TransactionCursorWrapper cursor = queryCategories(CategoryTable.Cols.LIMIT_AMOUNT, null);
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -175,17 +169,17 @@ public class CategoryList {
     public void removeLimit(Limit limit) {
         String name = limit.getName();
         ContentValues values = new ContentValues();
-        values.put(CategoryTable.Cols.LIMITAMOUNT, "");
+        values.put(CategoryTable.Cols.LIMIT_AMOUNT, "");
 
 
         mDatabase.update(CategoryTable.NAME, values,
-                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                CategoryTable.Cols.CATEGORY_NAME + " = ?",
                 new String[]{name});
 
     }
 
     //QUERIES
-    private TransactionCursorWrapper querryCategories(String whereClause, String[] whereArgs) {
+    private TransactionCursorWrapper queryCategories(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 CategoryTable.NAME,
                 null,
