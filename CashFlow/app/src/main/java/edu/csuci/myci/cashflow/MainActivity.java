@@ -1,21 +1,15 @@
 package edu.csuci.myci.cashflow;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;        // FIXME: remove this when hardcoded test arrays are taken out
 
-import javax.microedition.khronos.opengles.GL;
 
 
 public class MainActivity extends AppCompatActivity {
