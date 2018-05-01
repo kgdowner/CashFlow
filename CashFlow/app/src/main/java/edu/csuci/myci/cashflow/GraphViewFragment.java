@@ -2,6 +2,7 @@ package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 /**
  * Created by viktoriya on 3/26/18.
@@ -27,6 +34,9 @@ public class GraphViewFragment extends Fragment {
 
     private Spinner mTimeRangeSpinner;
     private Spinner mSelectCategorySpinner;
+
+    BarGraphSeries<DataPoint> series1;
+    LineGraphSeries<DataPoint> series2;
 
     public static void display(Context context, int typeOfGraph) {
         GraphViewFragment fragment = new GraphViewFragment();
@@ -48,11 +58,15 @@ public class GraphViewFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
 
-//        ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
-//        switch(graphType) {
-//            case GRAPH_TYPE_BAR:    imageView.setImageResource(R.drawable.graph_view_bar);  break;
-//            case GRAPH_TYPE_LINE:   imageView.setImageResource(R.drawable.graph_view_line); break;
-//        }
+        GraphView graph = (GraphView)v.findViewById(R.id.graph);
+
+
+        if(graphType==1){
+            setLineGraph(graph);
+        } else {
+            setBarGraph(graph);
+        }
+
 
         mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
         mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
@@ -87,5 +101,38 @@ public class GraphViewFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = activity;
+    }
+    public void setBarGraph(GraphView graph) {
+        graph.removeAllSeries();
+        graph.getGridLabelRenderer().resetStyles();
+        //graph.invalidate();
+
+        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+        series1.setSpacing(10);
+        series1.setDrawValuesOnTop(true);
+        series1.setValuesOnTopColor(Color.RED);
+
+        graph.addSeries(series1);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().calcCompleteRange();
+        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+
+    }
+
+    public void setLineGraph(GraphView graph) {
+        graph.removeAllSeries();
+        graph.getGridLabelRenderer().resetStyles();
+        //graph.invalidate();
+
+
+        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+
+
+        graph.addSeries(series2);
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+        graph.getViewport().setScrollable(true);
+
     }
 }

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.series.DataPoint;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -233,6 +235,90 @@ public class Profile {
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
                 "WHERE Categories.limits ";
+        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+
+
+
+
+
+    public DataPoint[] getSeries(){
+
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsInOrder(null, null, "date ASC");
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i=0;
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                series[i] = cursor.getDataPoint();
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
+
+    public DataPoint[] getBarSeries(){
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsSumByCategory();
+
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+
+        CategoryList categoryList = new CategoryList(mContext);
+        List<String> categoryNames = new ArrayList<String>();
+        categoryNames.addAll(categoryList.getCategories());
+
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+
+                //FIXME: need to redo query.
+                //TODO: Needs a different wrapper for BarGraph Data Point
+                String name  = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORYNAME));
+                Category category = categoryList.getCategory(name);
+
+
+                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+                Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
+
+                DataPoint temp = new DataPoint(i,y);
+
+                String tempString = i+", "+ y.toString();
+                sb.append(tempString+"...");
+
+                series[i] = temp;
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        Toast.makeText(mContext,sb.toString(), Toast.LENGTH_LONG).show();
+
+        return series;
+
+
+    }
+
+    private TransactionCursorWrapper queryTransactionsSumByCategory(){
+        String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp " +
+                "FROM Transactions " +
+                "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
+                "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
+                "GROUP BY Cat_Transaction.idCategory " +
+                "ORDER BY Categories.idCategory ASC";
         Cursor cursor = mDatabase.rawQuery(query,new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
