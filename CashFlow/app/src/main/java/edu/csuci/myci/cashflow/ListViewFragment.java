@@ -175,12 +175,10 @@ public class ListViewFragment extends Fragment {
             public void bind(Transaction transaction) {
 
                 SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy   kk:mm");
-                //SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy");
-
                 mTransaction = transaction;
 
+
                 mDateTextView.setText(df.format(mTransaction.getDate()).toString());
-                //mAmountTextView.setText(String.format("$%7.2f", mTransaction.getAmount()));
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
                 ArrayList<String> tempString = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
@@ -236,17 +234,15 @@ public class ListViewFragment extends Fragment {
         Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
 
-        if(sSortOrder ==0 || sSortOrder==1)
-        {
-            transactions = currentProfile.getTransactionsInOrder("date");
-
-        }else if(sSortOrder==3){
-            transactions = currentProfile.getTransactionsInOrder("amount");
-
-        } else
-        {
-            //FIXME: verify what kind of results we want
-            transactions= currentProfile.getTransactionsInOrder("category");
+        switch (sSortOrder){
+            case 3:
+                transactions = currentProfile.getTransactionsInOrder("amount");
+                break;
+            case 2:
+                transactions= currentProfile.getTransactionsInOrder("category");
+                break;
+            default:
+                transactions = currentProfile.getTransactionsInOrder("date");
 
         }
 

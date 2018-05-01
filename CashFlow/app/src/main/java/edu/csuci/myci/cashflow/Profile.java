@@ -62,10 +62,10 @@ public class Profile {
         TransactionCursorWrapper cursor;
 
         if(order.equals("amount")){
-            cursor = queryTransactionsInOrderByDate(null, null, order);
+            cursor = queryTransactionsInOrder(null, null, "CAST ( "+order+" AS NUMERICAL ) DESC");
 
         }else if(order.equals("date")){
-            cursor = queryTransactionsInOrder(null, null, order);
+            cursor = queryTransactionsInOrder(null, null, order+" DESC");
         } else{
             cursor = queryTransactionsInOrderByCategory();
         }
@@ -188,22 +188,11 @@ public class Profile {
                 whereArgs,
                 null,
                 null,
-                orderBy + " DESC"
+                orderBy
         );
         return new TransactionCursorWrapper(cursor);
     }
-    private TransactionCursorWrapper queryTransactionsInOrderByDate(String whereClause, String[] whereArgs, String orderBy){
-        Cursor cursor = mDatabase.query(
-                TransactionTable.NAME,
-                null,
-                whereClause,
-                whereArgs,
-                null,
-                null,
-                "CAST ( "+orderBy+" AS NUMERICAL )" + " DESC"
-        );
-        return new TransactionCursorWrapper(cursor);
-    }
+
 
     private TransactionCursorWrapper queryTransactionsInOrderByCategory(){
         String query = "SELECT * FROM Transactions " +
