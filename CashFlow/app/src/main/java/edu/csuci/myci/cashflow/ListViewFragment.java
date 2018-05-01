@@ -1,15 +1,11 @@
 package edu.csuci.myci.cashflow;
 
-import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,6 +113,16 @@ public class ListViewFragment extends Fragment {
         public void onBindViewHolder(TransactionHolder holder, final int position) {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
+            if(position %2 == 1)
+            {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            else
+            {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+                //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+            }
 
 
 
@@ -153,7 +159,7 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
-                        if(sDeleteFlag == false) {
+                        if(!sDeleteFlag) {
                             sDeleteFlag = true;
                             mRemoveTransaction.setEnabled(true);
                             mEditTransaction.setEnabled(true);
@@ -194,7 +200,7 @@ public class ListViewFragment extends Fragment {
 //                sb.append(" ");
                 if(!tempString.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
-                } else mCategoryTextView.setText("NULL");
+                } else mCategoryTextView.setText(R.string.emptyCategory);
 
                 mNameTextView.setText(mTransaction.getName().toString());
             }
