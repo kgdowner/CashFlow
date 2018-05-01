@@ -2,10 +2,6 @@ package edu.csuci.myci.cashflow;
 
 import java.math.BigDecimal;
 
-/**
- * Created by viktoriya on 4/28/18.
- */
-
 public class Limit {
     BigDecimal amount;
     String name;

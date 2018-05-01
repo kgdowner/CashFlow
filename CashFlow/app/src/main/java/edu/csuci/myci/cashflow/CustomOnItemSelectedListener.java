@@ -1,19 +1,10 @@
 package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
@@ -23,16 +14,13 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import static edu.csuci.myci.cashflow.GraphViewFragment.GraphisInFront;
+import static edu.csuci.myci.cashflow.GraphViewFragment.GraphIsInFront;
 import static edu.csuci.myci.cashflow.ListViewFragment.sListIsInFront;
 
 
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
     private Context context;
-    private static final int REQUEST_TRANSACTION = 0;
-    private static final int CATEGORY_MANIPULATE = 1;
-    private static final int PROFILE_MANIPULATE = 2;
 
 
     public CustomOnItemSelectedListener(Context context){
@@ -47,7 +35,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        if(GraphisInFront ==true) {
+                        if(GraphIsInFront) {
                             GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
 
                             graph.removeAllSeries();
@@ -66,7 +54,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
 
 
-                    case 2: if(GraphisInFront ==true){
+                    case 2: if(GraphIsInFront){
                         GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
                         graph.removeAllSeries();
                         graph.getGridLabelRenderer().resetStyles();
@@ -98,12 +86,12 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                 switch (position) {
                     case 0: break;
                     case 1:
-                        if(GraphisInFront ==true)break;
+                        if(GraphIsInFront)break;
                         AddTransactionDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 2:
-                        if(sListIsInFront == false)break;
+                        if(!sListIsInFront)break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         parent.setSelection(0);

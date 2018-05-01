@@ -9,7 +9,7 @@ import java.util.List;
 // to hold some application-wide data
 // just include GlobalScopeContainer & reference as GlobalScopeContainer.variable
 public class GlobalScopeContainer {
-    private GlobalScopeContainer() {};  // stop instantiation by hiding constructor
+    private GlobalScopeContainer() {}  // stop instantiation by hiding constructor
 
     public static final int TRANSACTION_BUFFER_SIZE = 16;
 

@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.jjoe64.graphview.GraphView;
@@ -21,16 +20,12 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-/**
- * Created by viktoriya on 3/26/18.
- */
-
 public class GraphViewFragment extends Fragment {
-    private static final String ARG_GRAPHTYPE = "type";
+    private static final String ARG_GRAPH_TYPE = "type";
     public static final int GRAPH_TYPE_BAR = 0;
     public static final int GRAPH_TYPE_LINE = 1;
 
-    public static boolean GraphisInFront;
+    public static boolean GraphIsInFront;
     public Context mActivity;
 
     private Spinner mTimeRangeSpinner;
@@ -42,7 +37,7 @@ public class GraphViewFragment extends Fragment {
     public static void display(Context context, int typeOfGraph) {
         GraphViewFragment fragment = new GraphViewFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_GRAPHTYPE, typeOfGraph);   // FIXME: does this really need to be done this way?  maybe parameters?
+        args.putSerializable(ARG_GRAPH_TYPE, typeOfGraph);   // FIXME: does this really need to be done this way?  maybe parameters?
         fragment.setArguments(args);
 
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
@@ -59,10 +54,10 @@ public class GraphViewFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph_view, container, false);
 
-        GraphView graph = (GraphView)v.findViewById(R.id.graph);
+        GraphView graph = (GraphView) v.findViewById(R.id.graph);
 
 
-        if(graphType==1){
+        if (graphType == 1) {
             setLineGraph(graph);
         } else {
             setBarGraph(graph);
@@ -76,9 +71,9 @@ public class GraphViewFragment extends Fragment {
         mTimeRangeSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
 
-
         return v;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,22 +85,22 @@ public class GraphViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        GraphisInFront = true;
-        if(series2!=null){series2.resetData(GlobalScopeContainer.activeProfile.getSeries());}
-
-        if(series1!=null){series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());}
+        GraphIsInFront = true;
+        updateUI();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        GraphisInFront = false;
+        GraphIsInFront = false;
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = activity;
     }
+
     public void setBarGraph(GraphView graph) {
         graph.removeAllSeries();
         graph.getGridLabelRenderer().resetStyles();
@@ -141,13 +136,21 @@ public class GraphViewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // FIXME: updating the UI like this does not seem logical
         // FIXME: for instance: it precludes updating the graph view if one of these
         // FIXME: sub-fragments was opened there, since they can only have one Target Fragment
 
-        if(series2!=null){series2.resetData(GlobalScopeContainer.activeProfile.getSeries());}
+        updateUI();
+    }
 
-        if(series1!=null){series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());}
+    private void updateUI() {
+        if (series2 != null) {
+            series2.resetData(GlobalScopeContainer.activeProfile.getSeries());
+        }
+
+        if (series1 != null) {
+            series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());
+        }
     }
 }

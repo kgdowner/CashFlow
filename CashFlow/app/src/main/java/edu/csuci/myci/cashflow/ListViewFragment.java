@@ -118,6 +118,7 @@ public class ListViewFragment extends Fragment {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor1));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
+
             else
             {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor2));

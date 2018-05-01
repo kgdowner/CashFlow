@@ -16,10 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * Created by viktoriya on 4/3/18.
- */
-
 public class DatePickerFragment extends DialogFragment {
     public static final String EXTRA_DATE = "edu.csuci.myci.cashflow.extra_date";
 
@@ -65,18 +61,18 @@ public class DatePickerFragment extends DialogFragment {
                         if(date.after(new Date())){
                             Toast.makeText(getActivity(), "Please choose different date", Toast.LENGTH_SHORT).show();
                         } else {
-                            sendResult(Activity.RESULT_OK, date);
+                            sendResult(date);
                         }
                     }
                 })
                 .create();
     }
-    private void sendResult(int resultCode, Date date){
+    private void sendResult(Date date){
         if(getTargetFragment() == null){return;}
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE,date);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
+        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent  );
 
     }
 }
