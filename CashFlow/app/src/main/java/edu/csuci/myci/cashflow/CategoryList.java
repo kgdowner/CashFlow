@@ -128,42 +128,31 @@ public class CategoryList {
     }
 
     public void addLimit(Limit limit){
-        //find category in category table by limit.getName()
-        //update category with limit.getAmount
-
         String name = limit.getName();
-        //ContentValues values = getContentValues(transaction);
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMITAMOUNT, limit.getAmount().toString());
 
         // FIXME: creating a SQLiteException 'no such column: limits'
-//        mDatabase.update(CategoryTable.NAME, values,
-//                CategoryTable.Cols.CATEGORYNAME + " = ?",
-//                new String[] {name});
+        mDatabase.update(CategoryTable.NAME, values,
+                CategoryTable.Cols.CATEGORYNAME + " = ?",
+                new String[] {name});
 
     }
     //TODO: removeLimit
     public List<Limit> getLimits() {
         List<Limit> limits = new ArrayList<>();
 
-        String query = "SELECT * FROM Categories " +
-                "WHERE Categories.limits IS NOT NULL";
-
-
         // FIXME: creating a SQLiteException 'no such column: limits'
-//        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
-//        try {
-//            cursor.moveToFirst();
-//            while (!cursor.isAfterLast()) {
-//                limits.add(cursor.getLimit());
-//                cursor.moveToNext();
-//            }
-//        } finally {
-//            cursor.close();
-//        }
-
-        limits.add(new Limit(new BigDecimal(2500), "Candy"));  // FIXME: remove
-
+        TransactionCursorWrapper cursor = querryCategories(CategoryTable.Cols.LIMITAMOUNT, null);
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                limits.add(cursor.getLimit());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
         return limits;
     }
 
