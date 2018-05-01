@@ -52,7 +52,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_category_management, container, true);
 
         // acquire layout object references
-        this.mCategoriesRadioGroup = (RadioGroup) view.findViewById(R.id.radiogroup_category_list);
+        this.mCategoriesRadioGroup = (RadioGroup) view.findViewById(R.id.radio_group_category_list);
         this.buttonAddCategory = (Button) view.findViewById(R.id.button_add_category);
         this.buttonRemoveCategory = (Button) view.findViewById(R.id.button_remove_category);
         this.buttonCancel = (Button) view.findViewById(R.id.button_cancel);
@@ -147,7 +147,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         int selectedCat = checkedButtonId;
 
         if (selectedCat == -1) {
-            Toast.makeText(getActivity(), "Please selecte category to remove ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please select category to remove ", Toast.LENGTH_LONG).show();
 
 
         } else {
@@ -173,7 +173,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
 
     private void onRename() {
         if (checkedButtonId == -1) {
-            Toast.makeText(getActivity(), "Please selecte category to rename ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Please select category to rename ", Toast.LENGTH_LONG).show();
         } else {
             String newCategoryName = mNewCategoryName.getText().toString();
             if (TextUtils.isEmpty(newCategoryName)) {

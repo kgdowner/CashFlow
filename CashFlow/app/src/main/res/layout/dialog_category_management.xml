@@ -27,7 +27,7 @@
             android:layout_weight="1">
 
             <RadioGroup
-                android:id="@+id/radiogroup_category_list"
+                android:id="@+id/radio_group_category_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
