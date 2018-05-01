@@ -2,6 +2,7 @@ package edu.csuci.myci.cashflow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -46,7 +47,7 @@ public class GraphViewFragment extends Fragment {
 
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_place, fragment);
+        fragmentTransaction.replace(R.id.fragment_place, fragment, "List_View_Fragment");
         fragmentTransaction.commit();
     }
 
@@ -137,5 +138,16 @@ public class GraphViewFragment extends Fragment {
         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
         graph.getViewport().setScrollable(true);
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        // FIXME: updating the UI like this does not seem logical
+        // FIXME: for instance: it precludes updating the graph view if one of these
+        // FIXME: sub-fragments was opened there, since they can only have one Target Fragment
+
+        if(series2!=null){series2.resetData(GlobalScopeContainer.activeProfile.getSeries());}
+
+        if(series1!=null){series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());}
     }
 }
