@@ -189,11 +189,11 @@ public class ListViewFragment extends Fragment {
                     sb.append(s);
                     sb.append(", ");
                 }
-                sb.setLength(sb.length()-2);
-                sb.append(" ");
+//                sb.setLength(sb.length()-2);  //THIS IS CAUSING CRASH ON REMOVAL OF CATEGORIES KEITH!!!
+//                sb.append(" ");
                 if(!tempString.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
-                }
+                } else mCategoryTextView.setText("NULL");
 
                 mNameTextView.setText(mTransaction.getName().toString());
             }
