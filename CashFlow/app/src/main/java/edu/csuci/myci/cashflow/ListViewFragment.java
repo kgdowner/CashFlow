@@ -115,12 +115,12 @@ public class ListViewFragment extends Fragment {
             holder.bind(transaction);
             if(position %2 == 1)
             {
-                holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor1));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
             }
             else
             {
-                holder.itemView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor2));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
             }
 
