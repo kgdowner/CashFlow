@@ -90,6 +90,9 @@ public class GraphViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         GraphisInFront = true;
+        if(series2!=null){series2.resetData(GlobalScopeContainer.activeProfile.getSeries());}
+
+        if(series1!=null){series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());}
     }
 
     @Override
