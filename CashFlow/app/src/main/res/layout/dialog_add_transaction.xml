@@ -21,9 +21,7 @@
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <EditText
             android:id="@+id/transaction_name"
@@ -36,11 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="567dp" />
 
-    </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,8 +63,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </LinearLayout>
-
-    </android.support.constraint.ConstraintLayout>
 
     <!---Select Categories drop down list-->
 
