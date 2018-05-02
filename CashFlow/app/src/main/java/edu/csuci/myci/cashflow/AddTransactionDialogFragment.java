@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,6 +31,10 @@ public class AddTransactionDialogFragment extends DialogFragment {
     private TextView mSelectedCategoryTextView;
     private Spinner mCategorySpinner;
     private CategoryList categoryList;
+    private Button signButton;
+
+    private BigDecimal actualAmount;
+    private String newAmount;
 
 
     public static void display(Context context) {
@@ -52,6 +59,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
         sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
         sEditName = (EditText) view.findViewById(R.id.transaction_name);
         mCategorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
+        signButton = (Button) view.findViewById(R.id.sign_button);
 
         mSelectedCategoryTextView = (TextView) view.findViewById(R.id.selected_category_names);
         mSelectedCategoryTextView.setText("");
@@ -100,6 +108,50 @@ public class AddTransactionDialogFragment extends DialogFragment {
             }
         });
 
+        sEditAmount.addTextChangedListener(new TextWatcher() {
+            boolean _ignore = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //newAmount = s.toString();
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                newAmount = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(final Editable s) {
+                if (_ignore)
+                    return;
+
+                _ignore = true; // prevent infinite loop
+                    // Change your text here.
+
+                signButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity(), "you clicked sign button", Toast.LENGTH_LONG)
+                                .show();
+                        if(s.toString().contains("-")){
+                            signButton.setText("-");
+                            String temp = s.toString();
+                            sEditAmount.setText(temp.replace("-", ""));
+                        } else {
+                            signButton.setText("+");
+                            String temp = s.toString();
+                            sEditAmount.setText("-"+temp);
+                        }
+                        //if string has - on front, remove it, else append.
+                    }
+                });
+                _ignore = false; // release, so the TextWatcher start to listen again.
+            }
+        });
+
+
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -107,7 +159,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
                 String name = sEditName.getText().toString();
                 String amount = sEditAmount.getText().toString();
 
-                BigDecimal actualAmount;
+
 
 
                 //Validation
@@ -131,6 +183,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
                     ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
                     return;
                 }
+
 
                 Transaction resultTransaction = new Transaction(actualAmount, name);
                 resultTransaction.setID(tempTransactionID);
