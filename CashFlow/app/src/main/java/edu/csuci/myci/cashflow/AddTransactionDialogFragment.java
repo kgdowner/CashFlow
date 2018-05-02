@@ -158,19 +158,19 @@ public class AddTransactionDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 String name = editName.getText().toString();
-                String amount = editAmount.getText().toString();
-
-
-
 
                 //Validation
                 if (TextUtils.isEmpty(name)) {
                     editName.setError("Name your transaction please.");
                     return;
                 }
+                if (TextUtils.isEmpty(newAmount)) {
+                    editAmount.setError("Enter amount please");
+                    return;
+                }
 
                 try {
-                    actualAmount = new BigDecimal(amount);
+                    actualAmount = new BigDecimal(newAmount);
                 } catch (NumberFormatException e) {
                     editAmount.setError("Please enter number.");
                     return;
