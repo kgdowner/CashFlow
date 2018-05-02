@@ -3,13 +3,16 @@ package edu.csuci.myci.cashflow;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -20,6 +23,9 @@ public class DatePickerFragment extends DialogFragment {
     public static final String EXTRA_DATE = "edu.csuci.myci.cashflow.extra_date";
 
     private static final String ARG_DATE = "date";
+
+    private static int mHour;
+    private static int mMinute;
 
     private DatePicker mDatePicker;
 
@@ -46,7 +52,13 @@ public class DatePickerFragment extends DialogFragment {
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
 
         mDatePicker = (DatePicker)v.findViewById(R.id.dialog_date_picker);
-        mDatePicker.init(year,month,day,null);
+        mDatePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                TimePicker mTimePicker = new TimePicker();
+                mTimePicker.show(getFragmentManager(), "Select time");
+            }
+        });
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -57,10 +69,14 @@ public class DatePickerFragment extends DialogFragment {
                         int year = mDatePicker.getYear();
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
-                        Date date = new GregorianCalendar(year, month, day).getTime();
+
+                        Date date = new GregorianCalendar(year,month,day, mHour,mMinute,60).getTime();
+
+
                         if(date.after(new Date())){
                             Toast.makeText(getActivity(), "Please choose different date", Toast.LENGTH_SHORT).show();
                         } else {
+
                             sendResult(date);
                         }
                     }
@@ -74,5 +90,20 @@ public class DatePickerFragment extends DialogFragment {
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent  );
 
+    }
+    public static class TimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            return new TimePickerDialog(getActivity(), this, hour, minute, DateFormat.is24HourFormat(getActivity()));
+        }
+        @Override
+        public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
+            mHour = hourOfDay;
+            mMinute = minute;
+            //displayCurrentTime.setText("Selected Time: " + String.valueOf(hourOfDay) + " : " + String.valueOf(minute));
+        }
     }
 }

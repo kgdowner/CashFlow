@@ -27,10 +27,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by viktoriya on 4/25/18.
- */
-
 public class EditTransactionFragment extends Fragment {
     public static final String EDIT_TRANSACTION = "edu.csuci.myci.cashflow.transaction_edit";
 
