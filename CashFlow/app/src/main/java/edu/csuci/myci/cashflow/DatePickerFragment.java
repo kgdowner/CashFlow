@@ -29,7 +29,7 @@ public class DatePickerFragment extends DialogFragment {
 
     private DatePicker mDatePicker;
 
-    public static DatePickerFragment newInstance(Date date){
+    public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_DATE, date);
 
@@ -40,7 +40,7 @@ public class DatePickerFragment extends DialogFragment {
 
 
     @Override
-    public Dialog onCreateDialog (Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         Date date = (Date) getArguments().getSerializable(ARG_DATE);
 
         Calendar calendar = Calendar.getInstance();
@@ -60,6 +60,7 @@ public class DatePickerFragment extends DialogFragment {
             }
         });
 
+
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.date_picker_title)
@@ -73,7 +74,8 @@ public class DatePickerFragment extends DialogFragment {
                         Date date = new GregorianCalendar(year,month,day, mHour,mMinute,60).getTime();
 
 
-                        if(date.after(new Date())){
+
+                        if (date.after(new Date())) {
                             Toast.makeText(getActivity(), "Please choose different date", Toast.LENGTH_SHORT).show();
                         } else {
 
@@ -83,12 +85,15 @@ public class DatePickerFragment extends DialogFragment {
                 })
                 .create();
     }
-    private void sendResult(Date date){
-        if(getTargetFragment() == null){return;}
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE,date);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent  );
+    private void sendResult(Date date) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE, date);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
 
     }
     public static class TimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {

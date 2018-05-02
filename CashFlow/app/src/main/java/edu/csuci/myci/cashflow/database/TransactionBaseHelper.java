@@ -14,18 +14,18 @@ public class TransactionBaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase mDatabase;
 
     public TransactionBaseHelper(Context context, String profileName) {
-        super(context, profileName, null , VERSION);
+        super(context, profileName, null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TransactionTable.NAME + "(" +
-                " _id integer primary key autoincrement, " +
-                TransactionTable.Cols.ID_TRANSACTION + ", " +
-                TransactionTable.Cols.TITLE + ", " +
-                TransactionTable.Cols.DATE + ", " +
+                        " _id integer primary key autoincrement, " +
+                        TransactionTable.Cols.ID_TRANSACTION + ", " +
+                        TransactionTable.Cols.TITLE + ", " +
+                        TransactionTable.Cols.DATE + ", " +
 //                TransactionTable.Cols.CATEGORIES + ", " +
-                TransactionTable.Cols.AMOUNT + ")"
+                        TransactionTable.Cols.AMOUNT + ")"
 
 
         );
@@ -48,10 +48,9 @@ public class TransactionBaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if(oldVersion ==1){
+        if (oldVersion == 1) {
             db.execSQL("ALTER TABLE " + CategoryTable.NAME + " ADD COLUMN limits ");
         }
     }

@@ -1,15 +1,15 @@
 package edu.csuci.myci.cashflow;
 
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        if(savedInstanceState==null) {
+        if (savedInstanceState == null) {
             Fragment fr = new LoaderFragment();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -43,14 +43,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
             // TODO: determine method for caching which profile was last active; for now, just get profile 0
         }
-        if(GlobalScopeContainer.profileList.isEmpty()) {
+        if (GlobalScopeContainer.profileList.isEmpty()) {
             GlobalScopeContainer.profileList.add("defaultProfile.db");
         }
         GlobalScopeContainer.activeProfile = Profile.get(getApplicationContext(), GlobalScopeContainer.profileList.get(0));
-
 
 
         // TODO: move this menu bar to a new java file

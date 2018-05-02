@@ -77,18 +77,17 @@ public class EditTransactionFragment extends Fragment {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_transaction, container, false);
         categoryList = new CategoryList(getActivity());
 
-        mEditTitle = (EditText)v.findViewById(R.id.transaction_name);
-        mEditAmount = (EditText)v.findViewById(R.id.transaction_amount);
-        mChangeDate = (Button)v.findViewById(R.id.transaction_date);
-        mOkButton =(Button)v.findViewById(R.id.edit_transaction_ok);
-        mCancelButton = (Button)v.findViewById(R.id.edit_transaction_cancel);
-        categorySpinner = (Spinner)v.findViewById(R.id.edit_transaction_category_spinner);
+        mEditTitle = (EditText) v.findViewById(R.id.transaction_name);
+        mEditAmount = (EditText) v.findViewById(R.id.transaction_amount);
+        mChangeDate = (Button) v.findViewById(R.id.transaction_date);
+        mOkButton = (Button) v.findViewById(R.id.edit_transaction_ok);
+        mCancelButton = (Button) v.findViewById(R.id.edit_transaction_cancel);
+        categorySpinner = (Spinner) v.findViewById(R.id.edit_transaction_category_spinner);
 
         this.editTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.edit_transaction_recyclerView);
         editTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -106,7 +105,7 @@ public class EditTransactionFragment extends Fragment {
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0){
+                if (position != 0) {
                     Category temp = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
                     categoryList.addCategoryTransaction(temp.getCategoryId(), mTransaction.getID());
                     updateList();
@@ -153,14 +152,13 @@ public class EditTransactionFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-               // newAmount = s.toString();
-
+                // newAmount = s.toString();
 
 
             }
         });
         updateDate();
-        mChangeDate.setOnClickListener(new View.OnClickListener(){
+        mChangeDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -175,30 +173,32 @@ public class EditTransactionFragment extends Fragment {
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newAmount!= null){
+                if (newAmount != null) {
                     try {
-                        BigDecimal actualAmount =  new BigDecimal(newAmount);
+                        BigDecimal actualAmount = new BigDecimal(newAmount);
                     } catch (NumberFormatException e) {
                         mEditAmount.setError("Please enter number.");
                         return;
                     }
-                    mTransaction.setAmount(new BigDecimal(newAmount));}
-                if(newName!=null){mTransaction.setName(newName);}
+                    mTransaction.setAmount(new BigDecimal(newAmount));
+                }
+                if (newName != null) {
+                    mTransaction.setName(newName);
+                }
 
                 mCurrentProfile.updateTransaction(mTransaction);
                 sendResult(Activity.RESULT_OK, "test");
-                getActivity().getSupportFragmentManager().popBackStackImmediate() ;
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
             }
         });
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStackImmediate() ;
+                getActivity().getSupportFragmentManager().popBackStackImmediate();
 
 
             }
         });
-
 
 
         return v;
@@ -272,27 +272,34 @@ public class EditTransactionFragment extends Fragment {
             mCategories = categories;
         }
     }
+
     private void updateDate() {
         mChangeDate.setText(mTransaction.getDate().toString());
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(resultCode != Activity.RESULT_OK){return;}
-        if(requestCode == REQUEST_DATE){
-            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-             mTransaction.setDate(date);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mTransaction.setDate(date);
             updateDate();
         }
     }
-    private void sendResult(int resultCode, String test){
-        if(getTargetFragment() == null){return;}
+
+    private void sendResult(int resultCode, String test) {
+        if (getTargetFragment() == null) {
+            return;
+        }
         Intent intent = new Intent();
         intent.putExtra(EDIT_TRANSACTION, test);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(),resultCode, intent  );
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
 
     }
+
     public void updateList() {
         List<Category> categories;
         categories = categoryList.getAllCategoriesForTransaction(mTransaction.getID().toString());

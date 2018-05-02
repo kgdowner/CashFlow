@@ -1,12 +1,8 @@
 package edu.csuci.myci.cashflow;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 import java.util.UUID;
 
 

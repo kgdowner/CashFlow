@@ -3,7 +3,6 @@ package edu.csuci.myci.cashflow;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -73,7 +72,9 @@ public class ListViewFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 sSortOrder = position;
-                if(position!=0){updateUI();}
+                if (position != 0) {
+                    updateUI();
+                }
             }
 
             @Override
@@ -86,15 +87,11 @@ public class ListViewFragment extends Fragment {
         addListenerOnDialogButton(getActivity());
 
 
-
-
-
         return v;
     }
 
 
-
-    private class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionHolder>{
+    private class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionHolder> {
         private List<Transaction> mTransactions;
 
 
@@ -113,18 +110,13 @@ public class ListViewFragment extends Fragment {
         public void onBindViewHolder(TransactionHolder holder, final int position) {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
-            if(position %2 == 1)
-            {
+            if (position % 2 == 1) {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor1));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            }
-
-            else
-            {
+            } else {
                 holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor2));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
             }
-
 
 
         }
@@ -147,20 +139,19 @@ public class ListViewFragment extends Fragment {
             private Transaction mTransaction;
 
 
-
             public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
                 super(inflater.inflate(R.layout.list_item_transaction, parent, false));
 
                 mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
                 mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
                 mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
-                mNameTextView = (TextView)itemView.findViewById(R.id.transaction_name);
+                mNameTextView = (TextView) itemView.findViewById(R.id.transaction_name);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if(!sDeleteFlag) {
+                        if (!sDeleteFlag) {
                             sDeleteFlag = true;
                             mRemoveTransaction.setEnabled(true);
                             mEditTransaction.setEnabled(true);
@@ -173,7 +164,7 @@ public class ListViewFragment extends Fragment {
                             sDeleteFlag = false;
                         }
 
-                            //TODO: delete more than 1 transaction
+                        //TODO: delete more than 1 transaction
 
 
                     }
@@ -184,22 +175,23 @@ public class ListViewFragment extends Fragment {
 
             public void bind(Transaction transaction) {
 
-                SimpleDateFormat df = new SimpleDateFormat( " MM/dd/yy   kk:mm");
+                SimpleDateFormat df = new SimpleDateFormat(" MM/dd/yy   kk:mm");
                 mTransaction = transaction;
 
 
                 mDateTextView.setText(df.format(mTransaction.getDate()).toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-                ArrayList<String> tempString = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
+                ArrayList<String> categoryArray = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
-                for (String s : tempString)
-                {
+                for (String s : categoryArray) {
                     sb.append(s);
                     sb.append(", ");
                 }
-//                sb.setLength(sb.length()-2);  //THIS IS CAUSING CRASH ON REMOVAL OF CATEGORIES KEITH!!!
-//                sb.append(" ");
-                if(!tempString.isEmpty()) {
+                if (categoryArray.size() > 0) {
+                    sb.setLength(sb.length() - 2);  //THIS IS CAUSING CRASH ON REMOVAL OF CATEGORIES KEITH!!!
+                    sb.append(" ");
+                }
+                if (!categoryArray.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
                 } else mCategoryTextView.setText(R.string.emptyCategory);
 
@@ -207,33 +199,33 @@ public class ListViewFragment extends Fragment {
             }
 
 
-
-
-
-        }
-        public void setTransactions(List<Transaction> transactions){
-            mTransactions =transactions;
         }
 
+        public void setTransactions(List<Transaction> transactions) {
+            mTransactions = transactions;
+        }
 
 
     }
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         //mAdapter.notifyDataSetChanged();
         sListIsInFront = true;
-        sSortOrder=0;
+        sSortOrder = 0;
 
         updateUI();
     }
+
     @Override
     public void onPause() {
         super.onPause();
         sListIsInFront = false;
     }
+
     @Override
-    public void onSaveInstanceState(Bundle outState){
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
         updateUI();
@@ -244,12 +236,12 @@ public class ListViewFragment extends Fragment {
         Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
 
-        switch (sSortOrder){
+        switch (sSortOrder) {
             case 3:
                 transactions = currentProfile.getTransactionsInOrder("amount");
                 break;
             case 2:
-                transactions= currentProfile.getTransactionsInOrder("category");
+                transactions = currentProfile.getTransactionsInOrder("category");
                 break;
             default:
                 transactions = currentProfile.getTransactionsInOrder("date");
@@ -260,7 +252,7 @@ public class ListViewFragment extends Fragment {
         mTransactionRecyclerView.setAdapter(mAdapter);
         //List<Transaction> transactions = Arrays.asList(GlobalScopeContainer.transactionBuffer);
 
-        if(mAdapter==null) {
+        if (mAdapter == null) {
             mAdapter = new TransactionAdapter(transactions);
             mTransactionRecyclerView.setAdapter(mAdapter);
         } else {
@@ -285,7 +277,7 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        mEditTransaction.setOnClickListener(new View.OnClickListener(){
+        mEditTransaction.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -300,7 +292,7 @@ public class ListViewFragment extends Fragment {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
 
                                 mAdapter.delete(sPosition);
@@ -327,7 +319,7 @@ public class ListViewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // FIXME: updating the UI like this does not seem logical
         // FIXME: for instance: it precludes updating the graph view if one of these
         // FIXME: sub-fragments was opened there, since they can only have one Target Fragment

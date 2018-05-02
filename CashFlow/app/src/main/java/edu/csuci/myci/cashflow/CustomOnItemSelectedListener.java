@@ -18,13 +18,12 @@ import static edu.csuci.myci.cashflow.GraphViewFragment.GraphIsInFront;
 import static edu.csuci.myci.cashflow.ListViewFragment.sListIsInFront;
 
 
-
-public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener{
+public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
     private Context context;
 
 
-    public CustomOnItemSelectedListener(Context context){
-        this.context=context;
+    public CustomOnItemSelectedListener(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -33,10 +32,11 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
         switch (parent.getId()) {
             case R.id.graph_view_spinner:
                 switch (position) {
-                    case 0: break;
+                    case 0:
+                        break;
                     case 1:
-                        if(GraphIsInFront) {
-                            GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
+                        if (GraphIsInFront) {
+                            GraphView graph = (GraphView) ((Activity) context).findViewById(R.id.graph);
 
                             graph.removeAllSeries();
                             graph.getGridLabelRenderer().resetStyles();
@@ -45,7 +45,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
                             LineGraphSeries<DataPoint> series = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
                             graph.addSeries(series);
-                            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter((Activity)context));
+                            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter((Activity) context));
                             graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
                         } else {
                             GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_LINE);
@@ -54,44 +54,45 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         break;
 
 
-                    case 2: if(GraphIsInFront){
-                        GraphView graph = (GraphView) ((Activity)context).findViewById(R.id.graph);
-                        graph.removeAllSeries();
-                        graph.getGridLabelRenderer().resetStyles();
-                        //graph.invalidate();
+                    case 2:
+                        if (GraphIsInFront) {
+                            GraphView graph = (GraphView) ((Activity) context).findViewById(R.id.graph);
+                            graph.removeAllSeries();
+                            graph.getGridLabelRenderer().resetStyles();
+                            //graph.invalidate();
 
 
-
-                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
-                        graph.addSeries(series);
-                        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
-                        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
-                        series.setSpacing(10);
-                        series.setDrawValuesOnTop(true);
-                        series.setValuesOnTopColor(Color.RED);
-                    } else {
-                        GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
-                    }
+                            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+                            graph.addSeries(series);
+                            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
+                            graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+                            series.setSpacing(10);
+                            series.setDrawValuesOnTop(true);
+                            series.setValuesOnTopColor(Color.RED);
+                        } else {
+                            GraphViewFragment.display(context, GraphViewFragment.GRAPH_TYPE_BAR);
+                        }
                         parent.setSelection(0);
 
                         break;
                     default:
                         Toast.makeText(parent.getContext(),
-                            "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                            Toast.LENGTH_SHORT).show();
+                                "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
+                                Toast.LENGTH_SHORT).show();
                         break;
                 }
                 break;
             case R.id.menu_spinner:
                 switch (position) {
-                    case 0: break;
+                    case 0:
+                        break;
                     case 1:
-                        if(GraphIsInFront)break;
+                        if (GraphIsInFront) break;
                         AddTransactionDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 2:
-                        if(!sListIsInFront)break;
+                        if (!sListIsInFront) break;
                         ListViewFragment.sDeleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         parent.setSelection(0);
@@ -110,22 +111,25 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                         LimitsDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
-                    case 6: System.exit(0);break;
+                    case 6:
+                        System.exit(0);
+                        break;
                     default:
-                    Toast.makeText(parent.getContext(),
-                            "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                } break;
+                        Toast.makeText(parent.getContext(),
+                                "OnItemSelectedListener : " + parent.getItemAtPosition(position).toString(),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                break;
             case R.id.select_category_spinner:
-                if(position==0) break;
+                if (position == 0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view only : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.time_range_spinner:
-                if(position==0) break;
+                if (position == 0) break;
                 Toast.makeText(parent.getContext(),
                         "You are attempting to view by : " + parent.getItemAtPosition(position).toString(),
                         Toast.LENGTH_SHORT).show();
