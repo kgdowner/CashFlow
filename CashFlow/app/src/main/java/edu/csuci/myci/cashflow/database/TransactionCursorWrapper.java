@@ -3,7 +3,6 @@ package edu.csuci.myci.cashflow.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.math.BigDecimal;
@@ -21,12 +20,12 @@ public class TransactionCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Transaction getTransaction(){
+    public Transaction getTransaction() {
         String uuidString = getString(getColumnIndex(TransactionTable.Cols.ID_TRANSACTION));
         String title = getString(getColumnIndex(TransactionTable.Cols.TITLE));
         Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
-        Transaction transaction = new Transaction(amount,title);
+        Transaction transaction = new Transaction(amount, title);
         transaction.setDate(new Date(date));
         transaction.setID(UUID.fromString(uuidString));
 
@@ -34,21 +33,23 @@ public class TransactionCursorWrapper extends CursorWrapper {
         return transaction;
     }
 
-    public Category getCategory(){
+    public Category getCategory() {
         String uuidString = getString(getColumnIndex(CategoryTable.Cols.ID_CATEGORY));
         String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
 
         return new Category(title, UUID.fromString(uuidString));
 
     }
-    public Limit getLimit(){
+
+    public Limit getLimit() {
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT)));
         String title = getString(getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
 
         return new Limit(amount, title);
 
     }
-    public DataPoint getDataPoint(){
+
+    public DataPoint getDataPoint() {
         Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
 

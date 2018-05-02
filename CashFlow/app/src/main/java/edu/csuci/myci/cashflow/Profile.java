@@ -1,10 +1,9 @@
 package edu.csuci.myci.cashflow;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.series.DataPoint;
@@ -28,14 +27,14 @@ public class Profile {
     private SQLiteDatabase mDatabase;
 
 
-
     public static Profile get(Context context, String profileName) {
-        if(sProfile == null || !(sProfile.getName().equals(profileName))) {
+        if (sProfile == null || !(sProfile.getName().equals(profileName))) {
             sProfile = new Profile(context, profileName);
         }
-        return  sProfile;
+        return sProfile;
 
     }
+
     private Profile(Context context, String profileName) {
         mContext = context.getApplicationContext();
         mDatabase = new TransactionBaseHelper(mContext, profileName).getWritableDatabase();
@@ -51,7 +50,7 @@ public class Profile {
 
         try {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 transactions.add(cursor.getTransaction());
                 cursor.moveToNext();
             }
@@ -60,21 +59,22 @@ public class Profile {
         }
         return transactions;
     }
+
     public List<Transaction> getTransactionsInOrder(String order) {
         List<Transaction> transactions = new ArrayList<>();
         TransactionCursorWrapper cursor;
 
-        if(order.equals("amount")){
-            cursor = queryTransactionsInOrder(null, null, "CAST ( "+order+" AS NUMERICAL ) DESC");
+        if (order.equals("amount")) {
+            cursor = queryTransactionsInOrder(null, null, "CAST ( " + order + " AS NUMERICAL ) DESC");
 
-        }else if(order.equals("date")){
-            cursor = queryTransactionsInOrder(null, null, order+" DESC");
-        } else{
+        } else if (order.equals("date")) {
+            cursor = queryTransactionsInOrder(null, null, order + " DESC");
+        } else {
             cursor = queryTransactionsInOrderByCategory();
         }
         try {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 transactions.add(cursor.getTransaction());
                 cursor.moveToNext();
             }
@@ -91,7 +91,7 @@ public class Profile {
         );
 
         try {
-            if (cursor.getCount() == 0){
+            if (cursor.getCount() == 0) {
                 return null;
             }
             cursor.moveToFirst();
@@ -101,7 +101,7 @@ public class Profile {
         }
     }
 
-    public ArrayList<String> getAllCategoriesForTransaction(String transactionId){
+    public ArrayList<String> getAllCategoriesForTransaction(String transactionId) {
         //for displaying in listViewFragment
         ArrayList<String> catNames = new ArrayList<>();
 
@@ -116,7 +116,7 @@ public class Profile {
 
             } while (c.moveToNext());
         }
-        return  catNames;
+        return catNames;
 
 
     }
@@ -126,23 +126,23 @@ public class Profile {
         return this.name;
     }
 
-    public void updateTransaction(Transaction transaction){
+    public void updateTransaction(Transaction transaction) {
         String uuidString = transaction.getID().toString();
         ContentValues values = getContentValues(transaction);
 
         mDatabase.update(TransactionTable.NAME, values,
                 TransactionTable.Cols.ID_TRANSACTION + " = ?",
-                new String[] {uuidString});
+                new String[]{uuidString});
 
     }
 
-    public void removeProfile(String name){
+    public void removeProfile(String name) {
         mDatabase.close();
         mContext.deleteDatabase(name);
         GlobalScopeContainer.profileList.remove(name);
 
-        if(GlobalScopeContainer.profileList.isEmpty()){
-            GlobalScopeContainer.profileList.add("defaultProfile"+(new Date().toString())+".db");
+        if (GlobalScopeContainer.profileList.isEmpty()) {
+            GlobalScopeContainer.profileList.add("defaultProfile" + (new Date().toString()) + ".db");
             GlobalScopeContainer.activeProfile = Profile.get(mContext, GlobalScopeContainer.profileList.get(0));
         }
 
@@ -150,18 +150,19 @@ public class Profile {
     }
 
 
-
-    public void removeTransaction(Transaction t){
+    public void removeTransaction(Transaction t) {
         String uuidString = t.getID().toString();
-        mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.ID_TRANSACTION + " = ?", new String[] {uuidString});
+        mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.ID_TRANSACTION + " = ?", new String[]{uuidString});
         mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ", new String[]{uuidString});
 
     }
-    public void addTransaction(Transaction t){
+
+    public void addTransaction(Transaction t) {
         ContentValues values = getContentValues(t);
         mDatabase.insert(TransactionTable.NAME, null, values);
     }
-    private static ContentValues getContentValues(Transaction crime){
+
+    private static ContentValues getContentValues(Transaction crime) {
         ContentValues values = new ContentValues();
         values.put(TransactionTable.Cols.ID_TRANSACTION, crime.getID().toString());
         values.put(TransactionTable.Cols.TITLE, crime.getName());
@@ -171,7 +172,8 @@ public class Profile {
         return values;
 
     }
-    private TransactionCursorWrapper queryTransactions(String whereClause, String[] whereArgs){
+
+    private TransactionCursorWrapper queryTransactions(String whereClause, String[] whereArgs) {
         Cursor cursor = mDatabase.query(
                 TransactionTable.NAME,
                 null,
@@ -184,7 +186,7 @@ public class Profile {
         return new TransactionCursorWrapper(cursor);
     }
 
-    private TransactionCursorWrapper queryTransactionsInOrder(String whereClause, String[] whereArgs, String orderBy){
+    private TransactionCursorWrapper queryTransactionsInOrder(String whereClause, String[] whereArgs, String orderBy) {
         Cursor cursor = mDatabase.query(
                 TransactionTable.NAME,
                 null,
@@ -198,63 +200,61 @@ public class Profile {
     }
 
 
-    private TransactionCursorWrapper queryTransactionsInOrderByCategory(){
+    private TransactionCursorWrapper queryTransactionsInOrderByCategory() {
         String query = "SELECT * FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Transactions.idTransaction = Cat_Transaction.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory GROUP BY Transactions.idTransaction " +
                 "ORDER BY Categories.categoryName DESC";
-        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
-//    String query = "SELECT * FROM Categories, Cat_Transaction " +
+
+    //    String query = "SELECT * FROM Categories, Cat_Transaction " +
 //            "WHERE Cat_Transaction.idTransaction =? " +
 //            "AND Categories.idCategory =  Cat_Transaction.idCategory";
-    public void limitChecker(){
+    public void limitChecker() {
         TransactionCursorWrapper cursor = queryTransactionLimitsCheck();
         try {
             cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
-            Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
-            Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT));
-            if(y>z){
+            while (!cursor.isAfterLast()) {
+                String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
+                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+                Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT));
+                if (y > z) {
 
-                Toast.makeText(mContext,"you are over limit in category "+title+" by $"+(y-z),Toast.LENGTH_LONG).show();
-            }
+                    Toast.makeText(mContext, "you are over limit in category " + title + " by $" + (y - z), Toast.LENGTH_LONG).show();
+                }
 
 
-
-            cursor.moveToNext();
+                cursor.moveToNext();
             }
         } finally {
             cursor.close();
         }
     }
-    private TransactionCursorWrapper queryTransactionLimitsCheck(){
+
+    private TransactionCursorWrapper queryTransactionLimitsCheck() {
         String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp, Categories.limits " +
                 "FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
                 "WHERE Categories.limits ";
-        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
 
 
-
-
-
-    public DataPoint[] getSeries(){
+    public DataPoint[] getSeries() {
 
         TransactionCursorWrapper cursor;
 
         cursor = queryTransactionsInOrder(null, null, "date ASC");
         DataPoint[] series = new DataPoint[cursor.getCount()];
-        int i=0;
+        int i = 0;
 
         try {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 series[i] = cursor.getDataPoint();
                 i++;
                 cursor.moveToNext();
@@ -266,7 +266,7 @@ public class Profile {
 
     }
 
-    public DataPoint[] getBarSeries(){
+    public DataPoint[] getBarSeries() {
         TransactionCursorWrapper cursor;
 
         cursor = queryTransactionsSumByCategory();
@@ -283,21 +283,21 @@ public class Profile {
 
         try {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
 
                 //FIXME: need to redo query.
                 //TODO: Needs a different wrapper for BarGraph Data Point
-                String name  = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
+                String name = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
                 Category category = categoryList.getCategory(name);
 
 
                 Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
                 Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
 
-                DataPoint temp = new DataPoint(i,y);
+                DataPoint temp = new DataPoint(i, y);
 
-                String tempString = i+", "+ y.toString();
-                sb.append(tempString+"...");
+                String tempString = i + ", " + y.toString();
+                sb.append(tempString + "...");
 
                 series[i] = temp;
                 i++;
@@ -306,21 +306,21 @@ public class Profile {
         } finally {
             cursor.close();
         }
-        Toast.makeText(mContext,sb.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, sb.toString(), Toast.LENGTH_LONG).show();
 
         return series;
 
 
     }
 
-    private TransactionCursorWrapper queryTransactionsSumByCategory(){
+    private TransactionCursorWrapper queryTransactionsSumByCategory() {
         String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp " +
                 "FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
                 "GROUP BY Cat_Transaction.idCategory " +
                 "ORDER BY Categories.idCategory ASC";
-        Cursor cursor = mDatabase.rawQuery(query,new String[]{});
+        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
 

@@ -23,7 +23,7 @@ public class DatePickerFragment extends DialogFragment {
 
     private DatePicker mDatePicker;
 
-    public static DatePickerFragment newInstance(Date date){
+    public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_DATE, date);
 
@@ -34,7 +34,7 @@ public class DatePickerFragment extends DialogFragment {
 
 
     @Override
-    public Dialog onCreateDialog (Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         Date date = (Date) getArguments().getSerializable(ARG_DATE);
 
         Calendar calendar = Calendar.getInstance();
@@ -45,8 +45,8 @@ public class DatePickerFragment extends DialogFragment {
 
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
 
-        mDatePicker = (DatePicker)v.findViewById(R.id.dialog_date_picker);
-        mDatePicker.init(year,month,day,null);
+        mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_picker);
+        mDatePicker.init(year, month, day, null);
 
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
@@ -58,7 +58,7 @@ public class DatePickerFragment extends DialogFragment {
                         int month = mDatePicker.getMonth();
                         int day = mDatePicker.getDayOfMonth();
                         Date date = new GregorianCalendar(year, month, day).getTime();
-                        if(date.after(new Date())){
+                        if (date.after(new Date())) {
                             Toast.makeText(getActivity(), "Please choose different date", Toast.LENGTH_SHORT).show();
                         } else {
                             sendResult(date);
@@ -67,12 +67,15 @@ public class DatePickerFragment extends DialogFragment {
                 })
                 .create();
     }
-    private void sendResult(Date date){
-        if(getTargetFragment() == null){return;}
-        Intent intent = new Intent();
-        intent.putExtra(EXTRA_DATE,date);
 
-        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent  );
+    private void sendResult(Date date) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE, date);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
 
     }
 }
