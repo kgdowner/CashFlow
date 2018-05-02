@@ -190,16 +190,18 @@ public class ListViewFragment extends Fragment {
 
                 mDateTextView.setText(df.format(mTransaction.getDate()).toString());
                 mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
-                ArrayList<String> tempString = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
+                ArrayList<String> categoryArray = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
-                for (String s : tempString)
+                for (String s : categoryArray)
                 {
                     sb.append(s);
                     sb.append(", ");
                 }
-//                sb.setLength(sb.length()-2);  //THIS IS CAUSING CRASH ON REMOVAL OF CATEGORIES KEITH!!!
-//                sb.append(" ");
-                if(!tempString.isEmpty()) {
+                if(categoryArray.size() > 0) {
+                    sb.setLength(sb.length()-2);  //THIS IS CAUSING CRASH ON REMOVAL OF CATEGORIES KEITH!!!
+                    sb.append(" ");
+                }
+                if(!categoryArray.isEmpty()) {
                     mCategoryTextView.setText(sb.toString());
                 } else mCategoryTextView.setText(R.string.emptyCategory);
 
