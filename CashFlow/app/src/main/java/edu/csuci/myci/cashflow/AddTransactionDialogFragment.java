@@ -26,10 +26,10 @@ import java.util.UUID;
 
 
 public class AddTransactionDialogFragment extends DialogFragment {
-    private EditText sEditAmount;
-    private EditText sEditName;
-    private TextView mSelectedCategoryTextView;
-    private Spinner mCategorySpinner;
+    private EditText editAmount;
+    private EditText editName;
+    private TextView selectedCategoryText;
+    private Spinner categorySpinner;
     private CategoryList categoryList;
     private Button signButton;
 
@@ -56,14 +56,15 @@ public class AddTransactionDialogFragment extends DialogFragment {
         Button confirmButton = (Button) view.findViewById(R.id.add_transaction_ok);
         Button cancelButton = (Button) view.findViewById(R.id.add_transaction_cancel);
 
-        sEditAmount = (EditText) view.findViewById(R.id.amountEntry);
-        sEditName = (EditText) view.findViewById(R.id.transaction_name);
-        mCategorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
+        editAmount = (EditText) view.findViewById(R.id.amountEntry);
+        editName = (EditText) view.findViewById(R.id.transaction_name);
+        categorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
         signButton = (Button) view.findViewById(R.id.sign_button);
 
-        mSelectedCategoryTextView = (TextView) view.findViewById(R.id.selected_category_names);
-        mSelectedCategoryTextView.setText("");
-        mSelectedCategoryTextView.setVisibility(View.INVISIBLE);
+
+        selectedCategoryText = (TextView) view.findViewById(R.id.selected_category_names);
+        selectedCategoryText.setText("");
+        selectedCategoryText.setVisibility(View.INVISIBLE);
 
 
         //Transferring Category Names to spinner
@@ -82,22 +83,22 @@ public class AddTransactionDialogFragment extends DialogFragment {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, categoryNames);
 
-        mCategorySpinner.setAdapter(dataAdapter);
+        categorySpinner.setAdapter(dataAdapter);
         final UUID tempTransactionID = UUID.randomUUID();
         final ArrayList<UUID> temCatStorage = new ArrayList<>();
 
 
         //Spinner action
-        mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
                 if (position != 0) {
-                    temCatStorage.add(categoryList.getCategory(mCategorySpinner.getSelectedItem().toString()).getCategoryId());
-                    mSelectedCategoryTextView.append(categoryNames.get(position) + ", ");
-                    mSelectedCategoryTextView.setVisibility(View.VISIBLE);
-                    //mSelectedCategoryTextView.setLayoutParams();
+                    temCatStorage.add(categoryList.getCategory(categorySpinner.getSelectedItem().toString()).getCategoryId());
+                    selectedCategoryText.append(categoryNames.get(position) + ", ");
+                    selectedCategoryText.setVisibility(View.VISIBLE);
+                    //selectedCategoryText.setLayoutParams();
                 }
 
             }
@@ -108,7 +109,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
             }
         });
 
-        sEditAmount.addTextChangedListener(new TextWatcher() {
+        editAmount.addTextChangedListener(new TextWatcher() {
             boolean _ignore = false;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -137,11 +138,11 @@ public class AddTransactionDialogFragment extends DialogFragment {
                         if(s.toString().contains("-")){
                             signButton.setText("-");
                             String temp = s.toString();
-                            sEditAmount.setText(temp.replace("-", ""));
+                            editAmount.setText(temp.replace("-", ""));
                         } else {
                             signButton.setText("+");
                             String temp = s.toString();
-                            sEditAmount.setText("-"+temp);
+                            editAmount.setText("-"+temp);
                         }
                         //if string has - on front, remove it, else append.
                     }
@@ -156,22 +157,22 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
             @Override
             public void onClick(View view) {
-                String name = sEditName.getText().toString();
-                String amount = sEditAmount.getText().toString();
+                String name = editName.getText().toString();
+                String amount = editAmount.getText().toString();
 
 
 
 
                 //Validation
                 if (TextUtils.isEmpty(name)) {
-                    sEditName.setError("Name your transaction please.");
+                    editName.setError("Name your transaction please.");
                     return;
                 }
 
                 try {
                     actualAmount = new BigDecimal(amount);
                 } catch (NumberFormatException e) {
-                    sEditAmount.setError("Please enter number.");
+                    editAmount.setError("Please enter number.");
                     return;
                 }
 
@@ -180,7 +181,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
                 }
 
                 if (temCatStorage.size() == 0) {
-                    ((TextView) mCategorySpinner.getSelectedView()).setError("Please choose category");
+                    ((TextView) categorySpinner.getSelectedView()).setError("Please choose category");
                     return;
                 }
 

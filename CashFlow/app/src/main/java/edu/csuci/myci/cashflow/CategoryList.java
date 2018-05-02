@@ -15,14 +15,13 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTransactionTable;
 
 public class CategoryList {
-    private Context mContext;
-
-    private SQLiteDatabase mDatabase;
+    private Context context;
+    private SQLiteDatabase database;
 
 
     public CategoryList(Context context) {
-        mContext = context.getApplicationContext();
-        mDatabase = new TransactionBaseHelper(mContext, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
+        this.context = context.getApplicationContext();
+        this.database = new TransactionBaseHelper(this.context, GlobalScopeContainer.activeProfile.getName()).getWritableDatabase();
 
     }
 
@@ -66,7 +65,7 @@ public class CategoryList {
     public void addCategory(Category t) {
 
         ContentValues values = getContentValues(t);
-        mDatabase.insert(CategoryTable.NAME, null, values);
+        this.database.insert(CategoryTable.NAME, null, values);
     }
 
     private static ContentValues getContentValues(Category crime) {
@@ -81,12 +80,12 @@ public class CategoryList {
 
     public void removeCategory(String categoryName) {
         String uuidString2 = String.valueOf((getCategory(categoryName)).getCategoryId());
-        mDatabase.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORY_NAME + " = ?", new String[]{categoryName});
-        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_CATEGORY + " = ? ", new String[]{uuidString2});
+        this.database.delete(CategoryTable.NAME, CategoryTable.Cols.CATEGORY_NAME + " = ?", new String[]{categoryName});
+        this.database.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_CATEGORY + " = ? ", new String[]{uuidString2});
     }
 
     public void removeCategoryTransaction(UUID categoryId, UUID transactionId) {
-        mDatabase.delete(CategoryTransactionTable.NAME,
+        this.database.delete(CategoryTransactionTable.NAME,
                 CategoryTransactionTable.Cols.ID_CATEGORY + " = ?  " +
                         "AND " + CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ",
                 new String[]{categoryId.toString(), transactionId.toString()});
@@ -97,7 +96,7 @@ public class CategoryList {
         String uuidString = category.getCategoryId().toString();
         ContentValues values = getContentValues(category);
 
-        mDatabase.update(CategoryTable.NAME, values,
+        this.database.update(CategoryTable.NAME, values,
                 CategoryTable.Cols.ID_CATEGORY + " = ?",
                 new String[]{uuidString});
 
@@ -107,7 +106,7 @@ public class CategoryList {
         ContentValues values = new ContentValues();
         values.put(CategoryTransactionTable.Cols.ID_CATEGORY, categoryId.toString());
         values.put(CategoryTransactionTable.Cols.ID_TRANSACTION, transactionId.toString());
-        mDatabase.insert(CategoryTransactionTable.NAME, null, values);
+        this.database.insert(CategoryTransactionTable.NAME, null, values);
 
     }
 
@@ -124,7 +123,7 @@ public class CategoryList {
         String query = "SELECT * FROM Categories, Cat_Transaction " +
                 "WHERE Cat_Transaction.idTransaction =? " +
                 "AND Categories.idCategory =  Cat_Transaction.idCategory";
-        Cursor c = mDatabase.rawQuery(query, new String[]{transactionId});
+        Cursor c = this.database.rawQuery(query, new String[]{transactionId});
         if (c.moveToFirst()) {
             do {
 
@@ -144,7 +143,7 @@ public class CategoryList {
         ContentValues values = new ContentValues();
         values.put(CategoryTable.Cols.LIMIT_AMOUNT, limit.getAmount().toString());
 
-        mDatabase.update(CategoryTable.NAME, values,
+        this.database.update(CategoryTable.NAME, values,
                 CategoryTable.Cols.CATEGORY_NAME + " = ?",
                 new String[]{name});
 
@@ -172,7 +171,7 @@ public class CategoryList {
         values.put(CategoryTable.Cols.LIMIT_AMOUNT, "");
 
 
-        mDatabase.update(CategoryTable.NAME, values,
+        this.database.update(CategoryTable.NAME, values,
                 CategoryTable.Cols.CATEGORY_NAME + " = ?",
                 new String[]{name});
 
@@ -180,7 +179,7 @@ public class CategoryList {
 
     //QUERIES
     private TransactionCursorWrapper queryCategories(String whereClause, String[] whereArgs) {
-        Cursor cursor = mDatabase.query(
+        Cursor cursor = this.database.query(
                 CategoryTable.NAME,
                 null,
                 whereClause,

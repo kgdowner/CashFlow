@@ -30,13 +30,10 @@ import java.util.UUID;
 public class EditTransactionFragment extends Fragment {
     public static final String EDIT_TRANSACTION = "edu.csuci.myci.cashflow.transaction_edit";
 
-
     private static final String ARG_TRANSACTION_ID = "transaction_id";
     private static final String DIALOG_DATE = "DialogDate";
-
     private static final int REQUEST_DATE = 0;
-
-
+    
     private Transaction mTransaction;
     private Profile mCurrentProfile;
     private CategoryList categoryList;
