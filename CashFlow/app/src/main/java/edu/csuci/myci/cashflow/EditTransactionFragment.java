@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class EditTransactionFragment extends Fragment {
     private static final String ARG_TRANSACTION_ID = "transaction_id";
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
-    
+
     private Transaction mTransaction;
     private Profile mCurrentProfile;
     private CategoryList categoryList;
@@ -44,6 +45,7 @@ public class EditTransactionFragment extends Fragment {
     private Button mOkButton;
     private Button mCancelButton;
     private Spinner categorySpinner;
+    private Button signButton;
 
     private RecyclerView editTransactionRecyclerView;
     private CategoryAdapter categoryAdapter;
@@ -51,6 +53,7 @@ public class EditTransactionFragment extends Fragment {
 
     private String newAmount;
     private String newName; //moving actual changing of stuff to OK button
+    private BigDecimal actualAmount;
 
 
     public static void display(Context context, UUID transactionID) {
@@ -85,6 +88,7 @@ public class EditTransactionFragment extends Fragment {
         mOkButton = (Button) v.findViewById(R.id.edit_transaction_ok);
         mCancelButton = (Button) v.findViewById(R.id.edit_transaction_cancel);
         categorySpinner = (Spinner) v.findViewById(R.id.edit_transaction_category_spinner);
+        signButton = (Button) v.findViewById(R.id.sign_button_edit);
 
         this.editTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.edit_transaction_recyclerView);
         editTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -135,10 +139,13 @@ public class EditTransactionFragment extends Fragment {
         });
 
         mEditAmount.setText(mTransaction.getAmount().toString());
+
         mEditAmount.addTextChangedListener(new TextWatcher() {
+            boolean _ignore = false;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                newAmount = s.toString();
+                //newAmount = s.toString();
 
             }
 
@@ -148,10 +155,9 @@ public class EditTransactionFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                // newAmount = s.toString();
+            public void afterTextChanged(final Editable s) {
 
-
+                newAmount = s.toString();
             }
         });
         updateDate();
@@ -167,17 +173,36 @@ public class EditTransactionFragment extends Fragment {
 
             }
         });
+
+        signButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "you clicked sign button", Toast.LENGTH_LONG)
+                        .show();
+
+                if (mEditAmount.getText().toString().contains("-")) {
+                    mEditAmount.setText(mEditAmount.getText().toString().replace("-", ""));
+
+                } else {
+                    mEditAmount.setText("-" + mEditAmount.getText());
+
+                }
+            }
+            //if string has - on front, remove it, else append.
+        });
+
+
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (newAmount != null) {
                     try {
-                        BigDecimal actualAmount = new BigDecimal(newAmount);
+                        actualAmount = new BigDecimal(newAmount);
                     } catch (NumberFormatException e) {
                         mEditAmount.setError("Please enter number.");
                         return;
                     }
-                    mTransaction.setAmount(new BigDecimal(newAmount));
+                    mTransaction.setAmount(actualAmount);
                 }
                 if (newName != null) {
                     mTransaction.setName(newName);
@@ -191,6 +216,7 @@ public class EditTransactionFragment extends Fragment {
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendResult(Activity.RESULT_OK, "test");
                 getActivity().getSupportFragmentManager().popBackStackImmediate();
 
 

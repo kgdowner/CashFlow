@@ -128,7 +128,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
                     return;
 
                 _ignore = true; // prevent infinite loop
-                    // Change your text here.
+                // Change your text here.
 
                 signButton.setOnClickListener(new View.OnClickListener() {
                     @Override
