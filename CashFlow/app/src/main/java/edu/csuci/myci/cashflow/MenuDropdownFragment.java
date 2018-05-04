@@ -43,7 +43,6 @@ public class MenuDropdownFragment extends DialogFragment {
         Button menuTitle = (Button) view.findViewById(R.id.dropdown_menu_title);
         menuTitle.setText(GlobalScopeContainer.activeProfile.getName());
         Button addTransaction = (Button)view.findViewById(R.id.dropdown_menu_add);
-        Button removeTransaction = (Button)view.findViewById(R.id.dropdown_menu_remove);
         Button manageProfiles = (Button)view.findViewById(R.id.dropdown_menu_profiles);
         Button manageCategories = (Button)view.findViewById(R.id.dropdown_menu_categories);
         Button manageLimits = (Button)view.findViewById(R.id.dropdown_menu_limits);
@@ -66,14 +65,6 @@ public class MenuDropdownFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 AddTransactionDialogFragment.display(getActivity());
-                dismiss();
-            }
-        });
-        removeTransaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ListViewFragment.sDeleteFlag = true;
-                //TODO: Either remove or fix
                 dismiss();
             }
         });
