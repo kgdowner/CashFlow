@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="recyclerColor1">#88bb88</color>
-    <color name="recyclerColor2">#cccccc</color>
-    <color name="dropDownButtonColor">#f1dddd</color>
+    <color name="color_primary">#3f51b5</color>
+    <color name="color_primary_dark">#303F9F</color>
+    <color name="color_accent">#FF4081</color>
 
+    <color name="transaction_list_color_1">#88bb88</color>
+    <color name="transaction_list_color_2">#cccccc</color>
+
+    <color name="dropdown_button_color">#f1dddd</color>
     <color name="menu_color_1">#509350</color>
     <color name="menu_color_2">#88bb88</color>
 </resources>

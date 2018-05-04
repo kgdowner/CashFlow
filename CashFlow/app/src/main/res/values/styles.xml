@@ -3,13 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
     </style>
     <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button">
-        <item name="colorButtonNormal">@color/dropDownButtonColor</item>
-        <item name="android:actionButtonStyle">@color/dropDownButtonColor</item>
+        <item name="colorButtonNormal">@color/dropdown_button_color</item>
+        <item name="android:actionButtonStyle">@color/dropdown_button_color</item>
     </style>
 
 </resources>

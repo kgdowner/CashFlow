@@ -95,10 +95,10 @@ public class ListViewFragment extends Fragment {
             Transaction transaction = mTransactions.get(position);
             holder.bind(transaction);
             if (position % 2 == 1) {
-                holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor1));
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.transaction_list_color_1));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFFFF"));
             } else {
-                holder.itemView.setBackgroundColor(getResources().getColor(R.color.recyclerColor2));
+                holder.itemView.setBackgroundColor(getResources().getColor(R.color.transaction_list_color_2));
                 //  holder.imageView.setBackgroundColor(Color.parseColor("#FFFAF8FD"));
             }
 
