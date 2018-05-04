@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
-public class SorttransactionsFragment extends DialogFragment {
+public class SortTransactionsFragment extends DialogFragment {
     public static void display(Context context) {
-        DialogFragment df = new SorttransactionsFragment();
+        DialogFragment df = new SortTransactionsFragment();
         FragmentTransaction ft = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
         df.setTargetFragment(((FragmentActivity) context).getSupportFragmentManager().findFragmentByTag("List_View_Fragment"), 0);
 
@@ -57,7 +57,7 @@ public class SorttransactionsFragment extends DialogFragment {
         sortDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListViewFragment.sSortOrder =1;
+                ListViewFragment.sortOrder =1;
                 getTargetFragment().onActivityResult(0, 0, null);
 
                 dismiss();
@@ -66,7 +66,7 @@ public class SorttransactionsFragment extends DialogFragment {
         sortCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListViewFragment.sSortOrder =2;
+                ListViewFragment.sortOrder =2;
                 getTargetFragment().onActivityResult(0, 0, null);
 
                 dismiss();
@@ -75,7 +75,7 @@ public class SorttransactionsFragment extends DialogFragment {
         sortAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListViewFragment.sSortOrder =3;
+                ListViewFragment.sortOrder =3;
                 getTargetFragment().onActivityResult(0, 0, null);
 
                 dismiss();

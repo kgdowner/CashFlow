@@ -13,12 +13,10 @@ import android.widget.TextView;
 public class LoaderFragment extends Fragment {
     private static final int PROFILE_MANIPULATE = 2;
 
-
-    private Button mManageProfiles;
-    private Button mManageCategories;
-    private Button mAddTransaction;
-
-    private TextView mCurrentProfileName;
+    private Button buttonAddTransaction;
+    private Button buttonManageCategories;
+    private Button buttonManageProfiles;
+    private TextView textCurrentProfileName;
 
 
     @Override
@@ -30,12 +28,12 @@ public class LoaderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_loader, container, false);
 
-        mManageCategories = (Button) v.findViewById(R.id.manage_category_button);
-        mManageProfiles = (Button) v.findViewById(R.id.manage_profile_button);
-        mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
-        mCurrentProfileName = (TextView) v.findViewById(R.id.profile_name);
+        buttonManageCategories  = (Button)      v.findViewById(R.id.manage_category_button);
+        buttonManageProfiles    = (Button)      v.findViewById(R.id.manage_profile_button);
+        buttonAddTransaction    = (Button)      v.findViewById(R.id.add_transaction_button);
+        textCurrentProfileName  = (TextView)    v.findViewById(R.id.profile_name);
 
-        mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName().replace(".db", ""));
+        textCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName().replace(".db", ""));
 
         addListenerOnDialogButton(getActivity());
 
@@ -43,14 +41,14 @@ public class LoaderFragment extends Fragment {
     }
 
     public void addListenerOnDialogButton(final Context context) {
-        mAddTransaction.setOnClickListener(new View.OnClickListener() {
+        buttonAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddTransactionDialogFragment.display(context);
             }
         });
 
-        mManageProfiles.setOnClickListener(new View.OnClickListener() {
+        buttonManageProfiles.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -58,7 +56,7 @@ public class LoaderFragment extends Fragment {
             }
         });
 
-        mManageCategories.setOnClickListener(new View.OnClickListener() {
+        buttonManageCategories.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -70,7 +68,7 @@ public class LoaderFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PROFILE_MANIPULATE) {
-            mCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
+            textCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
 
 
         }

@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Button mListViewButton;
-    private Button mGraphViewSpinner;
-    private Button mMainMenuSpinner;
+    private Button buttonListView;
+    private Button buttonGraphView;
+    private Button buttonMenuDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +53,24 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: move this menu bar to a new java file
         // top-bar button registration
-        mGraphViewSpinner = (Button) findViewById(R.id.graph_view_spinner);
-        mMainMenuSpinner = (Button) findViewById(R.id.menu_spinner);
-        mListViewButton = (Button) findViewById(R.id.list_view_button);
+        buttonGraphView = (Button) findViewById(R.id.graph_view_spinner);
+        buttonMenuDropdown = (Button) findViewById(R.id.menu_spinner);
+        buttonListView = (Button) findViewById(R.id.list_view_button);
 
-        mGraphViewSpinner.setOnClickListener(new View.OnClickListener() {
+        buttonGraphView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GraphDropdownFragment.display(MainActivity.this);
             }
         });
-        //mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
-        mMainMenuSpinner.setOnClickListener(new View.OnClickListener() {
+        //buttonGraphView.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        buttonMenuDropdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MenuDropdownFragment.display(MainActivity.this);
             }
         });
-        mListViewButton.setOnClickListener(new View.OnClickListener() {
+        buttonListView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fr = new ListViewFragment();

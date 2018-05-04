@@ -14,8 +14,8 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-import static edu.csuci.myci.cashflow.GraphViewFragment.GraphIsInFront;
-import static edu.csuci.myci.cashflow.ListViewFragment.sListIsInFront;
+import static edu.csuci.myci.cashflow.GraphViewFragment.graphIsInFront;
+import static edu.csuci.myci.cashflow.ListViewFragment.listIsInFront;
 
 
 public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
@@ -35,7 +35,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0:
                         break;
                     case 1:
-                        if (GraphIsInFront) {
+                        if (graphIsInFront) {
                             GraphView graph = (GraphView) ((Activity) context).findViewById(R.id.graph);
 
                             graph.removeAllSeries();
@@ -55,7 +55,7 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
 
 
                     case 2:
-                        if (GraphIsInFront) {
+                        if (graphIsInFront) {
                             GraphView graph = (GraphView) ((Activity) context).findViewById(R.id.graph);
                             graph.removeAllSeries();
                             graph.getGridLabelRenderer().resetStyles();
@@ -87,13 +87,13 @@ public class CustomOnItemSelectedListener implements AdapterView.OnItemSelectedL
                     case 0:
                         break;
                     case 1:
-                        if (GraphIsInFront) break;
+                        if (graphIsInFront) break;
                         AddTransactionDialogFragment.display(context);
                         parent.setSelection(0);
                         break;
                     case 2:
-                        if (!sListIsInFront) break;
-                        ListViewFragment.sDeleteFlag = true;
+                        if (!listIsInFront) break;
+                        ListViewFragment.deleteFlag = true;
                         Toast.makeText(context, "Please make a selection", Toast.LENGTH_LONG).show();
                         parent.setSelection(0);
                         break;

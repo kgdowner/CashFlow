@@ -25,11 +25,11 @@ public class GraphViewFragment extends Fragment {
     public static final int GRAPH_TYPE_BAR = 0;
     public static final int GRAPH_TYPE_LINE = 1;
 
-    public static boolean GraphIsInFront;
-    public Context mActivity;
+    public static boolean graphIsInFront;
+    public Context context;
 
-    private Spinner mTimeRangeSpinner;
-    private Spinner mSelectCategorySpinner;
+    private Spinner spinnerTimeRange;
+    private Spinner spinnerCategories;
 
     BarGraphSeries<DataPoint> series1;
     LineGraphSeries<DataPoint> series2;
@@ -64,11 +64,11 @@ public class GraphViewFragment extends Fragment {
         }
 
 
-        mTimeRangeSpinner = (Spinner) v.findViewById(R.id.time_range_spinner);
-        mSelectCategorySpinner = (Spinner) v.findViewById(R.id.select_category_spinner);
+        spinnerTimeRange = (Spinner) v.findViewById(R.id.time_range_spinner);
+        spinnerCategories = (Spinner) v.findViewById(R.id.select_category_spinner);
 
-        mSelectCategorySpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-        mTimeRangeSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        spinnerCategories.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        spinnerTimeRange.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
 
         return v;
@@ -85,20 +85,20 @@ public class GraphViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        GraphIsInFront = true;
+        graphIsInFront = true;
         updateUI();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        GraphIsInFront = false;
+        graphIsInFront = false;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mActivity = activity;
+        this.context = activity;
     }
 
     public void setBarGraph(GraphView graph) {

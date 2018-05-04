@@ -23,26 +23,25 @@ import java.util.UUID;
 
 
 public class ListViewFragment extends Fragment {
-    private RecyclerView mTransactionRecyclerView;
-    private TransactionAdapter mAdapter;
+    public static int sortOrder = 0;
+    public static boolean deleteFlag = false;
+    public static boolean listIsInFront;
 
-    private TextView mDateTextView;
-    private TextView mAmountTextView;
-    private TextView mCategoryTextView;
-    private TextView mNameTextView;
+    private RecyclerView recyclerViewTransaction;
+    private TransactionAdapter adapter;
 
-    private Button mAddTransaction;
-    private Button mRemoveTransaction;
-    private Button mEditTransaction;
+    private TextView textDate;
+    private TextView textAmount;
+    private TextView textCategory;
+    private TextView textName;
 
-    private Button sortOrderButton;
+    private Button buttonAddTransaction;
+    private Button buttonRemoveTransaction;
+    private Button buttonEditTransaction;
+    private Button buttonSortOrder;
 
-    private static int sPosition;
+    private static int position;
     private UUID editTransactionID;
-
-    public static boolean sDeleteFlag = false;
-    public static int sSortOrder = 0;
-    public static boolean sListIsInFront;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,20 +51,20 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        sListIsInFront = true;
+        listIsInFront = true;
 
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
 
-        mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
-        mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewTransaction = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
+        recyclerViewTransaction.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        sortOrderButton = (Button) v.findViewById(R.id.sort_list_spinner);
+        buttonSortOrder = (Button) v.findViewById(R.id.sort_list_spinner);
 
-        mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
-        mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
-        mEditTransaction = (Button) v.findViewById(R.id.edit_transaction);
-        mRemoveTransaction.setEnabled(false);
-        mEditTransaction.setEnabled(false);
+        buttonAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
+        buttonRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
+        buttonEditTransaction = (Button) v.findViewById(R.id.edit_transaction);
+        buttonRemoveTransaction.setEnabled(false);
+        buttonEditTransaction.setEnabled(false);
         updateUI();
 
 
@@ -127,26 +126,26 @@ public class ListViewFragment extends Fragment {
             public TransactionHolder(LayoutInflater inflater, ViewGroup parent) {
                 super(inflater.inflate(R.layout.list_item_transaction, parent, false));
 
-                mDateTextView = (TextView) itemView.findViewById(R.id.transaction_date);
-                mAmountTextView = (TextView) itemView.findViewById(R.id.transaction_amount);
-                mCategoryTextView = (TextView) itemView.findViewById(R.id.transaction_category);
-                mNameTextView = (TextView) itemView.findViewById(R.id.transaction_name);
+                textDate = (TextView) itemView.findViewById(R.id.transaction_date);
+                textAmount = (TextView) itemView.findViewById(R.id.transaction_amount);
+                textCategory = (TextView) itemView.findViewById(R.id.transaction_category);
+                textName = (TextView) itemView.findViewById(R.id.transaction_name);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if (!sDeleteFlag) {
-                            sDeleteFlag = true;
-                            mRemoveTransaction.setEnabled(true);
-                            mEditTransaction.setEnabled(true);
-                            sPosition = getAdapterPosition();
+                        if (!deleteFlag) {
+                            deleteFlag = true;
+                            buttonRemoveTransaction.setEnabled(true);
+                            buttonEditTransaction.setEnabled(true);
+                            position = getAdapterPosition();
                             editTransactionID = mTransaction.getID();
                         } else {
-                            mRemoveTransaction.setEnabled(false);
-                            mEditTransaction.setEnabled(false);
+                            buttonRemoveTransaction.setEnabled(false);
+                            buttonEditTransaction.setEnabled(false);
                             editTransactionID = null;
-                            sDeleteFlag = false;
+                            deleteFlag = false;
                         }
 
                         //TODO: delete more than 1 transaction
@@ -164,8 +163,8 @@ public class ListViewFragment extends Fragment {
                 mTransaction = transaction;
 
 
-                mDateTextView.setText(df.format(mTransaction.getDate()).toString());
-                mAmountTextView.setText(String.format("$%.2f", mTransaction.getAmount()));
+                textDate.setText(df.format(mTransaction.getDate()).toString());
+                textAmount.setText(String.format("$%.2f", mTransaction.getAmount()));
                 ArrayList<String> categoryArray = GlobalScopeContainer.activeProfile.getAllCategoriesForTransaction(mTransaction.getID().toString());
                 StringBuilder sb = new StringBuilder();
                 for (String s : categoryArray) {
@@ -177,10 +176,10 @@ public class ListViewFragment extends Fragment {
                     sb.append(" ");
                 }
                 if (!categoryArray.isEmpty()) {
-                    mCategoryTextView.setText(sb.toString());
-                } else mCategoryTextView.setText(R.string.emptyCategory);
+                    textCategory.setText(sb.toString());
+                } else textCategory.setText(R.string.emptyCategory);
 
-                mNameTextView.setText(mTransaction.getName().toString());
+                textName.setText(mTransaction.getName().toString());
             }
 
 
@@ -196,9 +195,9 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //mAdapter.notifyDataSetChanged();
-        sListIsInFront = true;
-        sSortOrder = 0;
+        //adapter.notifyDataSetChanged();
+        listIsInFront = true;
+        sortOrder = 0;
 
         updateUI();
     }
@@ -206,7 +205,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        sListIsInFront = false;
+        listIsInFront = false;
     }
 
     @Override
@@ -221,7 +220,7 @@ public class ListViewFragment extends Fragment {
         Profile currentProfile = GlobalScopeContainer.activeProfile;
         List<Transaction> transactions;
 
-        switch (sSortOrder) {
+        switch (sortOrder) {
             case 3:
                 transactions = currentProfile.getTransactionsInOrder("amount");
                 break;
@@ -233,43 +232,43 @@ public class ListViewFragment extends Fragment {
 
         }
 
-        mAdapter = new TransactionAdapter(transactions);
-        mTransactionRecyclerView.setAdapter(mAdapter);
+        adapter = new TransactionAdapter(transactions);
+        recyclerViewTransaction.setAdapter(adapter);
         //List<Transaction> transactions = Arrays.asList(GlobalScopeContainer.transactionBuffer);
 
-        if (mAdapter == null) {
-            mAdapter = new TransactionAdapter(transactions);
-            mTransactionRecyclerView.setAdapter(mAdapter);
+        if (adapter == null) {
+            adapter = new TransactionAdapter(transactions);
+            recyclerViewTransaction.setAdapter(adapter);
         } else {
-            mAdapter.setTransactions(transactions);
-            //mCrimeRecyclerView.swapAdapter(mAdapter,true);
+            adapter.setTransactions(transactions);
+            //mCrimeRecyclerView.swapAdapter(adapter,true);
 
         }
 
-        mTransactionRecyclerView.setAdapter(new TransactionAdapter(transactions));
-        mTransactionRecyclerView.invalidate();
-        mRemoveTransaction.setEnabled(false);
-        mEditTransaction.setEnabled(false);
+        recyclerViewTransaction.setAdapter(new TransactionAdapter(transactions));
+        recyclerViewTransaction.invalidate();
+        buttonRemoveTransaction.setEnabled(false);
+        buttonEditTransaction.setEnabled(false);
         currentProfile.limitChecker();
     }
 
 
     public void addListenerOnDialogButton(final Context context) {
-        sortOrderButton.setOnClickListener(new View.OnClickListener() {
+        buttonSortOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SorttransactionsFragment.display(context);
+                SortTransactionsFragment.display(context);
             }
         });
 
-        mAddTransaction.setOnClickListener(new View.OnClickListener() {
+        buttonAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddTransactionDialogFragment.display(context);
             }
         });
 
-        mEditTransaction.setOnClickListener(new View.OnClickListener() {
+        buttonEditTransaction.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -278,7 +277,7 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        mRemoveTransaction.setOnClickListener(new View.OnClickListener() {
+        buttonRemoveTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -287,7 +286,7 @@ public class ListViewFragment extends Fragment {
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
 
-                                mAdapter.delete(sPosition);
+                                adapter.delete(position);
                                 Transaction temp = GlobalScopeContainer.activeProfile.getTransactions(editTransactionID);
                                 GlobalScopeContainer.activeProfile.removeTransaction(temp);
 

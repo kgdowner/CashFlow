@@ -22,12 +22,12 @@ import javax.microedition.khronos.opengles.GL;
 public class ProfileManagementFragment extends android.support.v4.app.DialogFragment {
     public static final String MANAGE_PROFILES = "edu.csuci.myci.cashflow.profile";
 
-    private RadioGroup profiles;
-    private Button button_add_profile;
-    private Button button_remove_profile;
-    private Button button_cancel;
-    private Button button_ok;
-    private EditText mNewProfileName;
+    private RadioGroup radioGroupProfiles;
+    private Button buttonAddProfile;
+    private Button buttonRemoveProfile;
+    private Button buttonCancel;
+    private Button buttonOk;
+    private EditText editTextNewProfileName;
 
     private int checkedButtonId;
 
@@ -52,39 +52,39 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
 
         // acquire layout object references
-        this.profiles = (RadioGroup) view.findViewById(R.id.radio_group);
-        this.button_ok = (Button) view.findViewById(R.id.button_ok);
-        this.button_add_profile = (Button) view.findViewById(R.id.button_add_profile);
-        this.button_remove_profile = (Button) view.findViewById(R.id.button_remove_profile);
-        this.button_cancel = (Button) view.findViewById(R.id.button_cancel);
-        this.mNewProfileName = (EditText) view.findViewById(R.id.new_profile_name);
+        this.radioGroupProfiles = (RadioGroup) view.findViewById(R.id.radio_group);
+        this.buttonOk = (Button) view.findViewById(R.id.button_ok);
+        this.buttonAddProfile = (Button) view.findViewById(R.id.button_add_profile);
+        this.buttonRemoveProfile = (Button) view.findViewById(R.id.button_remove_profile);
+        this.buttonCancel = (Button) view.findViewById(R.id.button_cancel);
+        this.editTextNewProfileName = (EditText) view.findViewById(R.id.new_profile_name);
 
         // register button listener functions
-        this.button_add_profile.setOnClickListener(new View.OnClickListener() {
+        this.buttonAddProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonAddProfile();
             }
         });
-        this.button_remove_profile.setOnClickListener(new View.OnClickListener() {
+        this.buttonRemoveProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonRemoveProfile();
             }
         });
-        this.button_cancel.setOnClickListener(new View.OnClickListener() {
+        this.buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonCancel();
             }
         });
-        this.button_ok.setOnClickListener(new View.OnClickListener() {
+        this.buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonOK(getActivity());
             }
         });
-        this.profiles.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        this.radioGroupProfiles.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 checkedButtonId = checkedId;
@@ -93,7 +93,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
         // update the profile list
         populateRadioGroup();
-        profiles.check(profiles.getChildAt(0).getId()); //sets default to 1st; FIXME: do we want default profile set to active?
+        radioGroupProfiles.check(radioGroupProfiles.getChildAt(0).getId()); //sets default to 1st; FIXME: do we want default profile set to active?
 
         // show the dialog
         return view;
@@ -107,7 +107,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
         }
         if (checkedButtonId != -1) {
-            RadioButton button = (RadioButton) profiles.findViewById(checkedButtonId);
+            RadioButton button = (RadioButton) radioGroupProfiles.findViewById(checkedButtonId);
 
             GlobalScopeContainer.activeProfile.closeProfile();
             GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString() + ".db");
@@ -125,13 +125,13 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
     }
 
     private void onButtonAddProfile() {
-        String name = mNewProfileName.getText().toString();
+        String name = editTextNewProfileName.getText().toString();
         if (TextUtils.isEmpty(name)) {
-            mNewProfileName.setError("Name your Category please.");
+            editTextNewProfileName.setError("Name your Category please.");
             return;
         }
         if (GlobalScopeContainer.profileList.contains(name + ".db")) {
-            mNewProfileName.setError("Pick a different name please");
+            editTextNewProfileName.setError("Pick a different name please");
             return;
         }
 
@@ -149,9 +149,9 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
         RadioButton rb = new RadioButton(getActivity());
         rb.setText(name);
-        profiles.addView(rb);
+        radioGroupProfiles.addView(rb);
 
-        mNewProfileName.setText("");
+        editTextNewProfileName.setText("");
     }
 
     private void onButtonRemoveProfile() {
@@ -163,7 +163,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
 
         } else {
 
-            RadioButton button = (RadioButton) profiles.findViewById(selectedCat);
+            RadioButton button = (RadioButton) radioGroupProfiles.findViewById(selectedCat);
 
             String name = (String) button.getText();
 
@@ -187,7 +187,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             RadioButton rb = new RadioButton(getActivity());
             rb.setText(currentProfile.replace(".db", ""));
             rb.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-            profiles.addView(rb);
+            radioGroupProfiles.addView(rb);
         }
     }
 }

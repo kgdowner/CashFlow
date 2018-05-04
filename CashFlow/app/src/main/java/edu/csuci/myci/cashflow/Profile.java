@@ -21,23 +21,22 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.TransactionTable;
 
 public class Profile {
     private String name;
-    private static Profile sProfile;
-    private Context mContext;
-    private List<Transaction> mTransactions;
-    private SQLiteDatabase mDatabase;
+    private static Profile activeProfile;
+    private Context context;
+    private SQLiteDatabase database;
 
 
     public static Profile get(Context context, String profileName) {
-        if (sProfile == null || !(sProfile.getName().equals(profileName))) {
-            sProfile = new Profile(context, profileName);
+        if (activeProfile == null || !(activeProfile.getName().equals(profileName))) {
+            activeProfile = new Profile(context, profileName);
         }
-        return sProfile;
+        return activeProfile;
 
     }
 
     private Profile(Context context, String profileName) {
-        mContext = context.getApplicationContext();
-        mDatabase = new TransactionBaseHelper(mContext, profileName).getWritableDatabase();
+        this.context = context.getApplicationContext();
+        database = new TransactionBaseHelper(context, profileName).getWritableDatabase();
         this.name = profileName;
 
 
@@ -108,7 +107,7 @@ public class Profile {
         String query = "SELECT * FROM Categories, Cat_Transaction " +
                 "WHERE Cat_Transaction.idTransaction =? " +
                 "AND Categories.idCategory =  Cat_Transaction.idCategory";
-        Cursor c = mDatabase.rawQuery(query, new String[]{transactionId});
+        Cursor c = database.rawQuery(query, new String[]{transactionId});
         if (c.moveToFirst()) {
             do {
 
@@ -130,39 +129,39 @@ public class Profile {
         String uuidString = transaction.getID().toString();
         ContentValues values = getContentValues(transaction);
 
-        mDatabase.update(TransactionTable.NAME, values,
+        database.update(TransactionTable.NAME, values,
                 TransactionTable.Cols.ID_TRANSACTION + " = ?",
                 new String[]{uuidString});
 
     }
 
     public void removeProfile(String name) {
-        mDatabase.close();
-        mContext.deleteDatabase(name);
+        database.close();
+        context.deleteDatabase(name);
         GlobalScopeContainer.profileList.remove(name);
 
         if (GlobalScopeContainer.profileList.isEmpty()) {
             GlobalScopeContainer.profileList.add("defaultProfile" + (new Date().toString()) + ".db");
-            GlobalScopeContainer.activeProfile = Profile.get(mContext, GlobalScopeContainer.profileList.get(0));
+            GlobalScopeContainer.activeProfile = Profile.get(context, GlobalScopeContainer.profileList.get(0));
         }
 
 
     }
     public void closeProfile(){
-        mDatabase.close();
+        database.close();
     }
 
 
     public void removeTransaction(Transaction t) {
         String uuidString = t.getID().toString();
-        mDatabase.delete(TransactionTable.NAME, TransactionTable.Cols.ID_TRANSACTION + " = ?", new String[]{uuidString});
-        mDatabase.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ", new String[]{uuidString});
+        database.delete(TransactionTable.NAME, TransactionTable.Cols.ID_TRANSACTION + " = ?", new String[]{uuidString});
+        database.delete(CategoryTransactionTable.NAME, CategoryTransactionTable.Cols.ID_TRANSACTION + " = ? ", new String[]{uuidString});
 
     }
 
     public void addTransaction(Transaction t) {
         ContentValues values = getContentValues(t);
-        mDatabase.insert(TransactionTable.NAME, null, values);
+        database.insert(TransactionTable.NAME, null, values);
     }
 
     private static ContentValues getContentValues(Transaction crime) {
@@ -177,7 +176,7 @@ public class Profile {
     }
 
     private TransactionCursorWrapper queryTransactions(String whereClause, String[] whereArgs) {
-        Cursor cursor = mDatabase.query(
+        Cursor cursor = database.query(
                 TransactionTable.NAME,
                 null,
                 whereClause,
@@ -190,7 +189,7 @@ public class Profile {
     }
 
     private TransactionCursorWrapper queryTransactionsInOrder(String whereClause, String[] whereArgs, String orderBy) {
-        Cursor cursor = mDatabase.query(
+        Cursor cursor = database.query(
                 TransactionTable.NAME,
                 null,
                 whereClause,
@@ -208,7 +207,7 @@ public class Profile {
                 "INNER JOIN Cat_Transaction ON Transactions.idTransaction = Cat_Transaction.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory GROUP BY Transactions.idTransaction " +
                 "ORDER BY Categories.categoryName DESC";
-        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
+        Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
 
@@ -225,7 +224,7 @@ public class Profile {
                 Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT));
                 if (y > z) {
 
-                    Toast.makeText(mContext, "you are over limit in category " + title + " by $" + (y - z), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "you are over limit in category " + title + " by $" + (y - z), Toast.LENGTH_LONG).show();
                 }
 
 
@@ -242,7 +241,7 @@ public class Profile {
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
                 "WHERE Categories.limits ";
-        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
+        Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
 
@@ -279,7 +278,7 @@ public class Profile {
         int i = 0;
         StringBuilder sb = new StringBuilder();
 
-        CategoryList categoryList = new CategoryList(mContext);
+        CategoryList categoryList = new CategoryList(context);
         List<String> categoryNames = new ArrayList<String>();
         categoryNames.addAll(categoryList.getCategories());
 
@@ -309,7 +308,7 @@ public class Profile {
         } finally {
             cursor.close();
         }
-        Toast.makeText(mContext, sb.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
 
         return series;
 
@@ -323,7 +322,7 @@ public class Profile {
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
                 "GROUP BY Cat_Transaction.idCategory " +
                 "ORDER BY Categories.idCategory ASC";
-        Cursor cursor = mDatabase.rawQuery(query, new String[]{});
+        Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
 

@@ -27,17 +27,16 @@ import java.util.List;
 
 
 public class LimitsDialogFragment extends DialogFragment {
-    private Spinner mCategorySpinner;
-    private RadioGroup mAmountRadioGroup;
-    private EditText mCustomAmount;
-    private Button mOkButton;
-    private Button mCancelButton;
+    private Spinner spinnerCategories;
+    private RadioGroup radioGroupAmount;
+    private EditText editTextCustomAmount;
+    private Button buttonOk;
+    private Button buttonCancel;
 
-    private RecyclerView mLimitsRecyclerView;
-    private LimitAdapter mLimitAdapter;
-    private TextView categoryName;
-    private TextView categoryLimitAmount;
-
+    private RecyclerView recyclerViewLimits;
+    private LimitAdapter adapterLimit;
+    private TextView textCategoryName;
+    private TextView textCategoryLimitAmount;
 
     private CategoryList categoryList;
     private String spinnerSelect;
@@ -60,29 +59,29 @@ public class LimitsDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_set_alert, container, true);
 
-        this.mCategorySpinner = (Spinner) view.findViewById(R.id.category_spinner);
-        this.mAmountRadioGroup = (RadioGroup) view.findViewById(R.id.limits_radioGroup);
-        this.mCustomAmount = (EditText) view.findViewById(R.id.custom_amount_limits);
-        this.mOkButton = (Button) view.findViewById(R.id.add_limit_ok);
-        this.mCancelButton = (Button) view.findViewById(R.id.add_limit_cancel);
+        this.spinnerCategories = (Spinner) view.findViewById(R.id.category_spinner);
+        this.radioGroupAmount = (RadioGroup) view.findViewById(R.id.limits_radioGroup);
+        this.editTextCustomAmount = (EditText) view.findViewById(R.id.custom_amount_limits);
+        this.buttonOk = (Button) view.findViewById(R.id.add_limit_ok);
+        this.buttonCancel = (Button) view.findViewById(R.id.add_limit_cancel);
 
-        this.mLimitsRecyclerView = (RecyclerView) view.findViewById(R.id.limits_recyclerView);
-        mLimitsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.recyclerViewLimits = (RecyclerView) view.findViewById(R.id.limits_recyclerView);
+        recyclerViewLimits.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         categoryList = new CategoryList(getActivity());
         updateList();
 
-        final List<String> categoryNames = new ArrayList<String>();
-        categoryNames.add("");
-        categoryNames.addAll(categoryList.getCategories());
+        final List<String> textCategoryNames = new ArrayList<String>();
+        textCategoryNames.add("");
+        textCategoryNames.addAll(categoryList.getCategories());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, categoryNames);
-        mCategorySpinner.setAdapter(dataAdapter);
+                android.R.layout.simple_spinner_item, textCategoryNames);
+        spinnerCategories.setAdapter(dataAdapter);
 
-        mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) spinnerSelect = categoryNames.get(position);
+                if (position != 0) spinnerSelect = textCategoryNames.get(position);
             }
 
             @Override
@@ -92,23 +91,23 @@ public class LimitsDialogFragment extends DialogFragment {
         });
         populateRadioButtons();
 
-        mAmountRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroupAmount.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 radioSelect = checkedId;
-                RadioButton button = (RadioButton) mAmountRadioGroup.findViewById(checkedId);
+                RadioButton button = (RadioButton) radioGroupAmount.findViewById(checkedId);
 
                 amountFromRadioButton = new BigDecimal((String) button.getText());
             }
         });
 
-        mOkButton.setOnClickListener(new View.OnClickListener() {
+        buttonOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setLimitOnOkButton();
             }
         });
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
@@ -161,15 +160,15 @@ public class LimitsDialogFragment extends DialogFragment {
             public LimitHolder(LayoutInflater inflater, ViewGroup parent) {
                 super(inflater.inflate(R.layout.list_item_limit, parent, false));
 
-                categoryName = (TextView) itemView.findViewById(R.id.limit_category);
-                categoryLimitAmount = (TextView) itemView.findViewById(R.id.limit_amount);
+                textCategoryName = (TextView) itemView.findViewById(R.id.limit_category);
+                textCategoryLimitAmount = (TextView) itemView.findViewById(R.id.limit_amount);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         categoryList.removeLimit(mLimit);
-                        mLimitAdapter.notifyItemRemoved(getAdapterPosition());
+                        adapterLimit.notifyItemRemoved(getAdapterPosition());
                         updateList();
                     }
                 });
@@ -178,8 +177,8 @@ public class LimitsDialogFragment extends DialogFragment {
             public void bind(Limit limit) {
                 mLimit = limit;
 
-                categoryLimitAmount.setText(String.format("$%.2f", mLimit.getAmount()));
-                categoryName.setText(mLimit.getName());
+                textCategoryLimitAmount.setText(String.format("$%.2f", mLimit.getAmount()));
+                textCategoryName.setText(mLimit.getName());
             }
 
         }
@@ -191,7 +190,7 @@ public class LimitsDialogFragment extends DialogFragment {
 
     private void setLimitOnOkButton() {
         BigDecimal actualAmount;
-        String amount = mCustomAmount.getText().toString();
+        String amount = editTextCustomAmount.getText().toString();
 
 
         if (spinnerSelect.isEmpty()) {
@@ -200,13 +199,13 @@ public class LimitsDialogFragment extends DialogFragment {
 
         if (radioSelect == -1) {
             if (TextUtils.isEmpty(amount)) {
-                mCustomAmount.setError("Name your Category please.");
+                editTextCustomAmount.setError("Name your Category please.");
                 return;
             }
             try {
                 actualAmount = new BigDecimal(amount);
             } catch (NumberFormatException e) {
-                mCustomAmount.setError("Please enter number.");
+                editTextCustomAmount.setError("Please enter number.");
                 return;
             }
         } else {
@@ -222,7 +221,7 @@ public class LimitsDialogFragment extends DialogFragment {
         for (String c : amounts) {
             RadioButton button = new RadioButton(getActivity());
             button.setText(c);
-            mAmountRadioGroup.addView(button);
+            radioGroupAmount.addView(button);
         }
     }
 
@@ -230,14 +229,14 @@ public class LimitsDialogFragment extends DialogFragment {
         List<Limit> limits;
         limits = categoryList.getLimits();
 
-        mLimitAdapter = new LimitAdapter(limits);
-        mLimitsRecyclerView.setAdapter(mLimitAdapter);
+        adapterLimit = new LimitAdapter(limits);
+        recyclerViewLimits.setAdapter(adapterLimit);
 
-        if (mLimitAdapter == null) {
-            mLimitAdapter = new LimitAdapter(limits);
-            mLimitsRecyclerView.setAdapter(mLimitAdapter);
+        if (adapterLimit == null) {
+            adapterLimit = new LimitAdapter(limits);
+            recyclerViewLimits.setAdapter(adapterLimit);
         } else {
-            mLimitAdapter.setLimits(limits);
+            adapterLimit.setLimits(limits);
         }
     }
 
