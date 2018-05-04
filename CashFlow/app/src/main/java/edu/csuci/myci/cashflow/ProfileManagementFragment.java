@@ -16,6 +16,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import javax.microedition.khronos.opengles.GL;
+
 
 public class ProfileManagementFragment extends android.support.v4.app.DialogFragment {
     public static final String MANAGE_PROFILES = "edu.csuci.myci.cashflow.profile";
@@ -107,6 +109,7 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         if (checkedButtonId != -1) {
             RadioButton button = (RadioButton) profiles.findViewById(checkedButtonId);
 
+            GlobalScopeContainer.activeProfile.closeProfile();
             GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString() + ".db");
 
             Toast.makeText(context, "current active profile is " + GlobalScopeContainer.activeProfile.getName(), Toast.LENGTH_LONG).show();

@@ -148,6 +148,9 @@ public class Profile {
 
 
     }
+    public void closeProfile(){
+        mDatabase.close();
+    }
 
 
     public void removeTransaction(Transaction t) {
