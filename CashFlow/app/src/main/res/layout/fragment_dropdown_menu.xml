@@ -39,7 +39,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_title"
                     android:textAlignment="textStart"
                     android:textStyle="bold"
                     tools:text="@string/dropdown_menu_title" />
@@ -49,7 +49,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_add"
                     android:textAlignment="textStart"
                     tools:text="@string/dropdown_menu_add" />
 
@@ -58,7 +58,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_remove"
                     android:textAlignment="textStart"
                     tools:text="@string/dropdown_menu_remove" />
 
@@ -75,7 +75,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_categories"
                     android:textAlignment="textStart"
                     tools:text="@string/dropdown_menu_categories" />
 
@@ -84,7 +84,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_limits"
                     android:textAlignment="textStart"
                     tools:text="@string/dropdown_menu_limits" />
 
@@ -93,7 +93,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Button"
+                    android:text="@string/dropdown_menu_exit"
                     android:textAlignment="textStart"
                     tools:text="@string/dropdown_menu_exit" />
             </LinearLayout>

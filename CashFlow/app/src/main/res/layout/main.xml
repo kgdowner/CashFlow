@@ -12,10 +12,8 @@
         android:gravity="left|center_vertical"
         android:orientation="horizontal">
 
-        <Spinner
+        <Button
             android:id="@+id/menu_spinner"
-            style="?attr/buttonStyle"
-            android:entries="@array/main_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".20"

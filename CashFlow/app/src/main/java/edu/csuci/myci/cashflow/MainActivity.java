@@ -2,8 +2,10 @@ package edu.csuci.myci.cashflow;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private Button mListViewButton;
     private Spinner mGraphViewSpinner;
-    private Spinner mMainMenuSpinner;
+    private Button mMainMenuSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,21 @@ public class MainActivity extends AppCompatActivity {
         // TODO: move this menu bar to a new java file
         // top-bar button registration
         mGraphViewSpinner = (Spinner) findViewById(R.id.graph_view_spinner);
-        mMainMenuSpinner = (Spinner) findViewById(R.id.menu_spinner);
+        mMainMenuSpinner = (Button) findViewById(R.id.menu_spinner);
         mListViewButton = (Button) findViewById(R.id.list_view_button);
 
 
         mGraphViewSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
-        mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        //mMainMenuSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener(this));
+        mMainMenuSpinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuDropdownFragment.display(MainActivity.this);
+//                DialogFragment fr = new MenuDropdownFragment();
+//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                fr.show(ft, "Menu_drop_down");
+            }
+        });
         mListViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
