@@ -36,66 +36,93 @@
 
                 <Button
                     android:id="@+id/dropdown_menu_title"
-                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_1"
                     android:text="@string/dropdown_menu_title"
-                    android:textAlignment="textStart"
+                    android:textAlignment="center"
                     android:textStyle="bold"
-                    tools:text="@string/dropdown_menu_title" />
+                    android:theme="@style/AppTheme.Button"
+                    android:clickable="false" />
 
                 <Button
                     android:id="@+id/dropdown_menu_add"
-                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
                     android:text="@string/dropdown_menu_add"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_add" />
+                    android:layout_gravity="start"
+                    android:theme="@style/AppTheme.Button"
+                    android:paddingLeft="16dp" />
 
                 <Button
                     android:id="@+id/dropdown_menu_remove"
-                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
                     android:text="@string/dropdown_menu_remove"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_remove" />
-
-                <Button
-                    android:id="@+id/dropdown_menu_profiles"
+                    android:layout_gravity="start"
                     android:theme="@style/AppTheme.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dropdown_menu_profiles"
-                    android:textAlignment="textStart" />
+                    android:paddingLeft="16dp" />
 
                 <Button
                     android:id="@+id/dropdown_menu_categories"
-                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
                     android:text="@string/dropdown_menu_categories"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_categories" />
+                    android:layout_gravity="start"
+                    android:theme="@style/AppTheme.Button"
+                    android:paddingLeft="16dp" />
 
                 <Button
                     android:id="@+id/dropdown_menu_limits"
-                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
                     android:text="@string/dropdown_menu_limits"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_limits" />
+                    android:layout_gravity="start"
+                    android:theme="@style/AppTheme.Button"
+                    android:paddingLeft="16dp" />
+
+                <Button
+                    android:id="@+id/dropdown_menu_profiles"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
+                    android:text="@string/dropdown_menu_profiles"
+                    android:textAlignment="textStart"
+                    android:layout_gravity="start"
+                    android:theme="@style/AppTheme.Button"
+                    android:paddingLeft="16dp" />
 
                 <Button
                     android:id="@+id/dropdown_menu_exit"
-                    android:theme="@style/AppTheme.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
                     android:text="@string/dropdown_menu_exit"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_exit" />
+                    android:layout_gravity="start"
+                    android:theme="@style/AppTheme.Button"
+                    android:paddingLeft="16dp" />
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
 
