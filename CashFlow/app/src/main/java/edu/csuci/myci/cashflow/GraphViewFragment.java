@@ -131,6 +131,9 @@ public class GraphViewFragment extends Fragment {
         graph.addSeries(series2);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+        graph.getViewport().setMaxX(series2.getHighestValueX());
+        graph.getViewport().setMinX(series2.getLowestValueX());
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
         graph.getViewport().setScrollable(true);
 
     }
