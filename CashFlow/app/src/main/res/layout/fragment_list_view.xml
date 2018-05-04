@@ -30,40 +30,58 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/add_transaction_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/color_primary"
                 android:padding="8dp"
-                android:text="@string/button_add" />
+                android:text="@string/button_add"
+                android:textAlignment="center"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/remove_transaction_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/color_primary"
                 android:padding="8dp"
-                android:text="@string/button_remove" />
+                android:text="@string/button_remove"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:typeface="monospace" />
 
             <Button
                 android:id="@+id/edit_transaction"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/color_primary"
                 android:padding="8dp"
-                android:text="@string/button_edit_transaction" />
+                android:text="@string/button_edit_transaction"
+                android:textAlignment="center" />
 
             <Button
                 android:id="@+id/sort_list_spinner"
-                android:text="@string/sort_by"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight=".40"
-                android:padding="8dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/color_primary"
+                android:padding="8dp"
+                android:text="@string/sort_by"
+                android:textAlignment="center" />
         </LinearLayout>
 
 
