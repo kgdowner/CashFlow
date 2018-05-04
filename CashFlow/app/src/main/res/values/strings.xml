@@ -38,6 +38,11 @@
     <string name="dropdown_menu_limits">Manage Limits</string>
     <string name="dropdown_menu_exit">Exit</string>
 
+    <!-- fragment_dropdown_graphs.xml -->
+    <string name="dropdown_graphs_line">Line</string>
+    <string name="dropdown_graphs_bar">Bar</string>
+
+
     <!-- fragment_graph_view.xml -->
     <string-array name="time_options">
         <item>Last Month</item>
@@ -75,18 +80,5 @@
     <string name="transactions">Transactions</string>
     <string name="emptyCategory">NULL</string>
     <string name="rename_category">Rename</string>
-    <string-array name="graph_view">
-        <item>GRAPHS</item>
-        <item>Line</item>
-        <item>Bar</item>
-    </string-array>
-    <string-array name="main_menu">
-        <item></item>
-        <item>Add Transaction</item>
-        <item>Remove Transaction</item>
-        <item>Manage Profiles</item>
-        <item>Manage Categories</item>
-        <item>Set Limits on Categories</item>
-        <item>Exit</item>
-    </string-array>
+
 </resources>

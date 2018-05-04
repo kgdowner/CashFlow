@@ -28,14 +28,13 @@
             android:padding="8dp"
             android:text="@string/transactions" />
 
-        <Spinner
+        <Button
             android:id="@+id/graph_view_spinner"
-            style="?attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight=".40"
-            android:entries="@array/graph_view"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:text="@string/button_graph_list"/>
 
 
     </LinearLayout>
