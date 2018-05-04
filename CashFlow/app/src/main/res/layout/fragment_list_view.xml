@@ -57,13 +57,12 @@
                 android:padding="8dp"
                 android:text="@string/button_edit_transaction" />
 
-            <Spinner
+            <Button
                 android:id="@+id/sort_list_spinner"
-                style="?attr/buttonStyle"
+                android:text="@string/sort_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
-                android:entries="@array/category_sort_options"
                 android:padding="8dp" />
         </LinearLayout>
 

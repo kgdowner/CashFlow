@@ -35,13 +35,13 @@ public class ListViewFragment extends Fragment {
     private Button mRemoveTransaction;
     private Button mEditTransaction;
 
-    private Spinner mCategorySpinner;
+    private Button sortOrderButton;
 
     private static int sPosition;
     private UUID editTransactionID;
 
     public static boolean sDeleteFlag = false;
-    private static int sSortOrder = 0;
+    public static int sSortOrder = 0;
     public static boolean sListIsInFront;
 
     @Override
@@ -59,7 +59,7 @@ public class ListViewFragment extends Fragment {
         mTransactionRecyclerView = (RecyclerView) v.findViewById(R.id.transaction_recycler_view);
         mTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mCategorySpinner = (Spinner) v.findViewById(R.id.sort_list_spinner);
+        sortOrderButton = (Button) v.findViewById(R.id.sort_list_spinner);
 
         mAddTransaction = (Button) v.findViewById(R.id.add_transaction_button);
         mRemoveTransaction = (Button) v.findViewById(R.id.remove_transaction_button);
@@ -67,21 +67,6 @@ public class ListViewFragment extends Fragment {
         mRemoveTransaction.setEnabled(false);
         mEditTransaction.setEnabled(false);
         updateUI();
-
-        mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sSortOrder = position;
-                if (position != 0) {
-                    updateUI();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
         addListenerOnDialogButton(getActivity());
@@ -270,6 +255,13 @@ public class ListViewFragment extends Fragment {
 
 
     public void addListenerOnDialogButton(final Context context) {
+        sortOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SorttransactionsFragment.display(context);
+            }
+        });
+
         mAddTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
