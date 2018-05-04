@@ -1,6 +1,7 @@
 package edu.csuci.myci.cashflow;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,8 @@ public class GraphDropdownFragment extends DialogFragment {
         // create the dialog and assign it the proper layout
         Window window = getDialog().getWindow();
         window.setGravity(Gravity.TOP|Gravity.RIGHT);
+        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        window.setDimAmount(0);
 
         // ... ?  (TODO?)
 

@@ -38,7 +38,7 @@
 
                 <Button
                     android:id="@+id/dropdown_graph_line"
-                    style="@style/Widget.AppCompat.Button.Borderless"
+                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dropdown_graphs_line"
@@ -48,7 +48,7 @@
 
                 <Button
                     android:id="@+id/dropdown_graph_bar"
-                    style="@style/Widget.AppCompat.Button.Borderless"
+                    style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dropdown_graphs_bar"

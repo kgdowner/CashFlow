@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="recyclerColor1">#88bb88</color>
     <color name="recyclerColor2">#cccccc</color>
+    <color name="dropDownButtonColor">#f1dddd</color>
+
 </resources>
