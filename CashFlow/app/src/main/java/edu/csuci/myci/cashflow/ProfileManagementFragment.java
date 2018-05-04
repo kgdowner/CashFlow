@@ -165,7 +165,9 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
             String name = (String) button.getText();
 
             GlobalScopeContainer.activeProfile.removeProfile(name + ".db");
+            GlobalScopeContainer.activeProfile = Profile.get(getActivity(), GlobalScopeContainer.profileList.get(0));
 
+            getTargetFragment().onActivityResult(0, 0, null);  // for now this will call updateUI() in ListViewFragment
 
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
         }
