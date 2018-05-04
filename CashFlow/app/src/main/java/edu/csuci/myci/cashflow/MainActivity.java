@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private Button buttonListView;
     private Button buttonGraphView;
-    private Button buttonMenuDropdown;
+    private ImageButton buttonMenuDropdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: move this menu bar to a new java file
         // top-bar button registration
-        buttonGraphView = (Button) findViewById(R.id.graph_view_spinner);
-        buttonMenuDropdown = (Button) findViewById(R.id.menu_spinner);
         buttonListView = (Button) findViewById(R.id.list_view_button);
+        buttonGraphView = (Button) findViewById(R.id.graph_view_spinner);
+        buttonMenuDropdown = (ImageButton) findViewById(R.id.menu_button);
 
         buttonGraphView.setOnClickListener(new View.OnClickListener() {
             @Override

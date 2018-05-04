@@ -39,14 +39,14 @@ public class MenuDropdownFragment extends DialogFragment {
         // ... ?  (TODO?)
 
         // get button handles
-        Button button = (Button)view.findViewById(R.id.button);
-        Button menuTitle = (Button) view.findViewById(R.id.dropdown_menu_title);
+        Button spacer_button    = (Button) view.findViewById(R.id.spacer_button);
+        Button menuTitle        = (Button) view.findViewById(R.id.dropdown_menu_title);
         menuTitle.setText(GlobalScopeContainer.activeProfile.getName());
-        Button addTransaction = (Button)view.findViewById(R.id.dropdown_menu_add);
-        Button manageProfiles = (Button)view.findViewById(R.id.dropdown_menu_profiles);
-        Button manageCategories = (Button)view.findViewById(R.id.dropdown_menu_categories);
-        Button manageLimits = (Button)view.findViewById(R.id.dropdown_menu_limits);
-        Button exitButton = (Button)view.findViewById(R.id.dropdown_menu_exit);
+        Button addTransaction   = (Button) view.findViewById(R.id.dropdown_menu_add);
+        Button manageProfiles   = (Button) view.findViewById(R.id.dropdown_menu_profiles);
+        Button manageCategories = (Button) view.findViewById(R.id.dropdown_menu_categories);
+        Button manageLimits     = (Button) view.findViewById(R.id.dropdown_menu_limits);
+        Button exitButton       = (Button) view.findViewById(R.id.dropdown_menu_exit);
 
          //register button listener functions
 //        menuTitle.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class MenuDropdownFragment extends DialogFragment {
 //                onMenuTitle();
 //            }
 //        });
-        button.setOnClickListener(new View.OnClickListener() {
+        spacer_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss(); //this is the invisible button :)

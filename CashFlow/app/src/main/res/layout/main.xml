@@ -8,33 +8,51 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left|center_vertical"
+        android:layout_height="48dp"
+        android:background="@android:drawable/bottom_bar"
+        android:backgroundTint="@color/color_primary"
+        android:gravity="center_vertical|start"
         android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/menu_button"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".20"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:tint="@android:color/black"
+            app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
 
         <Button
             android:id="@+id/menu_spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="10dp"
+            android:layout_height="40dp"
             android:layout_weight=".20"
-            android:foreground="@drawable/menu_icon"
-            android:padding="8dp" />
+            android:background="@drawable/menu_icon"
+            android:enabled="false"
+            android:visibility="gone" />
+
 
         <Button
             android:id="@+id/list_view_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".40"
-            android:padding="8dp"
-            android:text="@string/transactions" />
+            android:layout_height="match_parent"
+            android:layout_weight=".20"
+            android:text="@string/transactions"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/graph_view_spinner"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".40"
-            android:padding="8dp"
-            android:text="@string/button_graph_list"/>
+            android:layout_height="match_parent"
+            android:layout_weight=".20"
+            android:text="@string/button_graph_list"
+            android:textSize="16sp" />
 
 
     </LinearLayout>
@@ -43,10 +61,10 @@
         android:id="@+id/fragment_place"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
