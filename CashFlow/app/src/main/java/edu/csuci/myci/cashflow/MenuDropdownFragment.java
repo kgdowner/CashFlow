@@ -39,6 +39,7 @@ public class MenuDropdownFragment extends DialogFragment {
         // ... ?  (TODO?)
 
         // get button handles
+        Button button = (Button)view.findViewById(R.id.button);
         Button menuTitle = (Button) view.findViewById(R.id.dropdown_menu_title);
         menuTitle.setText(GlobalScopeContainer.activeProfile.getName());
         Button addTransaction = (Button)view.findViewById(R.id.dropdown_menu_add);
@@ -55,6 +56,12 @@ public class MenuDropdownFragment extends DialogFragment {
 //                onMenuTitle();
 //            }
 //        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss(); //this is the invisible button :)
+            }
+        });
         addTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
