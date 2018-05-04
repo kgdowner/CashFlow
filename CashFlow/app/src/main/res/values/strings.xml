@@ -52,12 +52,8 @@
 
     <!-- fragment_list_view.xml -->
     <string name="button_edit_transaction">Edit</string>
-    <string-array name="category_sort_options">
-        <item>Sort by</item>
-        <item>Date</item>
-        <item>Category</item>
-        <item>Amount</item>
-    </string-array>
+    <string name="sort_by">Sort by</string>
+
 
     <!-- fragment_loader.xml -->
     <string name="profile_prompt">current profile:</string>
