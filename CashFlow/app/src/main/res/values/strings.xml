@@ -42,8 +42,7 @@
     <string name="dropdown_graphs_line">Line</string>
     <string name="dropdown_graphs_bar">Bar</string>
 
-
-    <!-- fragment_graph_view.xml -->
+    <!-- graph view elements -->
     <string-array name="time_options">
         <item>Last Month</item>
         <item>All Time</item>

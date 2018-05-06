@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -54,14 +52,14 @@ public class GraphDropdownFragment extends DialogFragment {
         graphBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GraphViewFragment.display(getActivity(),2);
+                GraphViewBarFragment.display(getActivity(),2);
                 dismiss();
             }
         });
         graphLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GraphViewFragment.display(getActivity(),1);
+                GraphViewLineFragment.display(getActivity(),1);
                 //TODO: Either remove or fix
                 dismiss();
             }
