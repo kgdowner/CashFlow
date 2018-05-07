@@ -108,10 +108,12 @@ public class ProfileManagementFragment extends android.support.v4.app.DialogFrag
         }
         if (checkedButtonId != -1) {
             RadioButton button = (RadioButton) radioGroupProfiles.findViewById(checkedButtonId);
+            String profileName = button.getText().toString();
 
-            GlobalScopeContainer.activeProfile.closeProfile();
-            GlobalScopeContainer.activeProfile = Profile.get(context, button.getText().toString() + ".db");
-
+            if(!(profileName+".db").equals(GlobalScopeContainer.activeProfile.getName())) {
+                GlobalScopeContainer.activeProfile.closeProfile();
+                GlobalScopeContainer.activeProfile = Profile.get(context, profileName+".db");
+            }
             Toast.makeText(context, "current active profile is " + GlobalScopeContainer.activeProfile.getName(), Toast.LENGTH_LONG).show();
             //dismiss();
 
