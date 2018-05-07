@@ -67,10 +67,9 @@ public class LoaderFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PROFILE_MANIPULATE) {
-            textCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName());
+            textCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName().replace(".db", ""));
 
 
-        }
+
     }
 }

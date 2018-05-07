@@ -41,7 +41,7 @@ public class MenuDropdownFragment extends DialogFragment {
         // get button handles
         Button spacer_button    = (Button) view.findViewById(R.id.spacer_button);
         Button menuTitle        = (Button) view.findViewById(R.id.dropdown_menu_title);
-        menuTitle.setText(GlobalScopeContainer.activeProfile.getName());
+        menuTitle.setText(GlobalScopeContainer.activeProfile.getName().replace(".db", ""));
         Button addTransaction   = (Button) view.findViewById(R.id.dropdown_menu_add);
         Button manageProfiles   = (Button) view.findViewById(R.id.dropdown_menu_profiles);
         Button manageCategories = (Button) view.findViewById(R.id.dropdown_menu_categories);
