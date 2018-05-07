@@ -22,6 +22,7 @@
     <string name="add_new_category">new category name</string>
 
     <!-- dialog_profile_management.xml -->
+    <string name="profiles_default_name">Default Profile</string>
     <string name="profiles_dialog_title">Profiles</string>
     <string name="profiles_name_hint">Enter new Profile Name</string>
 
@@ -39,8 +40,10 @@
     <string name="dropdown_menu_exit">Exit</string>
 
     <!-- fragment_dropdown_graphs.xml -->
-    <string name="dropdown_graphs_line">Line</string>
-    <string name="dropdown_graphs_bar">Bar</string>
+    <string name="dropdown_graphs_1">Running Total</string>
+    <string name="dropdown_graphs_2">Transactions</string>
+    <string name="dropdown_graphs_3">Categories Line</string>
+    <string name="dropdown_graphs_4">Categories Bar</string>
 
     <!-- graph view elements -->
     <string-array name="time_options">
