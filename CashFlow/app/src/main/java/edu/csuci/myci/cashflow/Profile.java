@@ -141,7 +141,7 @@ public class Profile {
         GlobalScopeContainer.profileList.remove(name);
 
         if (GlobalScopeContainer.profileList.isEmpty()) {
-            GlobalScopeContainer.profileList.add("defaultProfile" + (new Date().toString()) + ".db");
+            GlobalScopeContainer.profileList.add(context.getResources().getString(R.string.profiles_default_name) + " " + (new Date().getTime() % 10000) + ".db");
             GlobalScopeContainer.activeProfile = Profile.get(context, GlobalScopeContainer.profileList.get(0));
         }
 

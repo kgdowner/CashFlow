@@ -22,6 +22,7 @@
     <string name="add_new_category">new category name</string>
 
     <!-- dialog_profile_management.xml -->
+    <string name="profiles_default_name">Default Profile</string>
     <string name="profiles_dialog_title">Profiles</string>
     <string name="profiles_name_hint">Enter new Profile Name</string>
 
