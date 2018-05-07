@@ -8,9 +8,13 @@ import android.widget.Toast;
 
 import com.jjoe64.graphview.series.DataPoint;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import edu.csuci.myci.cashflow.database.TransactionBaseHelper;
@@ -24,6 +28,8 @@ public class Profile {
     private static Profile activeProfile;
     private Context context;
     private SQLiteDatabase database;
+    private static SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
 
 
     public static Profile get(Context context, String profileName) {
@@ -164,12 +170,14 @@ public class Profile {
         database.insert(TransactionTable.NAME, null, values);
     }
 
-    private static ContentValues getContentValues(Transaction crime) {
+    private static ContentValues getContentValues(Transaction transaction) {
+
+
         ContentValues values = new ContentValues();
-        values.put(TransactionTable.Cols.ID_TRANSACTION, crime.getID().toString());
-        values.put(TransactionTable.Cols.TITLE, crime.getName());
-        values.put(TransactionTable.Cols.DATE, crime.getDate().getTime());
-        values.put(TransactionTable.Cols.AMOUNT, crime.getAmount().toString());
+        values.put(TransactionTable.Cols.ID_TRANSACTION, transaction.getID().toString());
+        values.put(TransactionTable.Cols.TITLE, transaction.getName());
+        values.put(TransactionTable.Cols.DATE, df1.format(transaction.getDate()).toString());
+        values.put(TransactionTable.Cols.AMOUNT, transaction.getAmount().toString());
 
         return values;
 
@@ -268,6 +276,8 @@ public class Profile {
 
     }
 
+
+
     public DataPoint[] getBarSeries() {
         TransactionCursorWrapper cursor;
 
@@ -325,7 +335,60 @@ public class Profile {
         Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
+    private TransactionCursorWrapper queryTransactionsSumByDate() {
+        String query = "SELECT date(Transactions.date) AS date, SUM(Transactions.amount) AS temp " +
+                "FROM Transactions " +
+                "GROUP BY date " +
+                "ORDER BY date ASC";
 
+
+
+
+        Cursor cursor = database.rawQuery(query, new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+
+
+    public DataPoint[] getSumSeries() {
+
+        TransactionCursorWrapper cursor;
+
+        //cursor = queryTransactionsInOrder(null, null, "date ASC");
+        cursor = queryTransactionsSumByDate();
+        BigDecimal amount = BigDecimal.ZERO;
+
+
+
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i = 0;
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                Date date1;
+
+                try {
+                    date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    date1 = new Date();
+                }
+
+                Toast.makeText(context, date, Toast.LENGTH_SHORT).show();
+
+                amount =amount.add( new BigDecimal(cursor.getString(cursor.getColumnIndex("temp"))));
+
+                series[i] = new DataPoint(date1, amount.doubleValue() );
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
 
 }
 

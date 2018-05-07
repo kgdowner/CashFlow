@@ -6,7 +6,11 @@ import android.database.CursorWrapper;
 import com.jjoe64.graphview.series.DataPoint;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 import edu.csuci.myci.cashflow.Category;
@@ -16,17 +20,27 @@ import edu.csuci.myci.cashflow.database.TransactionDbSchema.CategoryTable;
 import edu.csuci.myci.cashflow.database.TransactionDbSchema.TransactionTable;
 
 public class TransactionCursorWrapper extends CursorWrapper {
+    SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+
     public TransactionCursorWrapper(Cursor cursor) {
         super(cursor);
     }
 
     public Transaction getTransaction() {
+        String date = getString(getColumnIndex(TransactionTable.Cols.DATE));
+        Date date1 = null;
+        try {
+             date1 = df1.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            date1 = new Date();
+        }
+
         String uuidString = getString(getColumnIndex(TransactionTable.Cols.ID_TRANSACTION));
         String title = getString(getColumnIndex(TransactionTable.Cols.TITLE));
-        Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
         Transaction transaction = new Transaction(amount, title);
-        transaction.setDate(new Date(date));
+        transaction.setDate(date1);
         transaction.setID(UUID.fromString(uuidString));
 
 
@@ -50,10 +64,18 @@ public class TransactionCursorWrapper extends CursorWrapper {
     }
 
     public DataPoint getDataPoint() {
-        Long date = getLong(getColumnIndex(TransactionTable.Cols.DATE));
+        String date = getString(getColumnIndex(TransactionTable.Cols.DATE));
+        Date date1;
+        try {
+            date1 = df1.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            date1 = new Date();
+        }
+
         BigDecimal amount = new BigDecimal(getString(getColumnIndex(TransactionTable.Cols.AMOUNT)));
 
-        return new DataPoint(date, amount.doubleValue());
+        return new DataPoint(date1, amount.doubleValue());
 
     }
 
