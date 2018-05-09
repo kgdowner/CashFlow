@@ -25,7 +25,7 @@
             android:visibility="visible">
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,36 +36,26 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <Button
-                    android:id="@+id/dropdown_graph_1"
+                    android:id="@+id/dropdown_graph_transactions"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/dropdown_graphs_1"
-                    android:textAlignment="center" />
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
+                    android:paddingLeft="16dp"
+                    android:text="@string/dropdown_graphs_transactions"
+                    android:textAlignment="textStart" />
 
                 <Button
-                    android:id="@+id/dropdown_graph_2"
+                    android:id="@+id/dropdown_graph_categories"
                     style="@style/Widget.AppCompat.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/dropdown_graphs_2"
-                    android:textAlignment="center" />
-
-                <Button
-                    android:id="@+id/dropdown_graph_3"
-                    style="@style/Widget.AppCompat.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dropdown_graphs_3"
-                    android:textAlignment="center" />
-
-                <Button
-                    android:id="@+id/dropdown_graph_4"
-                    style="@style/Widget.AppCompat.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dropdown_graphs_4"
-                    android:textAlignment="center" />
+                    android:background="@android:drawable/bottom_bar"
+                    android:backgroundTint="@color/menu_color_2"
+                    android:paddingLeft="16dp"
+                    android:text="@string/dropdown_graphs_categories"
+                    android:textAlignment="textStart" />
 
             </LinearLayout>
         </android.support.constraint.ConstraintLayout>
