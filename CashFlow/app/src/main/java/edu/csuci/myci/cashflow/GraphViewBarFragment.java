@@ -102,12 +102,16 @@ public class GraphViewBarFragment extends Fragment {
         graph.getGridLabelRenderer().resetStyles();
         //graph.invalidate();
 
-        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+     //   series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries());
+
         series1.setSpacing(10);
         series1.setDrawValuesOnTop(true);
         series1.setValuesOnTopColor(Color.RED);
 
         graph.addSeries(series1);
+        
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().calcCompleteRange();
@@ -119,16 +123,14 @@ public class GraphViewBarFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // FIXME: updating the UI like this does not seem logical
-        // FIXME: for instance: it precludes updating the graph view if one of these
-        // FIXME: sub-fragments was opened there, since they can only have one Target Fragment
-
         updateUI();
     }
 
     private void updateUI() {
         if (series1 != null) {
-            series1.resetData(GlobalScopeContainer.activeProfile.getBarSeries());
+            //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
+            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries());
+
         }
     }
 }

@@ -353,11 +353,8 @@ public class Profile {
 
         TransactionCursorWrapper cursor;
 
-        //cursor = queryTransactionsInOrder(null, null, "date ASC");
         cursor = queryTransactionsSumByDate();
         BigDecimal amount = BigDecimal.ZERO;
-
-
 
         DataPoint[] series = new DataPoint[cursor.getCount()];
         int i = 0;
@@ -375,7 +372,40 @@ public class Profile {
                     date1 = new Date();
                 }
 
-                Toast.makeText(context, date, Toast.LENGTH_SHORT).show();
+                amount =amount.add( new BigDecimal(cursor.getString(cursor.getColumnIndex("temp"))));
+
+                series[i] = new DataPoint(date1, amount.doubleValue() );
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
+    public DataPoint[] getSumBarSeries() {
+
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsSumByDate();
+        BigDecimal amount = BigDecimal.ZERO;
+
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i = 0;
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                Date date1;
+
+                try {
+                    date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    date1 = new Date();
+                }
 
                 amount =amount.add( new BigDecimal(cursor.getString(cursor.getColumnIndex("temp"))));
 

@@ -102,31 +102,33 @@ public class GraphViewLineFragment extends Fragment {
         //graph.invalidate();
 
 
-        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+        //series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
+        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries());
 
 
-        graph.addSeries(series2);
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
         graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
         graph.getViewport().setMaxX(series2.getHighestValueX());
         graph.getViewport().setMinX(series2.getLowestValueX());
+        graph.getViewport().setMinY(series2.getLowestValueY());
+        graph.getViewport().setMaxY(series2.getHighestValueY());
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
         graph.getViewport().setScrollable(true);
+
+        graph.addSeries(series2);
+
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // FIXME: updating the UI like this does not seem logical
-        // FIXME: for instance: it precludes updating the graph view if one of these
-        // FIXME: sub-fragments was opened there, since they can only have one Target Fragment
-
         updateUI();
     }
 
     private void updateUI() {
         if (series2 != null) {
-            series2.resetData(GlobalScopeContainer.activeProfile.getSeries());
+            series2.resetData(GlobalScopeContainer.activeProfile.getSumSeries());
         }
     }
 }
