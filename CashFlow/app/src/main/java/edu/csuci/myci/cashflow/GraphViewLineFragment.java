@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.jjoe64.graphview.GraphView;
@@ -28,6 +29,8 @@ public class GraphViewLineFragment extends Fragment {
 
     private Spinner spinnerTimeRange;
     private Spinner spinnerCategories;
+
+    String modifier = "date('now','-30 years')";
 
     LineGraphSeries<DataPoint> series2;
 
@@ -60,8 +63,40 @@ public class GraphViewLineFragment extends Fragment {
         spinnerTimeRange = (Spinner) v.findViewById(R.id.time_range_spinner);
         spinnerCategories = (Spinner) v.findViewById(R.id.select_category_spinner);
 
+        spinnerTimeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 1:
+                        modifier = "date('now','-1 month')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break;  // month
+                    case 2:
+                        modifier = "date('now','-6 month')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //6 month
+                    case 3:
+                        modifier = "date('now','-1 years')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //year
+                    case 4:
+                        modifier = "date('now','-30 years')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //all time
+                    default: break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         spinnerCategories.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-        spinnerTimeRange.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
 
 
         return v;
@@ -103,7 +138,8 @@ public class GraphViewLineFragment extends Fragment {
 
 
         //series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSeries());
-        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries());
+        series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries(
+                modifier));
 
 
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
@@ -128,7 +164,7 @@ public class GraphViewLineFragment extends Fragment {
 
     private void updateUI() {
         if (series2 != null) {
-            series2.resetData(GlobalScopeContainer.activeProfile.getSumSeries());
+            series2.resetData(GlobalScopeContainer.activeProfile.getSumSeries(modifier));
         }
     }
 }

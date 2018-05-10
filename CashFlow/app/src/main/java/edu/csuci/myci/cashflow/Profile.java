@@ -335,10 +335,11 @@ public class Profile {
         Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
     }
-    private TransactionCursorWrapper queryTransactionsSumByDate() {
+    private TransactionCursorWrapper queryTransactionsSumByDate(String modifier) {
         String query = "SELECT date(Transactions.date) AS date, SUM(Transactions.amount) AS temp " +
                 "FROM Transactions " +
-                "GROUP BY date " +
+                "WHERE date > " + modifier +
+                " GROUP BY date " +
                 "ORDER BY date ASC";
 
 
@@ -349,11 +350,11 @@ public class Profile {
     }
 
 
-    public DataPoint[] getSumSeries() {
+    public DataPoint[] getSumSeries(String modifier) {
 
         TransactionCursorWrapper cursor;
 
-        cursor = queryTransactionsSumByDate();
+        cursor = queryTransactionsSumByDate(modifier);
         BigDecimal amount = BigDecimal.ZERO;
 
         DataPoint[] series = new DataPoint[cursor.getCount()];
@@ -384,11 +385,11 @@ public class Profile {
         return series;
 
     }
-    public DataPoint[] getSumBarSeries() {
+    public DataPoint[] getSumBarSeries(String modifier) {
 
         TransactionCursorWrapper cursor;
 
-        cursor = queryTransactionsSumByDate();
+        cursor = queryTransactionsSumByDate(modifier);
         BigDecimal amount = BigDecimal.ZERO;
 
         DataPoint[] series = new DataPoint[cursor.getCount()];

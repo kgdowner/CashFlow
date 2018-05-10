@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.jjoe64.graphview.GraphView;
@@ -31,7 +32,11 @@ public class GraphViewBarFragment extends Fragment {
     private Spinner spinnerTimeRange;
     private Spinner spinnerCategories;
 
+    GraphView graph;
+
     BarGraphSeries<DataPoint> series1;
+
+    String modifier = "date('now','-30 years')";
 
     public static void display(Context context, int typeOfGraph) {
         GraphViewBarFragment fragment = new GraphViewBarFragment();
@@ -53,7 +58,7 @@ public class GraphViewBarFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph_view_bar, container, false);
 
-        GraphView graph = (GraphView) v.findViewById(R.id.graph);
+        graph = (GraphView) v.findViewById(R.id.graph);
 
 
 
@@ -64,8 +69,39 @@ public class GraphViewBarFragment extends Fragment {
         spinnerCategories = (Spinner) v.findViewById(R.id.select_category_spinner);
 
         spinnerCategories.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
-        spinnerTimeRange.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        spinnerTimeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch(position){
+                    case 1:
+                        modifier = "date('now','-1 month')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break;  // month
+                    case 2:
+                        modifier = "date('now','-6 month')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //6 month
+                    case 3:
+                        modifier = "date('now','-1 years')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //year
+                    case 4:
+                        modifier = "date('now','-30 years')";
+                        updateUI();
+                        parent.setSelection(0);
+                        break; //all time
+                    default: break;
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return v;
     }
@@ -102,8 +138,8 @@ public class GraphViewBarFragment extends Fragment {
         graph.getGridLabelRenderer().resetStyles();
         //graph.invalidate();
 
-     //   series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
-        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries());
+        //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
+        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
 
         series1.setSpacing(10);
         series1.setDrawValuesOnTop(true);
@@ -113,9 +149,11 @@ public class GraphViewBarFragment extends Fragment {
         
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().calcCompleteRange();
-        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+//        graph.getViewport().setXAxisBoundsManual(true);
+//        graph.getViewport().calcCompleteRange();
+//        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+//        graph.getViewport().setMinX(graph.getViewport().getMinX(true));
+
 
     }
 
@@ -128,8 +166,12 @@ public class GraphViewBarFragment extends Fragment {
 
     private void updateUI() {
         if (series1 != null) {
-            //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries());
-            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries());
+            //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
+            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+//            graph.getViewport().setXAxisBoundsManual(true);
+//            graph.getViewport().calcCompleteRange();
+//            graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
+//            graph.getViewport().setMinX(graph.getViewport().getMinX(true));
 
         }
     }
