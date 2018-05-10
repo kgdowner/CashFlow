@@ -38,8 +38,8 @@ public class GraphDropdownFragment extends DialogFragment {
         // get button handles
         Button invisible = (Button) view.findViewById(R.id.graph_dropdown_invisible_button);
 
-        Button graphLine = (Button)view.findViewById(R.id.dropdown_graph_1);
-        Button graphBar = (Button)view.findViewById(R.id.dropdown_graph_2);
+        Button graphLine = (Button)view.findViewById(R.id.dropdown_graph_transactions);
+        Button graphBar = (Button)view.findViewById(R.id.dropdown_graph_categories);
 
 
          //register button listener functions
