@@ -12,11 +12,12 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/graph_dropdown_invisible_button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:visibility="invisible" />
+            />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

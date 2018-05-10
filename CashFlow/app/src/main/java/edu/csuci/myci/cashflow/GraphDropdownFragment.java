@@ -35,9 +35,9 @@ public class GraphDropdownFragment extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         window.setDimAmount(0);
 
-        // ... ?  (TODO?)
-
         // get button handles
+
+        Button invisible = (Button) view.findViewById(R.id.graph_dropdown_invisible_button);
 
         Button graphLine = (Button)view.findViewById(R.id.dropdown_graph_1);
         Button graphBar = (Button)view.findViewById(R.id.dropdown_graph_2);
@@ -49,6 +49,13 @@ public class GraphDropdownFragment extends DialogFragment {
 //                onMenuTitle();
 //            }
 //        });
+        invisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
         graphBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
