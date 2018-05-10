@@ -36,11 +36,11 @@ public class GraphDropdownFragment extends DialogFragment {
         window.setDimAmount(0);
 
         // get button handles
-
         Button invisible = (Button) view.findViewById(R.id.graph_dropdown_invisible_button);
 
         Button graphLine = (Button)view.findViewById(R.id.dropdown_graph_1);
         Button graphBar = (Button)view.findViewById(R.id.dropdown_graph_2);
+
 
          //register button listener functions
 //        menuTitle.setOnClickListener(new View.OnClickListener() {
