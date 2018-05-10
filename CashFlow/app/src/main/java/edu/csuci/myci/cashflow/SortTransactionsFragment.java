@@ -38,9 +38,9 @@ public class SortTransactionsFragment extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         window.setDimAmount(0);
 
-        // ... ?  (TODO?)
-
         // get button handles
+
+        Button invisible = (Button)view.findViewById(R.id.button_invisible);
 
         Button sortDate = (Button)view.findViewById(R.id.sort_by_date);
         Button sortCategory = (Button)view.findViewById(R.id.sort_by_category);
@@ -54,6 +54,12 @@ public class SortTransactionsFragment extends DialogFragment {
 //                onMenuTitle();
 //            }
 //        });
+        invisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         sortDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/list_item_category"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_add" />
+                    />
                 <Button
                     android:id="@+id/sort_by_amount"
                     style="@style/Widget.AppCompat.Button"
@@ -54,15 +54,17 @@
                     android:layout_height="wrap_content"
                     android:text="@string/list_item_amount"
                     android:textAlignment="textStart"
-                    tools:text="@string/dropdown_menu_add" />
+                    />
+                <Button
+                    android:id="@+id/button_invisible"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@android:color/transparent"/>
             </LinearLayout>
+
         </android.support.constraint.ConstraintLayout>
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:background="@android:color/transparent"/>
+
 
     </LinearLayout>
 
