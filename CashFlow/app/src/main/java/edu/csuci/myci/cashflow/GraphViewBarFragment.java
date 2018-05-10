@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -145,14 +146,17 @@ public class GraphViewBarFragment extends Fragment {
         series1.setDrawValuesOnTop(true);
         series1.setValuesOnTopColor(Color.RED);
 
-        graph.addSeries(series1);
-        
+
         graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
 
-//        graph.getViewport().setXAxisBoundsManual(true);
-//        graph.getViewport().calcCompleteRange();
-//        graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
-//        graph.getViewport().setMinX(graph.getViewport().getMinX(true));
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMaxX(series1.getHighestValueX());
+        graph.getViewport().setMinX(series1.getLowestValueX());
+        graph.getViewport().setMinY(series1.getLowestValueY());
+        graph.getViewport().setMaxY(series1.getHighestValueY());
+
+        graph.addSeries(series1);
+
 
 
     }
@@ -166,12 +170,21 @@ public class GraphViewBarFragment extends Fragment {
 
     private void updateUI() {
         if (series1 != null) {
+            graph.removeAllSeries();
+
+            graph.getGridLabelRenderer().resetStyles();
             //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
             series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
-//            graph.getViewport().setXAxisBoundsManual(true);
-//            graph.getViewport().calcCompleteRange();
-//            graph.getViewport().setMaxX(graph.getViewport().getMaxX(true));
-//            graph.getViewport().setMinX(graph.getViewport().getMinX(true));
+            series1.setSpacing(10);
+            series1.setDrawValuesOnTop(true);
+            series1.setValuesOnTopColor(Color.RED);
+            graph.getViewport().setMaxX(series1.getHighestValueX());
+            graph.getViewport().setMinX(series1.getLowestValueX());
+
+            Toast.makeText(getActivity(), "updating ui to "+modifier, Toast.LENGTH_SHORT).show();
+            graph.addSeries(series1);
+
+
 
         }
     }
