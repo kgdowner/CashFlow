@@ -390,7 +390,7 @@ public class Profile {
         TransactionCursorWrapper cursor;
 
         cursor = queryTransactionsSumByDate(modifier);
-        BigDecimal amount = BigDecimal.ZERO;
+        BigDecimal amount;
 
         DataPoint[] series = new DataPoint[cursor.getCount()];
         int i = 0;
@@ -408,7 +408,7 @@ public class Profile {
                     date1 = new Date();
                 }
 
-                amount =amount.add( new BigDecimal(cursor.getString(cursor.getColumnIndex("temp"))));
+                amount =new BigDecimal(cursor.getString(cursor.getColumnIndex("temp")));
 
                 series[i] = new DataPoint(date1, amount.doubleValue() );
                 i++;
