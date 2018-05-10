@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:checkedButton="@+id/default_radio_button"
-            android:gravity="center_horizontal">
+            >
 
             <!--<RadioButton-->
                 <!--android:id="@id/default_radio_button"-->
