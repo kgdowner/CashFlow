@@ -47,7 +47,10 @@
 
     <!-- graph view elements -->
     <string-array name="time_options">
+        <item>Sort by</item>
         <item>Last Month</item>
+        <item>Last 6 Month</item>
+        <item>Last Year</item>
         <item>All Time</item>
         <item>Custom</item>
     </string-array>
