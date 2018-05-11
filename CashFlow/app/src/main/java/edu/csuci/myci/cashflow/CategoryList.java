@@ -120,20 +120,26 @@ public class CategoryList {
     public List<Category> getAllCategoriesForTransaction(String transactionId) {
         List<Category> catNames = new ArrayList<>();
 
+
+        TransactionCursorWrapper cursor = queryCategoriesForTransaction(transactionId);
+        if (cursor.moveToFirst()) {
+            do {
+
+                catNames.add(
+                        cursor.getCategory()
+
+                );
+
+            } while (cursor.moveToNext());
+        }
+        return catNames;
+    }
+    private TransactionCursorWrapper queryCategoriesForTransaction(String transactionId) {
         String query = "SELECT * FROM Categories, Cat_Transaction " +
                 "WHERE Cat_Transaction.idTransaction =? " +
                 "AND Categories.idCategory =  Cat_Transaction.idCategory";
-        Cursor c = this.database.rawQuery(query, new String[]{transactionId});
-        if (c.moveToFirst()) {
-            do {
-
-                catNames.add(getCategory(c.getString(c.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME))));
-
-            } while (c.moveToNext());
-        }
-        return catNames;
-
-
+        Cursor cursor = database.rawQuery(query, new String[]{transactionId});
+        return new TransactionCursorWrapper(cursor);
     }
 
 
@@ -190,4 +196,6 @@ public class CategoryList {
         );
         return new TransactionCursorWrapper(cursor);
     }
+
+
 }
