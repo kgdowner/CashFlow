@@ -20,10 +20,10 @@
             android:layout_width="24dp"
             android:layout_height="match_parent"
             android:layout_weight=".20"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
-            android:tint="@android:color/black"
-            app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+            android:scaleX="1.1"
+            android:scaleY="1"
+            android:tint="@color/menu_icon_tint"
+            app:srcCompat="@drawable/menu_icon" />
 
         <Button
             android:id="@+id/menu_spinner"
