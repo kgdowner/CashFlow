@@ -26,7 +26,7 @@ public class CategoryList {
     }
 
     //Category Manipulation
-    public List<String> getCategories() {
+    public List<String> getCategoryNames() {
         List<String> tempList = new ArrayList<String>();
         TransactionCursorWrapper cursor = queryCategories(null, null);
 
@@ -34,6 +34,23 @@ public class CategoryList {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 tempList.add(cursor.getCategory().getCategoryName());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return tempList;
+
+
+    }
+    public List<Category> getCategoris() {
+        List<Category> tempList = new ArrayList<Category>();
+        TransactionCursorWrapper cursor = queryCategories(null, null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                tempList.add(cursor.getCategory());
                 cursor.moveToNext();
             }
         } finally {

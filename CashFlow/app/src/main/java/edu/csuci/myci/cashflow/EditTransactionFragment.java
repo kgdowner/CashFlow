@@ -101,7 +101,7 @@ public class EditTransactionFragment extends Fragment {
 
         final List<String> categoryNames = new ArrayList<String>();
         categoryNames.add(getResources().getString(R.string.category_hint));
-        categoryNames.addAll(categoryList.getCategories());
+        categoryNames.addAll(categoryList.getCategoryNames());
 
         //Spinner set up
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),

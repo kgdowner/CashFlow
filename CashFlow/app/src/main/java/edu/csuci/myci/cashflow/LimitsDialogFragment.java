@@ -73,7 +73,7 @@ public class LimitsDialogFragment extends DialogFragment {
 
         final List<String> textCategoryNames = new ArrayList<String>();
         textCategoryNames.add("");
-        textCategoryNames.addAll(categoryList.getCategories());
+        textCategoryNames.addAll(categoryList.getCategoryNames());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, textCategoryNames);
         spinnerCategories.setAdapter(dataAdapter);
