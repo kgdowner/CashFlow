@@ -6,7 +6,7 @@
     <string name="button_add">+</string>
     <string name="button_remove">-</string>
 
-    <string name="category_hint">Categories</string>
+    <string name="category_hint">no category</string>
     <string-array name="default_categories">
         <item>@string/category_hint</item>
     </string-array>
@@ -77,7 +77,7 @@
     <string name="transaction_amount_label">Amount</string>
     <string name="date_picker_title">Transaction Date</string>
     <string name="transactions">Transactions</string>
-    <string name="emptyCategory">NULL</string>
+    <string name="emptyCategory"></string>
     <string name="rename_category">Rename</string>
 
 </resources>

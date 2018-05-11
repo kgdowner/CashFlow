@@ -85,18 +85,19 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
         categorySpinner.setAdapter(dataAdapter);
         final UUID tempTransactionID = UUID.randomUUID();
-        final ArrayList<UUID> temCatStorage = new ArrayList<>();
+        final ArrayList<UUID> tempCatStorage = new ArrayList<>();
 
 
         //Spinner action
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
                 if (position != 0) {
-                    temCatStorage.add(categoryList.getCategory(categorySpinner.getSelectedItem().toString()).getCategoryId());
-                    selectedCategoryText.append(categoryNames.get(position) + ", ");
+                    tempCatStorage.clear();
+                    tempCatStorage.add(categoryList.getCategory(categorySpinner.getSelectedItem().toString()).getCategoryId());
+                    //selectedCategoryText.append(categoryNames.get(position) + ", ");
+                    selectedCategoryText.setText(categoryNames.get(position));
+                    
                     selectedCategoryText.setVisibility(View.VISIBLE);
                     //selectedCategoryText.setLayoutParams();
                 }
@@ -176,15 +177,17 @@ public class AddTransactionDialogFragment extends DialogFragment {
                     return;
                 }
 
-                for (UUID id : temCatStorage) {
+                for (UUID id : tempCatStorage) {
                     categoryList.addCategoryTransaction(id, tempTransactionID);
                 }
 
-                if (temCatStorage.size() == 0) {
-                    ((TextView) categorySpinner.getSelectedView()).setError("Please choose category");
-                    return;
-                }
 
+                if (tempCatStorage.size() == 0) {
+                    if(categoryList.getCategory("") == null) {
+                        categoryList.addCategory(new Category("", UUID.randomUUID()));
+                    }
+                    categoryList.addCategoryTransaction(categoryList.getCategory("").getCategoryId(), tempTransactionID);
+                }
 
                 Transaction resultTransaction = new Transaction(actualAmount, name);
                 resultTransaction.setID(tempTransactionID);

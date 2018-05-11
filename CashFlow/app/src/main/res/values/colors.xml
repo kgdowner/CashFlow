@@ -9,6 +9,7 @@
     <color name="transaction_list_color_2">#cccccc</color>
 
     <color name="dropdown_button_color">#f1dddd</color>
+    <color name="menu_icon_tint">#111111</color>
     <color name="menu_color_1">#509350</color>
     <color name="menu_color_2">#80b080</color>
 
@@ -51,12 +52,12 @@
     <color name="ghost_white">#F8F8FF</color>
     <color name="mint_cream">#F5FFFA</color>
     <color name="white_smoke">#F5F5F5</color>
-    <color name="beige">#F5F5DC</color>
+    <color name="beige">#f5f5dc</color>
     <color name="wheat">#F5DEB3</color>
     <color name="sandy_brown">#F4A460</color>
-    <color name="azure">#F0FFFF</color>
+    <color name="azure">#010101</color>
     <color name="honeydew">#F0FFF0</color>
-    <color name="alice_blue">#F0F8FF</color>
+    <color name="alice_blue">#f0f8ff</color>
     <color name="khaki">#F0E68C</color>
     <color name="light_coral">#F08080</color>
     <color name="pale_goldenrod">#EEE8AA</color>
