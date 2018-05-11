@@ -33,7 +33,9 @@ public class CategoryList {
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                tempList.add(cursor.getCategory().getCategoryName());
+                if(!cursor.getCategory().getCategoryName().equals("")) {
+                    tempList.add(cursor.getCategory().getCategoryName());
+                }
                 cursor.moveToNext();
             }
         } finally {
