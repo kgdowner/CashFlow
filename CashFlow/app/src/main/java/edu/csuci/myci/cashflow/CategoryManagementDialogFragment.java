@@ -63,12 +63,12 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         this.categoryList = new CategoryList(getContext());
 
         //will be removed when we add manipulation of this.this.radioGroupCategories.
-        if (this.categoryList.getCategories().size() == 0) {
+        if (this.categoryList.getCategoryNames().size() == 0) {
             this.categoryList.populateCatList();
         }
 
         this.categoryNames = new ArrayList<String>();
-        this.categoryNames.addAll(this.categoryList.getCategories());
+        this.categoryNames.addAll(this.categoryList.getCategoryNames());
 
         //RadioGroup Set up
         populateRadioGroup(this.categoryNames);
@@ -136,9 +136,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         rb.setText(name);
         this.radioGroupCategories.addView(rb);
 
-        // FIXME: add non-activity-result updating of list\graph views
-        getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
-
+        getTargetFragment().onActivityResult(0, 0, null);
         this.textNewCategoryName.setText("");
     }
 
@@ -158,8 +156,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             this.categoryList.removeCategory(name);
             this.categoryNames.remove(name);
 
-            // FIXME: add non-activity-result updating of list\graph views
-            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+            getTargetFragment().onActivityResult(0, 0, null);
 
             this.radioGroupCategories.removeView(button);
         }
@@ -197,7 +194,7 @@ public class CategoryManagementDialogFragment extends DialogFragment {
             rb.setText(newCategoryName);
             this.radioGroupCategories.addView(rb);
 
-            getTargetFragment().onActivityResult(0, 0, null);  // FIXME: for now just update list view
+            getTargetFragment().onActivityResult(0, 0, null);
 
 
         }

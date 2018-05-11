@@ -71,13 +71,13 @@ public class AddTransactionDialogFragment extends DialogFragment {
         categoryList = new CategoryList(getActivity());
 
         //will be removed when we add manipulation of categories.
-        if (categoryList.getCategories().size() == 0) {
+        if (categoryList.getCategoryNames().size() == 0) {
             categoryList.populateCatList();
         }
 
         final List<String> categoryNames = new ArrayList<String>();
         categoryNames.add(getResources().getString(R.string.category_hint));
-        categoryNames.addAll(categoryList.getCategories());
+        categoryNames.addAll(categoryList.getCategoryNames());
 
         //Spinner set up
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
@@ -193,9 +193,6 @@ public class AddTransactionDialogFragment extends DialogFragment {
                 resultTransaction.setID(tempTransactionID);
                 GlobalScopeContainer.activeProfile.addTransaction(resultTransaction);
 
-
-                // TODO: replace this with code calling ListViewFragment.updateUI() here
-                // TODO: and add similar method + code for the graph views
                 getTargetFragment().onActivityResult(0, 0, null);
 
 

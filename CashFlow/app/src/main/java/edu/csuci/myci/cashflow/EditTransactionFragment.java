@@ -102,7 +102,7 @@ public class EditTransactionFragment extends Fragment {
         // setup the spinner
         final List<String> categoryNames = new ArrayList<String>();
         categoryNames.add(getResources().getString(R.string.category_hint));
-        categoryNames.addAll(categoryList.getCategories());
+        categoryNames.addAll(categoryList.getCategoryNames());
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, categoryNames);
