@@ -45,7 +45,7 @@ public class CategoryList {
 
 
     }
-    public List<Category> getCategoris() {
+    public List<Category> getCategories() {
         List<Category> tempList = new ArrayList<Category>();
         TransactionCursorWrapper cursor = queryCategories(null, null);
 

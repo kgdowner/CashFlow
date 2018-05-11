@@ -290,7 +290,7 @@ public class Profile {
 
         CategoryList categoryList = new CategoryList(context);
         List<String> categoryNames = new ArrayList<String>();
-        categoryNames.addAll(categoryList.getCategories());
+        categoryNames.addAll(categoryList.getCategoryNames());
 
 
         try {
