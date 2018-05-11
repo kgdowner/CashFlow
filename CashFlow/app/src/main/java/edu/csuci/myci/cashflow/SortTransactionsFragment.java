@@ -41,7 +41,6 @@ public class SortTransactionsFragment extends DialogFragment {
         // get button handles
 
         Button invisible = (Button)view.findViewById(R.id.button_invisible);
-
         Button sortDate = (Button)view.findViewById(R.id.sort_by_date);
         Button sortCategory = (Button)view.findViewById(R.id.sort_by_category);
         Button sortAmount = (Button)view.findViewById(R.id.sort_by_amount);
