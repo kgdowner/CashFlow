@@ -1,5 +1,7 @@
 package edu.csuci.myci.cashflow;
 
+import android.widget.Toast;
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -28,4 +30,16 @@ public class Category implements Serializable {
     public String toString() {
         return ("Category: " + categoryName + "\tID: " + categoryId);
     }
+
+
+    public boolean equals(Object o){
+        if(o instanceof Category){
+            Category toCompare = (Category) o;
+            return this.categoryId.equals(toCompare.categoryId);
+        }
+        return false;
+    }
+
+
+
 }

@@ -55,6 +55,8 @@ public class EditTransactionFragment extends Fragment {
     private String newName; //moving actual changing of stuff to OK button
     private BigDecimal actualAmount;
 
+    List<Category> categoriesForTransaction;
+
 
     public static void display(Context context, UUID transactionID) {
         EditTransactionFragment fragment = new EditTransactionFragment();
@@ -81,6 +83,8 @@ public class EditTransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_transaction, container, false);
         categoryList = new CategoryList(getActivity());
+        categoriesForTransaction = categoryList.getAllCategoriesForTransaction(transaction.getID().toString());
+
 
         // acquire layout handles
         title               = (EditText)    v.findViewById(R.id.transaction_name);
@@ -108,9 +112,17 @@ public class EditTransactionFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
+
+
+                    //TODO: move the actuall adding of new cat to ok button
                     Category temp = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
-                    categoryList.addCategoryTransaction(temp.getCategoryId(), transaction.getID());
-                    updateList();
+                    if(categoriesForTransaction.contains(temp)==false) {
+
+                        categoryList.addCategoryTransaction(temp.getCategoryId(), transaction.getID());
+                        updateList();
+                    }
+                    parent.setSelection(0);
+
                 }
             }
 
