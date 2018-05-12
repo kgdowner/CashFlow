@@ -99,31 +99,40 @@ public class EditTransactionFragment extends Fragment {
         editTransactionRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateList();
 
+        // setup the spinner
         final List<String> categoryNames = new ArrayList<String>();
         categoryNames.add(getResources().getString(R.string.category_hint));
         categoryNames.addAll(categoryList.getCategoryNames());
 
-        //Spinner set up
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, categoryNames);
 
         categorySpinner.setAdapter(dataAdapter);
+        if(!categoriesForTransaction.isEmpty()) {
+            categorySpinner.setSelection(dataAdapter.getPosition(categoriesForTransaction.get(0).getCategoryName()), true);
+        }
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
+                ArrayAdapter<String> tempAdapter = (ArrayAdapter<String>) parent.getAdapter();
 
-
-                    //TODO: move the actuall adding of new cat to ok button
-                    Category temp = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
-                    if(categoriesForTransaction.contains(temp)==false) {
-
-                        categoryList.addCategoryTransaction(temp.getCategoryId(), transaction.getID());
-                        updateList();
+                Category newCategory;
+                if(tempAdapter.getItem(position).equals("") || tempAdapter.getItem(position).equals(getResources().getString(R.string.category_hint))) {
+                    if(categoryList.getCategory("") == null) {
+                        categoryList.addCategory(new Category("", UUID.randomUUID()));
                     }
-                    parent.setSelection(0);
-
+                    newCategory = categoryList.getCategory("");
+                } else {
+                    newCategory = categoryList.getCategory(categorySpinner.getSelectedItem().toString());
                 }
+
+                for(Category cat : categoryList.getAllCategoriesForTransaction(transaction.getID() + "")) {
+                    categoryList.removeCategoryTransaction(cat.getCategoryId(), transaction.getID());
+                }
+                categoryList.addCategoryTransaction(newCategory.getCategoryId(), transaction.getID());
+
+                updateList();
+                parent.setSelection(position);
             }
 
             @Override
