@@ -51,12 +51,13 @@
                 android:entries="@array/time_options"
                 android:padding="8dp" />
 
-            <Spinner
+            <Button
                 android:id="@+id/select_category_spinner"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:text="@string/categories_dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:entries="@array/default_categories"
                 android:padding="8dp" />
 
         </LinearLayout>

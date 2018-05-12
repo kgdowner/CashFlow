@@ -254,76 +254,6 @@ public class Profile {
     }
 
 
-    public DataPoint[] getSeries() {
-
-        TransactionCursorWrapper cursor;
-
-        cursor = queryTransactionsInOrder(null, null, "date ASC");
-        DataPoint[] series = new DataPoint[cursor.getCount()];
-        int i = 0;
-
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-                series[i] = cursor.getDataPoint();
-                i++;
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-        return series;
-
-    }
-
-
-
-    public DataPoint[] getBarSeries() {
-        TransactionCursorWrapper cursor;
-
-        cursor = queryTransactionsSumByCategory();
-
-        DataPoint[] series = new DataPoint[cursor.getCount()];
-
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
-
-        CategoryList categoryList = new CategoryList(context);
-        List<String> categoryNames = new ArrayList<String>();
-        categoryNames.addAll(categoryList.getCategories());
-
-
-        try {
-            cursor.moveToFirst();
-            while (!cursor.isAfterLast()) {
-
-                //FIXME: need to redo query.
-                //TODO: Needs a different wrapper for BarGraph Data Point
-                String name = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
-                Category category = categoryList.getCategory(name);
-
-
-                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
-                Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
-
-                DataPoint temp = new DataPoint(i, y);
-
-                String tempString = i + ", " + y.toString();
-                sb.append(tempString + "...");
-
-                series[i] = temp;
-                i++;
-                cursor.moveToNext();
-            }
-        } finally {
-            cursor.close();
-        }
-        Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
-
-        return series;
-
-
-    }
 
     private TransactionCursorWrapper queryTransactionsSumByCategory() {
         String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp " +
@@ -342,10 +272,19 @@ public class Profile {
                 " GROUP BY date " +
                 "ORDER BY date ASC";
 
-
-
-
         Cursor cursor = database.rawQuery(query, new String[]{});
+        return new TransactionCursorWrapper(cursor);
+    }
+    private TransactionCursorWrapper queryTransactionsSumByDateByCategory(String modifier, UUID categoryID) {
+        String uuid = categoryID.toString();
+        String query = "SELECT date(Transactions.date) AS date, SUM(Transactions.amount) AS temp " +
+                "FROM Transactions " +
+                "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
+                "WHERE date > " + modifier + " AND Cat_Transaction.idCategory = ? "  +
+                " GROUP BY date " +
+                "ORDER BY date ASC";
+
+        Cursor cursor = database.rawQuery(query, new String[]{uuid});
         return new TransactionCursorWrapper(cursor);
     }
 
@@ -355,6 +294,41 @@ public class Profile {
         TransactionCursorWrapper cursor;
 
         cursor = queryTransactionsSumByDate(modifier);
+        BigDecimal amount = BigDecimal.ZERO;
+
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i = 0;
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                Date date1;
+
+                try {
+                    date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    date1 = new Date();
+                }
+
+                amount =amount.add( new BigDecimal(cursor.getString(cursor.getColumnIndex("temp"))));
+
+                series[i] = new DataPoint(date1, amount.doubleValue() );
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
+
+    public DataPoint[] getSumSeriesByCategory(String modifier, UUID categoryID) {
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsSumByDateByCategory(modifier, categoryID);
         BigDecimal amount = BigDecimal.ZERO;
 
         DataPoint[] series = new DataPoint[cursor.getCount()];
@@ -420,6 +394,77 @@ public class Profile {
         return series;
 
     }
+    public DataPoint[] getSeries() {
+
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsInOrder(null, null, "date ASC");
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+        int i = 0;
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                series[i] = cursor.getDataPoint();
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        return series;
+
+    }
+
+
+
+    public DataPoint[] getBarSeries() {
+        TransactionCursorWrapper cursor;
+
+        cursor = queryTransactionsSumByCategory();
+
+        DataPoint[] series = new DataPoint[cursor.getCount()];
+
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+
+        CategoryList categoryList = new CategoryList(context);
+        List<String> categoryNames = new ArrayList<String>();
+        categoryNames.addAll(categoryList.getCategoryNames());
+
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+
+                //FIXME: need to redo query.
+                //TODO: Needs a different wrapper for BarGraph Data Point
+                String name = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
+                Category category = categoryList.getCategory(name);
+
+
+                Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
+                Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
+
+                DataPoint temp = new DataPoint(i, y);
+
+                String tempString = i + ", " + y.toString();
+                sb.append(tempString + "...");
+
+                series[i] = temp;
+                i++;
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+        Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
+
+        return series;
+
+
+    }
+
 
 }
 

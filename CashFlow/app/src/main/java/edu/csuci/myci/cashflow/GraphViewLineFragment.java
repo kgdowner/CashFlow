@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.jjoe64.graphview.GraphView;
@@ -28,9 +29,11 @@ public class GraphViewLineFragment extends Fragment {
     public Context context;
 
     private Spinner spinnerTimeRange;
-    private Spinner spinnerCategories;
+    private Button spinnerCategories;
 
-    String modifier = "date('now','-30 years')";
+    public static GraphView graph;
+
+    public static String modifier = "date('now','-30 years')";
 
     LineGraphSeries<DataPoint> series2;
 
@@ -54,14 +57,14 @@ public class GraphViewLineFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_graph_view_line, container, false);
 
-        GraphView graph = (GraphView) v.findViewById(R.id.graph);
+        graph = (GraphView) v.findViewById(R.id.graph);
 
 
             setLineGraph(graph);
 
 
         spinnerTimeRange = (Spinner) v.findViewById(R.id.time_range_spinner);
-        spinnerCategories = (Spinner) v.findViewById(R.id.select_category_spinner);
+        spinnerCategories = (Button) v.findViewById(R.id.select_category_spinner);
 
         spinnerTimeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,7 +99,12 @@ public class GraphViewLineFragment extends Fragment {
 
             }
         });
-        spinnerCategories.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        spinnerCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GraphSortByCategoryFragment.display(getActivity());
+            }
+        });
 
 
         return v;
@@ -132,8 +140,7 @@ public class GraphViewLineFragment extends Fragment {
 
 
     public void setLineGraph(GraphView graph) {
-        graph.removeAllSeries();
-        graph.getGridLabelRenderer().resetStyles();
+
         //graph.invalidate();
 
 
@@ -141,16 +148,7 @@ public class GraphViewLineFragment extends Fragment {
         series2 = new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries(
                 modifier));
 
-
-        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
-        graph.getViewport().setMaxX(series2.getHighestValueX());
-        graph.getViewport().setMinX(series2.getLowestValueX());
-        graph.getViewport().setMinY(series2.getLowestValueY());
-        graph.getViewport().setMaxY(series2.getHighestValueY());
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
-        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
-        graph.getViewport().setScrollable(true);
+        resetGraphStyle();
 
         graph.addSeries(series2);
 
@@ -164,7 +162,24 @@ public class GraphViewLineFragment extends Fragment {
 
     private void updateUI() {
         if (series2 != null) {
+
             series2.resetData(GlobalScopeContainer.activeProfile.getSumSeries(modifier));
+            resetGraphStyle();
+            graph.addSeries(series2);
         }
+    }
+
+    private void resetGraphStyle() {
+        graph.removeAllSeries();
+        graph.getGridLabelRenderer().resetStyles();
+        graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Amount");
+        graph.getViewport().setMaxX(series2.getHighestValueX());
+        graph.getViewport().setMinX(series2.getLowestValueX());
+        graph.getViewport().setMinY(series2.getLowestValueY());
+        graph.getViewport().setMaxY(series2.getHighestValueY());
+        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
+        graph.getViewport().setScalable(true);
     }
 }
