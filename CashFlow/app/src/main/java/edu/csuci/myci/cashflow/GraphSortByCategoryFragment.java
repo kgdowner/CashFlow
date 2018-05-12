@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
 
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -68,6 +69,12 @@ public class GraphSortByCategoryFragment extends DialogFragment {
         updateList();
 
         categoryAllCheck = (CheckBox)view.findViewById(R.id.checkboxAll);
+        categoryAllCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                performActionOnClick();
+            }
+        });
 
         Button invisible = (Button)view.findViewById(R.id.button_invisible);
 
@@ -203,7 +210,13 @@ public class GraphSortByCategoryFragment extends DialogFragment {
     }
     public void performActionOnClick(){
         if (categoryAllCheck.isChecked()){
-            return;
+            GraphViewLineFragment.graph.removeAllSeries();
+            LineGraphSeries<DataPoint> series =
+                    new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries(GraphViewLineFragment.modifier ));
+            GraphViewLineFragment.graph.addSeries(series);
+            updateList();
+
+
             //or clear all, run basic getSumSeries()
         }else{
             GraphViewLineFragment.graph.removeAllSeries();
@@ -213,6 +226,8 @@ public class GraphSortByCategoryFragment extends DialogFragment {
                     LineGraphSeries<DataPoint> series =
                             new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeriesByCategory(GraphViewLineFragment.modifier,  categories.get(i).getCategoryId() ));
                     GraphViewLineFragment.graph.addSeries(series);
+                    series.setTitle(categories.get(i).getCategoryName());
+                    GraphViewLineFragment.graph.getLegendRenderer().setVisible(true);
                 }
             }
             //get checked category id, run getSumSeries by category id
