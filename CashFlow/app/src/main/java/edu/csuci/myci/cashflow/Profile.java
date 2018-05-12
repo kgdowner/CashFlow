@@ -255,12 +255,14 @@ public class Profile {
 
 
 
-    private TransactionCursorWrapper queryTransactionsSumByCategory() {
+    private TransactionCursorWrapper queryTransactionsSumByCategory(String modifier) {
         String query = "SELECT Categories.categoryName, SUM(Transactions.amount) AS temp " +
                 "FROM Transactions " +
                 "INNER JOIN Cat_Transaction ON Cat_Transaction.idTransaction = Transactions.idTransaction " +
                 "INNER JOIN Categories ON Cat_Transaction.idCategory = Categories.idCategory " +
-                "GROUP BY Cat_Transaction.idCategory " +
+                "WHERE date > " + modifier +
+
+                " GROUP BY Cat_Transaction.idCategory " +
                 "ORDER BY Categories.idCategory ASC";
         Cursor cursor = database.rawQuery(query, new String[]{});
         return new TransactionCursorWrapper(cursor);
@@ -418,10 +420,10 @@ public class Profile {
 
 
 
-    public DataPoint[] getBarSeries() {
+    public DataPoint[] getBarSeries(String modifier) {
         TransactionCursorWrapper cursor;
 
-        cursor = queryTransactionsSumByCategory();
+        cursor = queryTransactionsSumByCategory(modifier);
 
         DataPoint[] series = new DataPoint[cursor.getCount()];
 

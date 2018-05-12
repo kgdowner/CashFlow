@@ -161,7 +161,7 @@ public class GraphSortByCategoryFragment extends DialogFragment {
                             itemStateArray.put(adapterPosition, true);
                             //check all checks through boolean array, if all true, set checkAll true
 
-                            categoryAllCheck.setChecked(true);
+                            //categoryAllCheck.setChecked(true);
                             for (int i = 0; i<itemStateArray.size(); i++){
                                 if(itemStateArray.get(i) == false){
                                     categoryAllCheck.setChecked(false);

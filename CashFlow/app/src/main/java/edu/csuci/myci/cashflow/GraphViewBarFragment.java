@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,13 +32,15 @@ public class GraphViewBarFragment extends Fragment {
     public Context context;
 
     private Spinner spinnerTimeRange;
-    private Spinner spinnerCategories;
+    private Button spinnerCategories;
 
     GraphView graph;
 
     BarGraphSeries<DataPoint> series1;
 
     String modifier = "date('now','-30 years')";
+
+    public static boolean graphByDate = true;
 
     public static void display(Context context, int typeOfGraph) {
         GraphViewBarFragment fragment = new GraphViewBarFragment();
@@ -67,9 +70,14 @@ public class GraphViewBarFragment extends Fragment {
 
 
         spinnerTimeRange = (Spinner) v.findViewById(R.id.time_range_spinner);
-        spinnerCategories = (Spinner) v.findViewById(R.id.select_category_spinner);
+        spinnerCategories = (Button) v.findViewById(R.id.select_category_spinner);
 
-        spinnerCategories.setOnItemSelectedListener(new CustomOnItemSelectedListener(getActivity()));
+        spinnerCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SwitchBarTypeFragment.display(getActivity());
+            }
+        });
         spinnerTimeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -139,7 +147,12 @@ public class GraphViewBarFragment extends Fragment {
         //graph.invalidate();
 
         //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
-        series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+        if(graphByDate) {
+            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+        } else {
+            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
+
+        }
 
         graph.removeAllSeries();
         graph.getGridLabelRenderer().resetStyles();
@@ -153,6 +166,8 @@ public class GraphViewBarFragment extends Fragment {
         graph.getViewport().setMinY(series1.getLowestValueY());
         graph.getViewport().setMaxY(series1.getHighestValueY());
         graph.getViewport().setScalable(true);
+        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
+
 
         graph.addSeries(series1);
 
@@ -171,7 +186,12 @@ public class GraphViewBarFragment extends Fragment {
         if (series1 != null) {
 
             //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
-            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+            if(graphByDate) {
+                series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+            } else {
+                series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
+
+            }
             graph.removeAllSeries();
             graph.getGridLabelRenderer().resetStyles();
             series1.setSpacing(10);
@@ -180,6 +200,8 @@ public class GraphViewBarFragment extends Fragment {
             graph.getViewport().setMaxX(series1.getHighestValueX());
             graph.getViewport().setMinX(series1.getLowestValueX());
             graph.getViewport().setScalable(true);
+            graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
+
 
 
             Toast.makeText(getActivity(), "updating ui to "+modifier, Toast.LENGTH_SHORT).show();
