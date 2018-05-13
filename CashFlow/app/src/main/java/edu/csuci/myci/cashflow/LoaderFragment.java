@@ -16,6 +16,7 @@ public class LoaderFragment extends Fragment {
     private Button buttonAddTransaction;
     private Button buttonManageCategories;
     private Button buttonManageProfiles;
+    private Button buttonManageLimits;
     private TextView textCurrentProfileName;
 
 
@@ -31,6 +32,7 @@ public class LoaderFragment extends Fragment {
         buttonManageCategories  = (Button)      v.findViewById(R.id.manage_category_button);
         buttonManageProfiles    = (Button)      v.findViewById(R.id.manage_profile_button);
         buttonAddTransaction    = (Button)      v.findViewById(R.id.add_transaction_button);
+        buttonManageLimits      = (Button)      v.findViewById(R.id.manage_limits_button);
         textCurrentProfileName  = (TextView)    v.findViewById(R.id.profile_name);
 
         textCurrentProfileName.setText(GlobalScopeContainer.activeProfile.getName().replace(".db", ""));
@@ -61,6 +63,12 @@ public class LoaderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 CategoryManagementDialogFragment.display(context);
+            }
+        });
+        buttonManageLimits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LimitsDialogFragment.display(context);
             }
         });
     }

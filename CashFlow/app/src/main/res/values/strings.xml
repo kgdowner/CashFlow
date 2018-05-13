@@ -79,5 +79,6 @@
     <string name="transactions">Transactions</string>
     <string name="emptyCategory"></string>
     <string name="rename_category">Rename</string>
+    <string name="manage_limits_buttons">Manage Limits</string>
 
 </resources>
