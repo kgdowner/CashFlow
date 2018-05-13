@@ -146,13 +146,34 @@ public class CategoryManagementDialogFragment extends DialogFragment {
         if (selectedCat == -1) {
             Toast.makeText(getActivity(), "Please select category to remove ", Toast.LENGTH_LONG).show();
 
-
         } else {
-
             RadioButton button = (RadioButton) this.radioGroupCategories.findViewById(selectedCat);
 
             String name = (String) button.getText();
+            Category temp = this.categoryList.getCategory(name);
 
+            // FIXME: this method will be extremely intensive if the database ever gets large
+            // change any transaction that had this category to "no category"
+            if(categoryList.getCategory("") == null) {
+                categoryList.addCategory(new Category("", UUID.randomUUID()));
+            }
+            Category noCategory = this.categoryList.getCategory("");
+
+            for(Transaction t : GlobalScopeContainer.activeProfile.getTransactions()) {
+                if(this.categoryList.getAllCategoriesForTransaction(t.getID() + "").get(0).equals(temp)) {
+                    Toast.makeText(getActivity(), "changed to no category!", Toast.LENGTH_SHORT).show();
+
+                    // remove all categories from this transaction
+                    for(Category cat : categoryList.getAllCategoriesForTransaction(t.getID() + "")) {
+                        categoryList.removeCategoryTransaction(cat.getCategoryId(), t.getID());
+                    }
+
+                    // add the no category category
+                    categoryList.addCategoryTransaction(noCategory.getCategoryId(), t.getID());
+                }
+            }
+
+            // remove the category itself
             this.categoryList.removeCategory(name);
             this.categoryNames.remove(name);
 
