@@ -33,12 +33,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <CheckBox
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/checkboxAll"
-                        android:checked="true"/>
+                    android:orientation="horizontal"
+                    style="@style/Base.Widget.AppCompat.Button"
+                    >
+
 
                     <TextView
                         android:id="@+id/category"
@@ -52,11 +50,17 @@
                         android:visibility="visible"
                         tools:ellipsize="end"
                         tools:layout_editor_absoluteY="0dp" />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/checkboxAll"
+                        android:checked="true"/>
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.Button"
                     android:id="@+id/sort_by_category_graph">
 
                 </android.support.v7.widget.RecyclerView>
