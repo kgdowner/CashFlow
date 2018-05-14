@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@android:drawable/bottom_bar"
-        android:backgroundTint="@color/menu_color_2"
+        android:backgroundTint="@color/tab_bars"
         android:gravity="center_vertical|start"
         android:orientation="horizontal">
 

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal|center_vertical">
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@color/dialog_background"
+    android:orientation="vertical">
 
     <!---Text View add transaction-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/alert_dialog_title"/>
+        android:text="@string/alert_dialog_title" />
 
     <!---Amount Label-->     <!---Amount EditableText Field-->
     <!---Select Categories drop down list-->
@@ -17,37 +19,37 @@
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/default_categories"
-        >
+        android:entries="@array/default_categories">
 
 
     </Spinner>
 
 
     <RadioGroup
+        android:id="@+id/limits_radioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/limits_radioGroup">
+        android:layout_height="wrap_content">
 
 
     </RadioGroup>
 
     <EditText
+        android:id="@+id/custom_amount_limits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/alert_custom_amount_hint"
-        android:id="@+id/custom_amount_limits"/>
+        android:hint="@string/alert_custom_amount_hint" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/limits_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/limits_recyclerView">
+        android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+
     <TextView
+        android:id="@+id/limits_display"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/limits_display"/>
+        android:layout_height="wrap_content" />
     <!---OK Button - code based positive button-->    <!---Cancel Button - code based negative button-->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -56,19 +58,24 @@
 
         <Button
             android:id="@+id/add_limit_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/button_cancel"/>
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/dialog_button"
+            android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/add_limit_ok"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/dialog_button"
             android:text="@string/button_ok" />
 
 
     </LinearLayout>
-
 
 
 </LinearLayout>

@@ -5,6 +5,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@android:drawable/bottom_bar"
+    android:backgroundTint="@color/dialog_background"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -22,44 +24,43 @@
     <!---Amount Label-->     <!---Amount EditableText Field-->
 
 
+    <EditText
+        android:id="@+id/transaction_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:hint="@string/transaction_name_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="567dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/sign_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/dialog_button"
+            android:text="+/-" />
 
         <EditText
-            android:id="@+id/transaction_name"
+            android:id="@+id/amountEntry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:hint="@string/transaction_name_hint"
+            android:layout_weight="0.4"
+            android:hint="@string/transaction_amount_hint"
+            android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="567dp" />
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sign_button"
-            android:text="+/-"/>
-
-            <EditText
-                android:id="@+id/amountEntry"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="0.4"
-                android:hint="@string/transaction_amount_hint"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:inputType="numberDecimal"
-                />
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
     <!---Select Categories drop down list-->
 
@@ -72,6 +73,8 @@
         android:id="@+id/category_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:entries="@array/default_categories">
 
 
@@ -96,20 +99,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
 
         <Button
             android:id="@+id/add_transaction_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".5"
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/dialog_button"
             android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/add_transaction_ok"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight=".5"
+            android:background="@android:drawable/menuitem_background"
+            android:backgroundTint="@color/dialog_button"
             android:text="@string/button_ok" />
 
 

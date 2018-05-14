@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,12 +29,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0">
+
                 <LinearLayout
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/menu_color_2"
                     android:orientation="horizontal"
-                    style="@style/Base.Widget.AppCompat.Button"
-                    >
+                    android:padding="4dp">
 
 
                     <TextView
@@ -50,27 +51,31 @@
                         android:visibility="visible"
                         tools:ellipsize="end"
                         tools:layout_editor_absoluteY="0dp" />
+
                     <CheckBox
+                        android:id="@+id/checkboxAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/checkboxAll"
-                        android:checked="true"/>
+                        android:checked="true" />
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/sort_by_category_graph"
+                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Base.Widget.AppCompat.Button"
-                    android:id="@+id/sort_by_category_graph"
-                    android:choiceMode="multipleChoice">
+                    android:background="@color/menu_color_2"
+                    android:choiceMode="multipleChoice"
+                    android:padding="4dp">
 
                 </android.support.v7.widget.RecyclerView>
+
                 <Button
                     android:id="@+id/button_invisible"
                     style="@style/Base.Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@android:color/transparent"/>
+                    android:layout_height="55dp"
+                    android:background="@android:color/transparent" />
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>

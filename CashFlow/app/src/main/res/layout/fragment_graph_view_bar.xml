@@ -45,25 +45,25 @@
 
             <Spinner
                 android:id="@+id/time_range_spinner"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:entries="@array/time_options"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:background="@android:drawable/bottom_bar"
-                android:backgroundTint="@color/menu_color_2"
+                android:backgroundTint="@color/tab_bars"
+                android:entries="@array/time_options"
                 android:padding="8dp" />
 
             <Button
                 android:id="@+id/select_category_spinner"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:text="Date or Category"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:background="@android:drawable/bottom_bar"
-                android:backgroundTint="@color/menu_color_2"
-                android:padding="8dp" />
+                android:backgroundTint="@color/tab_bars"
+                android:padding="8dp"
+                android:text="Date or Category" />
 
         </LinearLayout>
 
