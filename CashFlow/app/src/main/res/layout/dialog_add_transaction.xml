@@ -56,7 +56,9 @@
                 android:layout_weight="0.4"
                 android:hint="@string/transaction_amount_hint"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:inputType="numberDecimal"
+                />
         </LinearLayout>
 
     <!---Select Categories drop down list-->
