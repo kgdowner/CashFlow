@@ -49,6 +49,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
                 android:entries="@array/time_options"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/menu_color_2"
                 android:padding="8dp" />
 
             <Button
@@ -57,6 +60,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
                 android:text="Date or Category"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:background="@android:drawable/bottom_bar"
+                android:backgroundTint="@color/menu_color_2"
                 android:padding="8dp" />
 
         </LinearLayout>

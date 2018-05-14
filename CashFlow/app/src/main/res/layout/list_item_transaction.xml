@@ -14,7 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout4">
 
         <TextView
             android:id="@+id/transaction_date"
@@ -26,21 +27,22 @@
 
         <TextView
             android:id="@+id/transaction_amount"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:minWidth="60dp"
+            android:minWidth="100dp"
             android:paddingVertical="8dp"
             android:text="@string/list_item_amount"
-            android:textAlignment="textStart"
+            android:textAlignment="viewEnd"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toEndOf="@+id/transaction_date"
+
+
             tools:layout_editor_absoluteY="0dp"
             tools:paddingVertical="8dp" />
 
         <TextView
             android:id="@+id/transaction_name"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
 
@@ -54,17 +56,20 @@
 
         <TextView
             android:id="@+id/transaction_category"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:paddingVertical="8dp"
             android:text="@string/list_item_category"
-            android:textAlignment="viewStart"
+            android:textAlignment="textEnd"
             android:textColor="@android:color/black"
             android:visibility="visible"
             app:layout_constraintStart_toEndOf="@+id/transaction_name"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+
             tools:ellipsize="end"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:layout_editor_absoluteY="0dp"
+            android:gravity="end" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
