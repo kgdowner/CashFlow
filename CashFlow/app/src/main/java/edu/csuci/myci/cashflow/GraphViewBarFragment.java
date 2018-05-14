@@ -19,10 +19,15 @@ import android.widget.Toast;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.List;
+import java.util.Random;
 
 public class GraphViewBarFragment extends Fragment {
     private static final String ARG_GRAPH_TYPE = "type";
@@ -42,6 +47,8 @@ public class GraphViewBarFragment extends Fragment {
     String modifier = "date('now','-30 years')";
 
     public static boolean graphByDate = true;
+
+    public static List<String> barName;
 
     public static void display(Context context, int typeOfGraph) {
         GraphViewBarFragment fragment = new GraphViewBarFragment();
@@ -67,7 +74,7 @@ public class GraphViewBarFragment extends Fragment {
 
 
 
-            setBarGraph(graph);
+            updateUI();
 
 
         spinnerTimeRange = (Spinner) v.findViewById(R.id.time_range_spinner);
@@ -143,45 +150,6 @@ public class GraphViewBarFragment extends Fragment {
         this.context = activity;
     }
 
-    public void setBarGraph(GraphView graph) {
-
-        //graph.invalidate();
-        graph.removeAllSeries();
-        graph.getGridLabelRenderer().resetStyles();
-        //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
-        if(graphByDate) {
-            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
-            graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-            graph.getViewport().setXAxisBoundsManual(true);
-            graph.getViewport().setMaxX(series1.getHighestValueX());
-            graph.getViewport().setMinX(series1.getLowestValueX());
-            graph.getViewport().setMinY(series1.getLowestValueY());
-            graph.getViewport().setMaxY(series1.getHighestValueY());
-
-        } else {
-            series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
-            graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
-            graph.getViewport().setXAxisBoundsManual(false);
-
-
-        }
-
-
-        series1.setSpacing(10);
-        series1.setDrawValuesOnTop(true);
-        series1.setValuesOnTopColor(Color.RED);
-
-        graph.getViewport().setScalable(true);
-        graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
-
-
-        graph.addSeries(series1);
-
-
-
-    }
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -189,35 +157,56 @@ public class GraphViewBarFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (series1 != null) {
+
             graph.removeAllSeries();
             graph.getGridLabelRenderer().resetStyles();
 
             //series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
             if(graphByDate) {
                 series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getSumBarSeries(modifier));
+                graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                series1.setSpacing(10);
+                series1.setDrawValuesOnTop(true);
+                series1.setValuesOnTopColor(Color.RED);
+                graph.getViewport().setMaxX(series1.getHighestValueX());
+                graph.getViewport().setMinX(series1.getLowestValueX());
+                graph.getViewport().setScalable(true);
+
+                graph.addSeries(series1);
+
             } else {
-                series1 = new BarGraphSeries<>(GlobalScopeContainer.activeProfile.getBarSeries(modifier));
+                DataPoint[] series = GlobalScopeContainer.activeProfile.getBarSeries(modifier);
                 graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter());
+                graph.getViewport().setMaxX(series[series.length-1].getX()+1);
+                graph.getViewport().setMinX(series[0].getX());
+                graph.getViewport().setScalable(true);
+                for (DataPoint d : series) {
+                    BarGraphSeries<DataPoint> seriesX = new BarGraphSeries<>(new DataPoint[] {d});
+                    //series1.setTitle(barName.toString());
+                    Random rnd = new Random();
+                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+
+                    seriesX.setColor(color);
+                    seriesX.setTitle(barName.get((int)d.getX()));
+                    graph.getLegendRenderer().setVisible(true);
+                    seriesX.setSpacing(5);
+                    seriesX.setDrawValuesOnTop(true);
+                    seriesX.setValuesOnTopColor(Color.RED);
+                    graph.addSeries(seriesX);
+
+
+
+                }
+            graph.getLegendRenderer().setBackgroundColor(Color.WHITE);
+                graph.getLegendRenderer().setSpacing(30);
+
 
 
             }
 
-            series1.setSpacing(10);
-            series1.setDrawValuesOnTop(true);
-            series1.setValuesOnTopColor(Color.RED);
-            graph.getViewport().setMaxX(series1.getHighestValueX());
-            graph.getViewport().setMinX(series1.getLowestValueX());
-            graph.getViewport().setScalable(true);
+;
             graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
-
-
-
-            //Toast.makeText(getActivity(), "updating ui to "+modifier, Toast.LENGTH_SHORT).show();
-            graph.addSeries(series1);
-
-
-
-        }
+            graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
     }
 }
