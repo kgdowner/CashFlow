@@ -217,7 +217,7 @@ public class LimitsDialogFragment extends DialogFragment {
     }
 
     private void populateRadioButtons() {
-        String[] amounts = {"100", "200", "500", "1000", "1500"};
+        String[] amounts = {"-100", "-200", "-500", "-1000", "-1500"};
         for (String c : amounts) {
             RadioButton button = new RadioButton(getActivity());
             button.setText(c);

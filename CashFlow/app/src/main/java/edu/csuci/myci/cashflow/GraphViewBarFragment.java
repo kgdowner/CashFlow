@@ -173,6 +173,7 @@ public class GraphViewBarFragment extends Fragment {
                 graph.getViewport().setMaxX(series1.getHighestValueX());
                 graph.getViewport().setMinX(series1.getLowestValueX());
                 graph.getViewport().setScalable(true);
+                series1.setTitle("Daily Total");
 
                 graph.addSeries(series1);
 

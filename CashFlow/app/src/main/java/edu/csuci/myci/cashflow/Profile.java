@@ -230,7 +230,8 @@ public class Profile {
                 String title = cursor.getString(cursor.getColumnIndex(CategoryTable.Cols.CATEGORY_NAME));
                 Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
                 Double z = cursor.getDouble(cursor.getColumnIndex(CategoryTable.Cols.LIMIT_AMOUNT));
-                if (y > z) {
+                if ((y > 0 && z>0 && y>z) || (y<0 && z<0 && y<z)) {
+
 
                     Toast.makeText(context, "you are over limit in category " + title + " by $" + (y - z), Toast.LENGTH_LONG).show();
                 }
