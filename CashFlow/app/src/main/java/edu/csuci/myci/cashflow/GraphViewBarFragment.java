@@ -59,6 +59,8 @@ public class GraphViewBarFragment extends Fragment {
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_place, fragment, "List_View_Fragment");
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
+
         fragmentTransaction.commit();
     }
 

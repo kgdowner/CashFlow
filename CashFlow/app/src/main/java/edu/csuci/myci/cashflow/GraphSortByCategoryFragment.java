@@ -1,6 +1,7 @@
 package edu.csuci.myci.cashflow;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -19,11 +20,13 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GraphSortByCategoryFragment extends DialogFragment {
     private RecyclerView graphRecyclerView;
@@ -214,6 +217,7 @@ public class GraphSortByCategoryFragment extends DialogFragment {
             LineGraphSeries<DataPoint> series =
                     new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeries(GraphViewLineFragment.modifier ));
             GraphViewLineFragment.graph.addSeries(series);
+            series.setTitle("Balance over time");
             updateList();
 
 
@@ -225,12 +229,32 @@ public class GraphSortByCategoryFragment extends DialogFragment {
                     categories.get(i).getCategoryId();
                     LineGraphSeries<DataPoint> series =
                             new LineGraphSeries<>(GlobalScopeContainer.activeProfile.getSumSeriesByCategory(GraphViewLineFragment.modifier,  categories.get(i).getCategoryId() ));
+                    Random rnd = new Random();
+                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                    series.setDrawDataPoints(true);
+                    series.setDataPointsRadius(10);
+
+                    series.setColor(color);
                     GraphViewLineFragment.graph.addSeries(series);
                     series.setTitle(categories.get(i).getCategoryName());
                     GraphViewLineFragment.graph.getLegendRenderer().setVisible(true);
                 }
             }
             //get checked category id, run getSumSeries by category id
+            GraphViewLineFragment.graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         }
     }
+
+
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+
+        super.onSaveInstanceState(state);
+
+        //state.putBooleanArray("startArray", itemStateArray);
+
+    }
+
+
 }

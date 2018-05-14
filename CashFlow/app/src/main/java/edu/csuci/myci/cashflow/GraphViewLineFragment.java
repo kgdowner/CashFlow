@@ -46,6 +46,7 @@ public class GraphViewLineFragment extends Fragment {
         FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_place, fragment, "List_View_Fragment");
+        fragmentTransaction.addToBackStack(fragment.getClass().getName());
         fragmentTransaction.commit();
     }
 
@@ -178,7 +179,9 @@ public class GraphViewLineFragment extends Fragment {
         graph.getViewport().setMinX(series2.getLowestValueX());
         graph.getViewport().setMinY(series2.getLowestValueY());
         graph.getViewport().setMaxY(series2.getHighestValueY());
-        graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        //graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+        series2.setDrawDataPoints(true);
+        series2.setDataPointsRadius(10);
         graph.getGridLabelRenderer().setHorizontalLabelsAngle(90);
         graph.getViewport().setScalable(true);
     }
