@@ -271,7 +271,7 @@ public class Profile {
         String query = "SELECT date(Transactions.date) AS date, SUM(Transactions.amount) AS temp " +
                 "FROM Transactions " +
                 "WHERE date > " + modifier +
-                " GROUP BY date " +
+                " GROUP BY strftime('%Y-%m-%d', Transactions.date) " +
                 "ORDER BY date ASC";
 
         Cursor cursor = database.rawQuery(query, new String[]{});
@@ -431,8 +431,8 @@ public class Profile {
         StringBuilder sb = new StringBuilder();
 
         CategoryList categoryList = new CategoryList(context);
-        List<String> categoryNames = new ArrayList<String>();
-        categoryNames.addAll(categoryList.getCategoryNames());
+        GraphViewBarFragment.barName = new ArrayList<String>();
+        //categoryNames.addAll(categoryList.getCategoryNames());
 
 
         try {
@@ -446,12 +446,13 @@ public class Profile {
 
 
                 Double y = cursor.getDouble(cursor.getColumnIndex("temp"));
-                Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
+                //Double x = (double) categoryNames.indexOf(category.getCategoryName()); //needs to be ascending... wtf
+                GraphViewBarFragment.barName.add(i,name);
 
                 DataPoint temp = new DataPoint(i, y);
 
-                String tempString = i + ", " + y.toString();
-                sb.append(tempString + "...");
+//                String tempString = i + ", " + y.toString();
+//                sb.append(tempString + "...");
 
                 series[i] = temp;
                 i++;
@@ -460,7 +461,7 @@ public class Profile {
         } finally {
             cursor.close();
         }
-        Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
 
         return series;
 
